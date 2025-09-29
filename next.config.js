@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
-const { withContentlayer } = require('next-contentlayer')
-
 const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  output: 'standalone', // Enable standalone output for Docker
   experimental: {
     appDir: true,
   },
   images: {
-    domains: ['images.unsplash.com', 'avatars.githubusercontent.com'],
+    domains: ['images.unsplash.com', 'avatars.githubusercontent.com', 'localhost', 'omnisignalai.com'],
   },
   webpack: (config) => {
     config.infrastructureLogging = {
@@ -16,4 +17,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withContentlayer(nextConfig)
+module.exports = nextConfig

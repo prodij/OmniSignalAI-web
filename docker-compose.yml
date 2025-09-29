@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: omnisignal-web
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - WATCHPACK_POLLING=true  # Enable hot reload in Docker
+    restart: unless-stopped
+    networks:
+      - omnisignal-network
+
+  # Production build (optional - can be started with docker-compose up web-prod)
+  web-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: omnisignal-web-prod
+    ports:
+      - "5001:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+    restart: unless-stopped
+    networks:
+      - omnisignal-network
+    profiles:
+      - production
+
+networks:
+  omnisignal-network:
+    driver: bridge
