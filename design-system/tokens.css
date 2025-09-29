@@ -1,0 +1,172 @@
+/* Design Tokens - AI-Controllable Variables */
+
+:root {
+  /* Primary Color System (AI can modify these values) */
+  --primary-hue: 240;
+  --primary-saturation: 100%;
+  --primary-lightness: 50%;
+
+  /* Generated variations */
+  --primary: hsl(var(--primary-hue) var(--primary-saturation) var(--primary-lightness));
+  --primary-dark: hsl(var(--primary-hue) var(--primary-saturation) calc(var(--primary-lightness) - 10%));
+  --primary-light: hsl(var(--primary-hue) var(--primary-saturation) calc(var(--primary-lightness) + 20%));
+
+  /* Secondary Colors */
+  --secondary-hue: 280;
+  --secondary-saturation: 100%;
+  --secondary-lightness: 60%;
+  --secondary: hsl(var(--secondary-hue) var(--secondary-saturation) var(--secondary-lightness));
+
+  /* Accent Colors */
+  --accent-hue: 320;
+  --accent-saturation: 100%;
+  --accent-lightness: 65%;
+  --accent: hsl(var(--accent-hue) var(--accent-saturation) var(--accent-lightness));
+
+  /* Grayscale */
+  --gray-50: hsl(220 14% 96%);
+  --gray-100: hsl(220 13% 91%);
+  --gray-200: hsl(220 13% 83%);
+  --gray-300: hsl(220 9% 75%);
+  --gray-400: hsl(220 9% 60%);
+  --gray-500: hsl(220 9% 46%);
+  --gray-600: hsl(220 13% 35%);
+  --gray-700: hsl(220 14% 27%);
+  --gray-800: hsl(220 15% 20%);
+  --gray-900: hsl(220 17% 15%);
+  --gray-950: hsl(220 23% 9%);
+
+  /* Semantic Colors */
+  --success: hsl(142 76% 36%);
+  --warning: hsl(38 92% 50%);
+  --error: hsl(0 84% 60%);
+  --info: hsl(199 89% 48%);
+
+  /* Background Colors */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(220 17% 15%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(220 17% 15%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(220 17% 15%);
+
+  /* Border Colors */
+  --border: hsl(220 13% 91%);
+  --input: hsl(220 13% 91%);
+
+  /* Motion Preferences (AI can modify) */
+  --animation-speed-fast: 0.15s;
+  --animation-speed: 0.3s;
+  --animation-speed-slow: 0.6s;
+  --bounce-strength: 1.4;
+  --spring-damping: 0.8;
+  --spring-stiffness: 100;
+
+  /* Spacing System */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 2rem;       /* 32px */
+  --space-xl: 4rem;       /* 64px */
+  --space-2xl: 8rem;      /* 128px */
+
+  /* Typography Scale */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 1.875rem;   /* 30px */
+  --text-4xl: 2.25rem;    /* 36px */
+  --text-5xl: 3rem;       /* 48px */
+  --text-6xl: 3.75rem;    /* 60px */
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius: 0.5rem;       /* 8px */
+  --radius-lg: 1rem;      /* 16px */
+
+  /* Shadow System */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+  /* Component Specific */
+  --hero-gradient: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  --card-gradient: linear-gradient(145deg, var(--card), hsl(220 13% 98%));
+  --text-gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+
+  /* Interactive States */
+  --hover-opacity: 0.8;
+  --disabled-opacity: 0.5;
+  --focus-ring: 0 0 0 2px var(--primary);
+}
+
+/* Dark Mode Overrides */
+[data-theme="dark"] {
+  --background: hsl(220 23% 9%);
+  --foreground: hsl(220 14% 96%);
+  --card: hsl(220 17% 15%);
+  --card-foreground: hsl(220 14% 96%);
+  --popover: hsl(220 17% 15%);
+  --popover-foreground: hsl(220 14% 96%);
+  --border: hsl(220 13% 35%);
+  --input: hsl(220 13% 35%);
+}
+
+/* Animation Utility Classes */
+.animate-fade-in {
+  animation: fadeIn var(--animation-speed) ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--animation-speed) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-bounce-gentle {
+  animation: bounceGentle 2s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animation-speed-fast: 0.01ms;
+    --animation-speed: 0.01ms;
+    --animation-speed-slow: 0.01ms;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-bounce-gentle {
+    animation: none;
+  }
+}

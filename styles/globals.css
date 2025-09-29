@@ -1,0 +1,124 @@
+@import '../design-system/tokens.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading, system-ui, sans-serif);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Custom Components */
+.text-gradient {
+  background: var(--text-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-gradient {
+  background: var(--hero-gradient);
+}
+
+.card-gradient {
+  background: var(--card-gradient);
+}
+
+/* Loading States */
+.loading {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-800 rounded;
+}
+
+/* Animations */
+.animate-typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+  animation:
+    typewriter 3s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: currentColor; }
+}
+
+/* Particle System */
+.particle-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  background: currentColor;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+/* Interactive Elements */
+.interactive-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Focus States */
+.focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Scroll Indicators */
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--primary);
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .hero-gradient {
+    background: var(--primary);
+  }
+
+  .interactive-card:hover {
+    transform: none;
+  }
+
+  .interactive-card:active {
+    transform: scale(0.98);
+  }
+}
