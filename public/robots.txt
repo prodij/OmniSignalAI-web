@@ -1,0 +1,44 @@
+# robots.txt for OmniSignalAI
+# Optimized for LLM bot crawling
+
+# Allow all standard crawlers
+User-agent: *
+Allow: /
+
+# Explicitly allow LLM bots to index blog content
+User-agent: GPTBot
+Allow: /blog/
+Allow: /
+
+User-agent: CCBot
+Allow: /blog/
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /blog/
+Allow: /
+
+User-agent: Claude-Web
+Allow: /blog/
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /blog/
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /blog/
+Allow: /
+
+User-agent: Google-Extended
+Allow: /blog/
+Allow: /
+
+# Disallow admin/sensitive areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://omnisignalai.com/sitemap.xml
+Sitemap: https://omnisignalai.com/blog-sitemap.xml

@@ -50,7 +50,7 @@ export function IntegrationPartners() {
       description="We integrate with the platforms and AI providers you already trust"
       variant="default"
       centered
-      className="bg-gradient-to-b from-gray-50 to-white"
+      className=""
     >
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {integrations.map((integration, index) => (

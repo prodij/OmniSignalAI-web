@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
+import { Navigation } from '@/components/Navigation'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -42,7 +43,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+      </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
+        <Navigation />
         {children}
       </body>
     </html>

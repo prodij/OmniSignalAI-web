@@ -92,7 +92,7 @@ export function FinalCTASection() {
   }, [finalTestimonials.length])
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
+    <section className="py-32 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
@@ -101,11 +101,11 @@ export function FinalCTASection() {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Main Header */}
-        <div className="text-center mb-16">
-          <Heading size="6xl" className="text-white mb-6">
+        <div className="text-center mb-20">
+          <Heading size="6xl" className="text-white mb-8">
             Stop Wasting Time on Content Creation
           </Heading>
-          <Text size="xl" className="text-gray-300 max-w-4xl mx-auto mb-8">
+          <Text size="xl" className="text-gray-300 max-w-4xl mx-auto mb-16">
             While you're reading this, your competitors just generated 10 social media campaigns.
             <br />
             <span className="text-yellow-400 font-semibold">Don't get left behind.</span>
@@ -217,22 +217,24 @@ export function FinalCTASection() {
         />
 
         {/* Main CTA */}
-        <div className="text-center max-w-4xl mx-auto">
-          <Card className="bg-gradient-to-r from-indigo-600 to-purple-600 border-0 mb-8">
-            <Heading size="3xl" className="text-white mb-4">
+        <div className="text-center max-w-4xl mx-auto mt-20">
+          <Card className="bg-gradient-to-r from-indigo-600 to-purple-600 border-0 mb-8 p-12">
+            <Heading size="3xl" className="text-white mb-6">
               Start Your Content Transformation Now
             </Heading>
-            <Text size="lg" className="text-indigo-100 mb-6">
+            <Text size="lg" className="text-indigo-100 mb-12">
               14-day free trial • No credit card required • Cancel anytime
             </Text>
 
             {/* Main CTA Button */}
-            <Button
-              size="lg"
-              className="bg-yellow-400 text-gray-900 px-12 py-6 font-bold text-xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-2xl mb-6"
-            >
-              Generate My First Campaign in 30 Seconds - FREE
-            </Button>
+            <div className="flex justify-center py-8">
+              <Button
+                size="lg"
+                className="bg-yellow-400 text-gray-900 px-16 py-8 font-bold text-2xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-2xl"
+              >
+                Generate My First Campaign in 30 Seconds - FREE
+              </Button>
+            </div>
 
             {/* Trust Signals */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">

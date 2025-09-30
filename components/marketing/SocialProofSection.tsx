@@ -116,13 +116,13 @@ export function SocialProofSection() {
       description="Real results from real marketers who made the switch"
       variant="default"
       centered
-      className="bg-gradient-to-b from-gray-50 to-white"
+      className=""
     >
       {/* Key Metrics */}
-      <StatsSection className="mb-16">
+      <StatsSection className="mb-20">
         {metrics.map((metric, index) => (
           <div key={index} className="text-center">
-            <div className="text-4xl lg:text-5xl font-bold text-indigo-600 mb-2">
+            <div className="text-5xl lg:text-6xl font-bold text-indigo-600 mb-4">
               <NumberTicker
                 value={metric.value}
                 className="text-indigo-600"
@@ -138,8 +138,8 @@ export function SocialProofSection() {
       </StatsSection>
 
       {/* Main Testimonial Carousel */}
-      <div className="max-w-4xl mx-auto mb-16">
-        <Card variant="elevated" className="text-center shadow-2xl">
+      <div className="max-w-4xl mx-auto mb-20">
+        <Card variant="elevated" className="text-center shadow-2xl p-12">
           <div className="flex justify-center mb-4">
             <div className="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center">
               {React.createElement(testimonials[currentTestimonial].imageIcon, {
@@ -147,22 +147,22 @@ export function SocialProofSection() {
               })}
             </div>
           </div>
-          <div className="text-3xl text-gray-400 mb-6">"</div>
-          <blockquote className="text-xl lg:text-2xl text-gray-700 leading-relaxed mb-8">
+          <div className="text-3xl text-gray-400 mb-8">"</div>
+          <blockquote className="text-xl lg:text-2xl text-gray-700 leading-relaxed mb-12">
             {testimonials[currentTestimonial].quote}
           </blockquote>
 
           {/* Author Info */}
-          <div className="border-t pt-6">
-            <Heading size="lg" className="mb-2">
+          <div className="border-t pt-8">
+            <Heading size="lg" className="mb-4">
               {testimonials[currentTestimonial].author}
             </Heading>
-            <Text size="base" color="muted" className="mb-4">
+            <Text size="base" color="muted" className="mb-6">
               {testimonials[currentTestimonial].role} at {testimonials[currentTestimonial].company}
             </Text>
 
             {/* Results */}
-            <Card className="bg-green-50 border border-green-200 mb-4">
+            <Card className="bg-green-50 border border-green-200 mb-6 p-4">
               <Text size="sm" weight="medium" className="text-green-700 mb-1">Results:</Text>
               <Text weight="semibold" className="text-green-800">
                 {testimonials[currentTestimonial].results}

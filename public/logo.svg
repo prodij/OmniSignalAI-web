@@ -1,0 +1,94 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#818cf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Subtle dot matrix background -->
+  <g opacity="0.08">
+    <circle cx="15" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="25" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="35" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="45" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="55" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="65" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="75" cy="15" r="0.5" fill="#4f46e5"/>
+    <circle cx="85" cy="15" r="0.5" fill="#4f46e5"/>
+
+    <circle cx="15" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="25" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="35" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="45" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="55" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="65" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="75" cy="25" r="0.5" fill="#4f46e5"/>
+    <circle cx="85" cy="25" r="0.5" fill="#4f46e5"/>
+
+    <circle cx="15" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="25" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="35" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="45" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="55" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="65" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="75" cy="75" r="0.5" fill="#4f46e5"/>
+    <circle cx="85" cy="75" r="0.5" fill="#4f46e5"/>
+
+    <circle cx="15" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="25" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="35" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="45" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="55" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="65" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="75" cy="85" r="0.5" fill="#4f46e5"/>
+    <circle cx="85" cy="85" r="0.5" fill="#4f46e5"/>
+  </g>
+
+  <!-- Outer orbital ring -->
+  <circle cx="50" cy="50" r="35" stroke="url(#primaryGradient)" stroke-width="0.5" fill="none" opacity="0.3"/>
+
+  <!-- Middle orbital ring -->
+  <circle cx="50" cy="50" r="25" stroke="url(#primaryGradient)" stroke-width="0.5" fill="none" opacity="0.4"/>
+
+  <!-- Inner orbital ring -->
+  <circle cx="50" cy="50" r="15" stroke="url(#primaryGradient)" stroke-width="0.5" fill="none" opacity="0.5"/>
+
+  <!-- Orbital data nodes on outer ring -->
+  <circle cx="85" cy="50" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+  <circle cx="50" cy="15" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+  <circle cx="15" cy="50" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+  <circle cx="50" cy="85" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+
+  <!-- Orbital data nodes on middle ring (diagonal positions) -->
+  <circle cx="67.68" cy="67.68" r="1.5" fill="url(#primaryGradient)" opacity="0.7"/>
+  <circle cx="32.32" cy="32.32" r="1.5" fill="url(#primaryGradient)" opacity="0.7"/>
+  <circle cx="67.68" cy="32.32" r="1.5" fill="url(#primaryGradient)" opacity="0.7"/>
+  <circle cx="32.32" cy="67.68" r="1.5" fill="url(#primaryGradient)" opacity="0.7"/>
+
+  <!-- Orbital data nodes on inner ring -->
+  <circle cx="50" cy="35" r="1.2" fill="url(#glowGradient)" opacity="0.9"/>
+  <circle cx="63" cy="57.5" r="1.2" fill="url(#glowGradient)" opacity="0.9"/>
+  <circle cx="37" cy="57.5" r="1.2" fill="url(#glowGradient)" opacity="0.9"/>
+
+  <!-- Central processor core -->
+  <circle cx="50" cy="50" r="6" fill="url(#primaryGradient)" filter="url(#glow)"/>
+  <circle cx="50" cy="50" r="4" fill="#ffffff" opacity="0.8"/>
+
+  <!-- Signal output wave - amplified clean signal -->
+  <path d="M 50 50 Q 65 45, 75 50 T 90 50" stroke="url(#primaryGradient)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Secondary signal indicators -->
+  <path d="M 50 50 Q 45 35, 50 25" stroke="url(#glowGradient)" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+</svg>

@@ -13,6 +13,12 @@
 /.next/
 /out/
 
+# velite generated content
+/.velite
+
+# AI generated media
+/public/generated/
+
 # production
 /build
 

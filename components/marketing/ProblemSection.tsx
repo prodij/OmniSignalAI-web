@@ -34,7 +34,7 @@ export function ProblemSection() {
       description="You're spending HOURS on content that should take MINUTES"
       variant="secondary"
       centered
-      className="bg-gradient-to-b from-red-50 to-orange-50"
+      className=""
     >
       <div className="mb-4 text-center">
         <Badge variant="error" size="md" className="text-red-700 bg-red-100">

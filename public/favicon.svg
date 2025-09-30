@@ -1,0 +1,33 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Orbital rings -->
+  <circle cx="50" cy="50" r="35" stroke="url(#primaryGradient)" stroke-width="0.5" fill="none" opacity="0.3"/>
+  <circle cx="50" cy="50" r="25" stroke="url(#primaryGradient)" stroke-width="0.5" fill="none" opacity="0.4"/>
+  <circle cx="50" cy="50" r="15" stroke="url(#primaryGradient)" stroke-width="0.5" fill="none" opacity="0.5"/>
+
+  <!-- Orbital data nodes -->
+  <circle cx="85" cy="50" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+  <circle cx="50" cy="15" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+  <circle cx="15" cy="50" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+  <circle cx="50" cy="85" r="2" fill="url(#primaryGradient)" opacity="0.8"/>
+
+  <!-- Central processor core -->
+  <circle cx="50" cy="50" r="7" fill="url(#primaryGradient)" filter="url(#glow)"/>
+  <circle cx="50" cy="50" r="4" fill="#ffffff" opacity="0.9"/>
+
+  <!-- Signal output -->
+  <path d="M 50 50 Q 65 45, 75 50 T 90 50" stroke="url(#primaryGradient)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+</svg>

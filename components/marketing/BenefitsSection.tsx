@@ -119,30 +119,30 @@ export function BenefitsSection() {
             key={index}
             variant="elevated"
             interactive
-            className="group hover:shadow-2xl transition-all duration-300"
+            className="group hover:shadow-2xl transition-all duration-300 p-8"
           >
             {/* Header */}
-            <div className="flex items-start space-x-4 mb-6">
+            <div className="flex items-start space-x-4 mb-8">
               <div className="flex-shrink-0">
                 {React.createElement(benefit.icon, { className: cn("w-10 h-10", benefit.color) })}
               </div>
               <div className="flex-grow">
-                <Heading size="xl" className="mb-2">
+                <Heading size="xl" className="mb-3">
                   {benefit.title}
                 </Heading>
-                <Badge variant="success" size="sm" className={cn("font-semibold", benefit.color)}>
+                <Badge variant="success" size="sm" className={cn("font-semibold mt-2", benefit.color)}>
                   {benefit.metric}
                 </Badge>
               </div>
             </div>
 
             {/* Description */}
-            <Text size="base" color="muted" className="mb-6 leading-relaxed">
+            <Text size="base" color="muted" className="mb-8 leading-relaxed">
               {benefit.description}
             </Text>
 
             {/* Before/After Comparison */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-4 mb-8">
               <Card className="bg-red-50 border border-red-200 text-center">
                 <Text size="xs" weight="medium" className="text-red-600 uppercase mb-1">
                   Before
@@ -163,10 +163,10 @@ export function BenefitsSection() {
 
             {/* Detailed Benefits */}
             <div>
-              <Text size="sm" weight="medium" className="text-gray-700 mb-3">
+              <Text size="sm" weight="medium" className="text-gray-700 mb-4">
                 What this means for you:
               </Text>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {benefit.details.map((detail, detailIndex) => (
                   <div key={detailIndex} className="flex items-start space-x-3">
                     <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>

@@ -41,6 +41,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copy Velite generated assets (blog images, etc)
+COPY --from=builder --chown=nextjs:nodejs /app/public/static ./public/static
+
 USER nextjs
 
 EXPOSE 5000

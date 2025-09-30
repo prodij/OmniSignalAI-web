@@ -137,14 +137,14 @@ export function HowItWorksSection() {
         gap="xl"
         verticalAlign="start"
         leftContent={
-          <div className="space-y-4">
+          <div className="space-y-6">
             {steps.map((step, index) => (
               <Card
                 key={index}
                 interactive
                 onClick={() => setActiveStep(index)}
                 className={cn(
-                  "cursor-pointer transition-all duration-300",
+                  "cursor-pointer transition-all duration-300 p-8",
                   activeStep === index
                     ? 'bg-indigo-50 border-2 border-indigo-200 shadow-lg'
                     : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
@@ -158,7 +158,7 @@ export function HowItWorksSection() {
                     {step.icon}
                   </div>
                   <div className="flex-grow">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center justify-between mb-4">
                       <Heading size="lg">{step.title}</Heading>
                       <Badge
                         variant={activeStep === index ? 'default' : 'default'}
@@ -178,9 +178,9 @@ export function HowItWorksSection() {
 
                 {/* Expanded Details */}
                 {activeStep === index && (
-                  <div className="mt-4 pt-4 border-t border-indigo-200">
-                    <Text className="mb-4">{step.description}</Text>
-                    <div className="space-y-2">
+                  <div className="mt-6 pt-6 border-t border-indigo-200">
+                    <Text className="mb-6">{step.description}</Text>
+                    <div className="space-y-4">
                       {step.details.map((detail, detailIndex) => (
                         <div key={detailIndex} className="flex items-start space-x-2">
                           <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>

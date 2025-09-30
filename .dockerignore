@@ -7,6 +7,9 @@ yarn-error.log
 .next
 out
 
+# Velite generated content (will be regenerated during build)
+.velite
+
 # Environment files
 .env
 .env.local

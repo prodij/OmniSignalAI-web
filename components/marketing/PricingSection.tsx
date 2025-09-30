@@ -124,7 +124,7 @@ export function PricingSection() {
       description="Choose the plan that fits your content creation needs. All plans include our core AI generation technology."
       variant="default"
       centered
-      className="bg-gradient-to-b from-white to-gray-50"
+      className=""
     >
       {/* Billing Toggle */}
       <div className="flex justify-center mb-8">
@@ -174,7 +174,7 @@ export function PricingSection() {
             variant="elevated"
             interactive
             className={cn(
-              "transition-all duration-300 hover:shadow-2xl relative",
+              "transition-all duration-300 hover:shadow-2xl relative p-10",
               plan.popular
                 ? 'bg-gradient-to-b from-indigo-50 to-white border-2 border-indigo-200 shadow-xl scale-105'
                 : 'bg-white border border-gray-200 shadow-lg hover:border-indigo-200'
@@ -191,10 +191,10 @@ export function PricingSection() {
 
             {/* Header */}
             <div className="text-center mb-8">
-              <Heading size="2xl" className="mb-2">{plan.name}</Heading>
-              <Text color="muted" className="mb-6">{plan.description}</Text>
+              <Heading size="2xl" className="mb-4">{plan.name}</Heading>
+              <Text color="muted" className="mb-8">{plan.description}</Text>
 
-              <div className="mb-4">
+              <div className="mb-3">
                 <span className="text-5xl font-bold text-gray-900">
                   ${getCurrentPrice(plan)}
                 </span>
@@ -211,8 +211,8 @@ export function PricingSection() {
             </div>
 
             {/* Features */}
-            <div className="mb-8">
-              <div className="space-y-3">
+            <div className="mb-12">
+              <div className="space-y-4">
                 {plan.features.map((feature, featureIndex) => (
                   <div key={featureIndex} className="flex items-center space-x-3">
                     <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -239,19 +239,21 @@ export function PricingSection() {
             </div>
 
             {/* CTA */}
-            <Button
-              variant={plan.popular ? 'primary' : 'secondary'}
-              size="lg"
-              fullWidth
-              className={cn(
-                "transition-all duration-300 font-semibold text-lg",
-                plan.popular
-                  ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-xl'
-                  : 'bg-gray-900 text-white hover:bg-gray-800'
-              )}
-            >
-              {plan.cta}
-            </Button>
+            <div className="pt-8 border-t border-gray-100">
+              <Button
+                variant={plan.popular ? 'primary' : 'secondary'}
+                size="lg"
+                fullWidth
+                className={cn(
+                  "transition-all duration-300 font-semibold text-lg py-4",
+                  plan.popular
+                    ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-xl'
+                    : 'bg-gray-900 text-white hover:bg-gray-800'
+                )}
+              >
+                {plan.cta}
+              </Button>
+            </div>
 
             {plan.name !== "Enterprise" && (
               <Text size="sm" color="muted" className="text-center mt-4">

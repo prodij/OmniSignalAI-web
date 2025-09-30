@@ -97,6 +97,365 @@ styles/                   # Global CSS
 @/content/*     // ./content/*
 ```
 
+### Media Generator Tool
+Located in `lib/media-generator/` - AI-powered image generation for marketing content, blog headers, and website assets.
+
+**Key Files:**
+- `index.ts` - Main API exports and quick start guide
+- `image-generator.ts` - Core generation logic using OpenRouter/Gemini
+- `prompt-guide.ts` - Prompt engineering best practices and templates
+- `types.ts` - TypeScript interfaces for AI agent consumption
+- `utils.ts` - File handling, validation, error handling
+
+**Powered by:**
+- **Model**: Gemini 2.5 Flash Image Preview via OpenRouter
+- **Capabilities**: Text-to-image (1024px), multi-turn refinement, character consistency, high-quality text rendering
+- **Output**: Base64 images saved to `public/generated/images/`
+
+## AI Media Generation Guide
+
+### Setup Requirements
+
+1. **Environment Variable**: Add to `.env`:
+```env
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+```
+
+2. **Get API Key**: Sign up at https://openrouter.ai and create an API key
+
+### Basic Usage (For AI Agents)
+
+```typescript
+import { generateImage } from '@/lib/media-generator';
+
+// Simple generation
+const result = await generateImage({
+  prompt: 'Professional hero banner for AI-powered social media platform, modern design, vibrant colors, high quality'
+});
+
+if (result.success) {
+  console.log('Image URL:', result.imageUrl);      // For web display: /generated/images/...
+  console.log('File path:', result.filePath);      // For server use: /home/.../public/generated/...
+} else {
+  console.error('Error:', result.error);
+}
+```
+
+### Using Prompt Templates (Recommended)
+
+**Common templates provide consistent, high-quality results:**
+
+```typescript
+import { generateImage, COMMON_TEMPLATES, buildPromptFromTemplate } from '@/lib/media-generator';
+
+// Blog header image
+const blogPrompt = buildPromptFromTemplate(
+  COMMON_TEMPLATES.blogHeader('AI marketing automation trends 2025')
+);
+const blogImage = await generateImage({ prompt: blogPrompt });
+
+// Social media post
+const socialPrompt = buildPromptFromTemplate(
+  COMMON_TEMPLATES.socialMediaPost('productivity tips for entrepreneurs')
+);
+const socialImage = await generateImage({ prompt: socialPrompt });
+
+// Hero section banner
+const heroPrompt = buildPromptFromTemplate(
+  COMMON_TEMPLATES.heroSection('AI-powered content creation platform')
+);
+const heroImage = await generateImage({ prompt: heroPrompt });
+
+// Product feature showcase
+const productPrompt = buildPromptFromTemplate(
+  COMMON_TEMPLATES.productFeature('OmniSignalAI dashboard', 'real-time analytics')
+);
+const productImage = await generateImage({ prompt: productPrompt });
+```
+
+### Available Templates
+
+| Template | Use Case | Example |
+|----------|----------|---------|
+| `blogHeader(topic)` | Blog article headers | Editorial style, wide banner |
+| `socialMediaPost(topic)` | Social media graphics | Square format, vibrant, attention-grabbing |
+| `heroSection(concept)` | Website hero banners | Panoramic, cinematic, high-impact |
+| `productFeature(product, feature)` | Product showcases | Clean background, professional lighting |
+| `teamMember(role, setting)` | Team photos | Professional portraits, approachable |
+| `conceptIllustration(concept)` | Abstract concepts | Clean illustration, modern design |
+
+### Prompt Enhancement
+
+**Enhance basic prompts automatically:**
+
+```typescript
+import { enhancePrompt, validatePrompt } from '@/lib/media-generator';
+
+// Check prompt quality
+const validation = validatePrompt('office workspace');
+console.log('Score:', validation.score);         // 60
+console.log('Suggestions:', validation.suggestions);
+
+// Enhance with style
+const enhanced = enhancePrompt('office workspace', {
+  style: 'photorealistic',
+  addDefaults: true
+});
+
+console.log('Enhanced prompt:', enhanced.prompt);
+// "office workspace, photorealistic, high resolution, professional photography, natural lighting, sharp focus, detailed textures, 8K quality, high quality, professional, detailed"
+
+const result = await generateImage({ prompt: enhanced.prompt });
+```
+
+### Multi-Turn Refinement
+
+**Iteratively improve images through conversation:**
+
+```typescript
+import { generateImage, refineImage } from '@/lib/media-generator';
+
+// Generate initial image
+const initial = await generateImage({
+  prompt: 'Modern office workspace with laptop and coffee'
+});
+
+// Refine with additional instructions
+const refined = await refineImage(
+  'Modern office workspace with laptop and coffee',
+  'Make the lighting warmer, add plants in the background, and include a notebook'
+);
+
+// Further refinement (maintains context)
+const final = await refineImage(
+  'Modern office workspace with laptop and coffee',
+  'Change the laptop to show a dashboard interface',
+  [
+    'Modern office workspace with laptop and coffee',
+    'Make the lighting warmer, add plants in the background, and include a notebook'
+  ]
+);
+```
+
+### Image Variations
+
+**Generate multiple variations of the same concept:**
+
+```typescript
+import { generateImageVariations } from '@/lib/media-generator';
+
+const variations = await generateImageVariations(
+  'Professional headshot of a tech CEO, clean background, confident expression',
+  3  // Generate 3 variations
+);
+
+variations.forEach((result, index) => {
+  if (result.success) {
+    console.log(`Variation ${index + 1}:`, result.imageUrl);
+  }
+});
+```
+
+### Prompt Engineering Best Practices
+
+**For AI Agents: Follow these guidelines for optimal results**
+
+#### 1. Structure Your Prompts
+```
+[Subject] + [Style] + [Composition] + [Technical Details] + [Mood/Atmosphere]
+```
+
+**Good Example:**
+```typescript
+"Professional marketing team collaborating in modern office, photorealistic,
+medium wide shot with natural depth of field, soft natural lighting from large windows,
+warm and productive atmosphere, high quality, detailed"
+```
+
+**Bad Example:**
+```typescript
+"some people working"  // Too vague, lacks detail
+```
+
+#### 2. Be Specific
+
+| Instead of... | Use... |
+|--------------|--------|
+| "nice colors" | "vibrant teal and orange color palette" |
+| "good lighting" | "soft golden hour lighting from the left" |
+| "professional" | "professional corporate photography, studio quality" |
+| "modern" | "modern minimalist design, clean lines, negative space" |
+
+#### 3. Use Style Keywords
+
+- **Photorealistic**: "photorealistic, high resolution, professional photography, natural lighting, sharp focus, 8K quality"
+- **Illustration**: "digital illustration, clean lines, vibrant colors, vector style, modern aesthetic"
+- **Minimalist**: "minimalist design, clean composition, negative space, simple geometric shapes, limited color palette"
+- **Marketing**: "marketing campaign quality, eye-catching, compelling visual, commercial photography, brand-focused"
+
+#### 4. Add Technical Specifications
+
+- **Lighting**: "soft diffused lighting", "dramatic side lighting", "golden hour natural light"
+- **Camera**: "medium shot", "wide angle", "shallow depth of field", "eye-level perspective"
+- **Composition**: "centered composition", "rule of thirds", "negative space on left"
+- **Quality**: "high resolution", "sharp focus", "detailed textures", "professional quality"
+
+#### 5. Use Negative Prompts
+
+**Avoid unwanted elements:**
+```typescript
+const result = await generateImage({
+  prompt: 'Professional office workspace',
+  negativePrompt: 'blurry, low quality, cluttered, messy, dark, generic stock photo'
+});
+```
+
+**Default negative prompts automatically included:**
+- blurry, low quality, distorted, watermark, text overlay, extra limbs, deformed, pixelated, artificial, generic stock photo
+
+### Example Prompts for Common Use Cases
+
+#### Blog Article Headers
+```typescript
+const prompt = `Editorial photography for blog article about ${topic},
+wide banner format 16:9, professional magazine quality, engaging composition,
+subtle depth of field, modern and sophisticated, high quality, detailed`;
+```
+
+#### Social Media Posts
+```typescript
+const prompt = `Eye-catching social media graphic about ${topic},
+square format, bold central focus, vibrant colors, high contrast,
+trendy aesthetic, attention-grabbing, shareable, professional design`;
+```
+
+#### Marketing Hero Banners
+```typescript
+const prompt = `Hero banner showcasing ${concept},
+wide panoramic view, dramatic perspective, cinematic lighting,
+depth and dimension, high resolution, impressive, memorable, professional,
+premium quality, modern design`;
+```
+
+#### Product Screenshots
+```typescript
+const prompt = `Professional product screenshot of ${product} ${feature},
+clean white background, centered composition, professional lighting,
+sharp details, high resolution, marketing quality, modern and appealing`;
+```
+
+### Error Handling
+
+**Always check for success and handle errors:**
+
+```typescript
+const result = await generateImage({ prompt: 'your prompt here' });
+
+if (!result.success) {
+  // Common error scenarios:
+
+  if (result.error?.includes('API key')) {
+    // API authentication failed - check OPENROUTER_API_KEY
+    console.error('Please set OPENROUTER_API_KEY in .env');
+  }
+  else if (result.error?.includes('rate limit')) {
+    // Rate limit exceeded - wait and retry
+    console.error('Rate limit exceeded. Try again in a few moments.');
+  }
+  else if (result.error?.includes('timeout')) {
+    // Request timeout - image generation taking too long
+    console.error('Generation timeout. Try a simpler prompt or retry.');
+  }
+  else {
+    // Other error
+    console.error('Generation failed:', result.error);
+  }
+
+  return null;
+}
+
+// Success - use the image
+return result.imageUrl;  // Returns: /generated/images/your-image.png
+```
+
+### Environment Validation
+
+**Check configuration before generation:**
+
+```typescript
+import { validateEnvironment } from '@/lib/media-generator';
+
+const validation = validateEnvironment();
+
+if (!validation.isValid) {
+  console.error('Setup required:', validation.error);
+  // Handle: API key not set or invalid
+}
+```
+
+### Video Generation
+
+**Current Status**: Not yet available
+- OpenRouter does not currently support video generation models
+- Video support is on OpenRouter's roadmap ("coming soon")
+- **Workaround**: Use ImageRouter API (https://api.imagerouter.io) for video generation (separate service)
+- **Recommended**: Focus on image generation for now, monitor OpenRouter for video model availability
+
+### Quick Reference for AI Agents
+
+```typescript
+// Import everything you need
+import {
+  generateImage,              // Core function
+  generateImageVariations,    // Multiple variations
+  refineImage,               // Iterative refinement
+  COMMON_TEMPLATES,          // Pre-built templates
+  buildPromptFromTemplate,   // Build from template
+  enhancePrompt,             // Auto-enhance prompts
+  validatePrompt,            // Check prompt quality
+  validateEnvironment,       // Check API key setup
+} from '@/lib/media-generator';
+
+// Quick generation
+const result = await generateImage({
+  prompt: 'detailed prompt here'
+});
+
+// Template-based (recommended)
+const prompt = buildPromptFromTemplate(
+  COMMON_TEMPLATES.blogHeader('your topic')
+);
+const result = await generateImage({ prompt });
+
+// With enhancements
+const enhanced = enhancePrompt('basic prompt', {
+  style: 'photorealistic'
+});
+const result = await generateImage({
+  prompt: enhanced.prompt
+});
+```
+
+### Output Files
+
+**Generated images are saved to:**
+- **Directory**: `public/generated/images/`
+- **Filename format**: `{prompt-slug}-{timestamp}.{extension}`
+- **Public URL**: `/generated/images/{filename}`
+- **Format**: PNG (base64 converted to file)
+- **Resolution**: 1024px (Gemini default)
+
+**Example output:**
+```typescript
+{
+  success: true,
+  imageUrl: '/generated/images/modern-office-workspace-1735516800000.png',
+  filePath: '/home/prodij/OmniSignalAI-web/public/generated/images/modern-office-workspace-1735516800000.png',
+  prompt: 'modern office workspace with laptop',
+  base64Data: 'data:image/png;base64,...'
+}
+```
+
 ## Critical Configuration Knowledge
 
 ### PostCSS Required

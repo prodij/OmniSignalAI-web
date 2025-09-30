@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { HeroLayout, TwoColumnLayout, Button, Heading, Text, Card, cn } from '@/lib/design-system'
+import { HeroLayout, Button, Heading, Text, Card, Badge, cn } from '@/lib/design-system'
 import { Check, Zap, Clock, Sparkles, CheckCircle2 } from 'lucide-react'
 
 const platformsDemo = [
@@ -38,101 +38,106 @@ export function HeroSection() {
 
   return (
     <HeroLayout
-      variant="gradient"
+      variant="white"
       height="screen"
-      className="relative overflow-hidden"
+      className="relative overflow-hidden pt-16 pb-20"
     >
-      {/* Background particles */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
-        <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-white rounded-full animate-ping"></div>
-        <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-cyan-300 rounded-full animate-pulse"></div>
-      </div>
 
-      <TwoColumnLayout
-        variant="equal"
-        gap="xl"
-        verticalAlign="center"
-        leftContent={
-          <div className="space-y-8">
-            <Heading
-              as="h1"
-              size="6xl"
-              className="text-white leading-tight animate-fade-in"
-            >
-              From Hours to{' '}
-              <span className="relative inline-block">
-                30 Seconds
-                <div className="absolute -bottom-2 left-0 right-0 h-1 bg-white/30 rounded animate-pulse"></div>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-center max-w-7xl mx-auto">
+        {/* Left: Text Content - 40% */}
+        <div className="lg:col-span-2 space-y-12">
+          <Heading
+            as="h1"
+            size="6xl"
+            className="text-gray-900 leading-tight mb-8"
+          >
+            From Hours to{' '}
+            <span className="relative inline-block">
+              30 Seconds
+              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-indigo-500 rounded"></div>
+            </span>
+          </Heading>
+
+          <Text
+            size="xl"
+            className="text-gray-700 mb-4"
+          >
+            AI Creates Your Entire Social Media Campaign
+          </Text>
+
+          <Text
+            size="lg"
+            className="text-gray-600 leading-relaxed mb-6"
+          >
+            Stop being a content producer. Start being a content strategist. Our AI generates
+            platform-perfect posts with images and copy while you focus on what actually drives
+            business results.
+          </Text>
+
+          {/* Benefits Grid */}
+          <div className="grid grid-cols-1 gap-4">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="flex items-center space-x-3">
+                <CheckCircle2 className="w-5 h-5 text-indigo-600 flex-shrink-0" />
+                <Text size="sm" className="text-gray-700">
+                  {benefit}
+                </Text>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Section */}
+          <div className="pt-12 space-y-6">
+            {/* Trust Signals Above CTA */}
+            <div className="flex items-center gap-4 text-sm">
+              <Badge className="bg-indigo-100 text-indigo-700 border-indigo-200">
+                Starting at $49/mo
+              </Badge>
+              <span className="text-gray-400">•</span>
+              <span className="flex items-center gap-2 text-gray-600">
+                <Check className="w-4 h-4 text-green-600" />
+                SOC 2 Certified
               </span>
-            </Heading>
-
-            <Text
-              size="xl"
-              className="text-white/90 animate-slide-up"
-            >
-              AI Creates Your Entire Social Media Campaign
-            </Text>
-
-            <Text
-              size="lg"
-              className="text-white/80 leading-relaxed max-w-xl"
-            >
-              Stop being a content producer. Start being a content strategist. Our AI generates
-              platform-perfect posts with images and copy while you focus on what actually drives
-              business results.
-            </Text>
-
-            {/* Benefits Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center space-x-3">
-                  <CheckCircle2 className="w-5 h-5 text-cyan-300 flex-shrink-0" />
-                  <Text size="sm" className="text-white/90">
-                    {benefit}
-                  </Text>
-                </div>
-              ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="pt-6 space-y-4">
-              <Button
-                variant="primary"
-                size="lg"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 text-lg font-semibold"
-                onClick={startDemo}
-              >
-                Start Free Trial - No Credit Card Required
-              </Button>
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <span className="flex items-center">
-                  <Check className="text-green-500 mr-1 w-4 h-4" />
-                  14-day free trial
-                </span>
-                <span className="flex items-center">
-                  <Check className="text-green-500 mr-1 w-4 h-4" />
-                  Setup in 2 minutes
-                </span>
-                <span className="flex items-center">
-                  <Check className="text-green-500 mr-1 w-4 h-4" />
-                  Cancel anytime
-                </span>
-              </div>
+            <Button
+              variant="primary"
+              size="lg"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white px-10 py-5 text-lg font-semibold w-full sm:w-auto shadow-lg hover:shadow-xl transition-shadow"
+              onClick={startDemo}
+            >
+              Start Free Trial - No Credit Card Required
+            </Button>
+
+            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+              <span className="flex items-center gap-1.5">
+                <Check className="text-green-600 w-4 h-4" />
+                14-day free trial
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="text-green-600 w-4 h-4" />
+                Setup in 2 minutes
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="text-green-600 w-4 h-4" />
+                Cancel anytime
+              </span>
             </div>
           </div>
-        }
-        rightContent={
+        </div>
+
+        {/* Right: Product Screenshot - 60% */}
+        <div className="lg:col-span-3">
           <div className="relative">
             <Card
               variant="elevated"
-              className="bg-white border border-gray-200 shadow-2xl p-8"
+              className="bg-white border border-gray-200 shadow-2xl p-8 transform hover:scale-[1.02] transition-transform duration-300"
             >
               <div className="space-y-6">
                 {/* Studio Header */}
-                <div className="flex items-center space-x-3 text-green-400">
-                  <Sparkles className="w-5 h-5 animate-pulse" />
-                  <Text size="sm" className="font-mono text-green-400">
+                <div className="flex items-center space-x-3 text-green-600">
+                  <Sparkles className="w-5 h-5" />
+                  <Text size="sm" className="font-mono text-green-600 font-semibold">
                     OmniSignalAI Studio
                   </Text>
                 </div>
@@ -140,29 +145,28 @@ export function HeroSection() {
                 {/* Demo Content */}
                 <div className="space-y-6">
                   {/* Input Area */}
-                  <Card variant="bordered" className="bg-white/10 border-white/20 p-4">
-                    <Text size="sm" className="text-white/60 mb-2">
+                  <Card variant="bordered" className="bg-gray-50 border-gray-200 p-4">
+                    <Text size="sm" className="text-gray-500 mb-2">
                       Describe your campaign idea...
                     </Text>
-                    <Text className="text-white animate-typewriter">
+                    <Text className="text-gray-900 font-medium">
                       Announcing our new project management tool for remote teams
                     </Text>
                   </Card>
 
                   {/* Countdown */}
-                  <div className="text-center py-8">
+                  <div className="text-center py-6">
                     <Heading
                       size="4xl"
                       className={cn(
                         "font-bold transition-colors duration-300",
-                        countdown > 20 ? "text-green-400" :
-                        countdown > 10 ? "text-yellow-400" : "text-red-400",
-                        isRunning && "animate-bounce-gentle"
+                        countdown > 20 ? "text-green-600" :
+                        countdown > 10 ? "text-yellow-600" : "text-red-600"
                       )}
                     >
                       {countdown}
                     </Heading>
-                    <Text size="sm" className="text-white/60">
+                    <Text size="sm" className="text-gray-500">
                       seconds remaining
                     </Text>
                   </div>
@@ -174,22 +178,30 @@ export function HeroSection() {
                                           countdown < 30 - (index * 3) ? Zap : Clock
                       const statusText = countdown < 25 - (index * 5) ? 'Generated' :
                                         countdown < 30 - (index * 3) ? 'Processing' : 'Pending'
+                      const isGenerated = countdown < 25 - (index * 5)
+                      const isProcessing = countdown < 30 - (index * 3) && !isGenerated
 
                       return (
                         <Card
                           key={platform.name}
                           className={cn(
-                            platform.color,
-                            "p-3 text-center border border-white/10",
-                            countdown < 25 - (index * 5) && "bg-green-500/20"
+                            "p-3 text-center border",
+                            isGenerated && "bg-green-50 border-green-200",
+                            isProcessing && "bg-blue-50 border-blue-200",
+                            !isGenerated && !isProcessing && "bg-gray-50 border-gray-200"
                           )}
                         >
-                          <Text size="xs" className="text-white/60 mb-1">
+                          <Text size="xs" className="text-gray-600 mb-1 font-medium">
                             {platform.name}
                           </Text>
                           <div className="flex items-center justify-center space-x-2">
-                            <IconComponent className="w-4 h-4 text-white" />
-                            <Text size="sm" className="text-white">{statusText}</Text>
+                            <IconComponent className={cn(
+                              "w-4 h-4",
+                              isGenerated && "text-green-600",
+                              isProcessing && "text-blue-600",
+                              !isGenerated && !isProcessing && "text-gray-400"
+                            )} />
+                            <Text size="sm" className="text-gray-700">{statusText}</Text>
                           </div>
                         </Card>
                       )
@@ -198,18 +210,14 @@ export function HeroSection() {
                 </div>
               </div>
             </Card>
-
-            {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 w-8 h-8 bg-cyan-300 rounded-full animate-bounce opacity-60"></div>
-            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-purple-300 rounded-full animate-pulse opacity-40"></div>
           </div>
-        }
-      />
+        </div>
+      </div>
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
+        <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2"></div>
         </div>
       </div>
     </HeroLayout>
