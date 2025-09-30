@@ -456,6 +456,385 @@ const result = await generateImage({
 }
 ```
 
+## Image Generation Agent (Autonomous)
+
+### Overview
+
+The **Image Generation Agent** is an autonomous system that handles the complete workflow from natural language intent → optimized prompt → generated image. It's specifically designed for AI agents (blog agents, designer agents) to generate images on-demand.
+
+**Located in**: `lib/agents/image-generation-agent/`
+
+**Key Benefits:**
+- 🧠 Natural language understanding - just describe what you want
+- 🎯 Automatic use case detection (blog header, social post, hero banner, etc.)
+- 🔧 Nano Banana (Gemini 2.5 Flash) specific optimization
+- 🔄 Multi-turn refinement support
+- 🔍 Transparent reasoning - see how decisions are made
+
+### Quick Start (For AI Agents)
+
+**Simple one-liner:**
+```typescript
+import { generateImageWithAgent } from '@/lib/agents/image-generation-agent';
+
+const result = await generateImageWithAgent(
+  'Create a professional blog header about AI marketing automation'
+);
+
+if (result.success) {
+  console.log('Image:', result.imageUrl);
+}
+```
+
+**Full agent usage:**
+```typescript
+import { ImageGenerationAgent } from '@/lib/agents/image-generation-agent';
+
+const agent = new ImageGenerationAgent();
+
+const result = await agent.generate({
+  intent: 'Create a professional blog header about AI marketing automation'
+});
+
+if (result.success) {
+  console.log('Image:', result.imageUrl);
+  console.log('Detected use case:', result.reasoning.detectedIntent.useCase);
+  console.log('Optimized prompt:', result.reasoning.translatedPrompt.prompt);
+  console.log('Quality score:', result.reasoning.translatedPrompt.qualityScore);
+}
+```
+
+### Agent Workflow
+
+```
+1. INTENT DETECTION
+   ↓ Parse natural language
+   ↓ Classify use case (blog-header, social-post, hero-banner, etc.)
+   ↓ Extract topic, style, platform
+   ↓ Calculate confidence score
+
+2. CONTEXT ANALYSIS
+   ↓ Determine composition (aspect ratio, framing, perspective)
+   ↓ Determine technical specs (lighting, camera, quality)
+   ↓ Determine mood/atmosphere
+   ↓ Suggest color palette
+
+3. PROMPT TRANSLATION (Nano Banana Optimized)
+   ↓ Apply Gemini-specific optimizations
+   ↓ Structure: Subject + Style + Technical + Mood
+   ↓ Generate negative prompts
+   ↓ Calculate quality score
+
+4. IMAGE GENERATION
+   ↓ Call media-generator with optimized prompt
+   ↓ Retry on failure (exponential backoff)
+   ↓ Apply refinements if requested
+
+5. FILE MANAGEMENT
+   ↓ Save to public/generated/images/
+   ↓ Return imageUrl + filePath + reasoning
+```
+
+### Supported Use Cases
+
+The agent automatically detects 6 use case types:
+
+| Use Case | Keywords | Example Intent |
+|----------|----------|----------------|
+| **blog-header** | blog, article, header | "Blog header about sustainable fashion" |
+| **social-post** | social, tweet, instagram | "Instagram post about productivity tips" |
+| **hero-banner** | hero, banner, landing | "Hero banner showing team collaboration" |
+| **product-feature** | product, feature, showcase | "Product image of SaaS dashboard" |
+| **team-photo** | team, portrait, headshot | "Professional photo of tech founder" |
+| **concept-illustration** | concept, illustration | "Illustration of AI workflow" |
+
+### Advanced Usage
+
+**With hints (improves detection accuracy):**
+```typescript
+const result = await agent.generate({
+  intent: 'productivity tips for entrepreneurs',
+  useCase: 'social-post',           // Force specific use case
+  platform: 'instagram',            // Target platform
+  stylePreference: 'illustration'   // Force specific style
+});
+```
+
+**With multi-turn refinement:**
+```typescript
+const result = await agent.generate({
+  intent: 'Hero section showing team collaboration',
+  refinementInstructions: [
+    'Make the lighting warmer and more golden',
+    'Add more diversity in the team composition'
+  ]
+});
+```
+
+**With custom configuration:**
+```typescript
+import { ImageGenerationAgent, PRESET_CONFIGS } from '@/lib/agents/image-generation-agent';
+
+// High quality mode (all optimizations)
+const qualityAgent = new ImageGenerationAgent(PRESET_CONFIGS.quality);
+
+// Fast mode (minimal quality checks)
+const fastAgent = new ImageGenerationAgent(PRESET_CONFIGS.fast);
+
+// Debug mode (verbose logging)
+const debugAgent = new ImageGenerationAgent(PRESET_CONFIGS.debug);
+
+// Custom config
+const customAgent = new ImageGenerationAgent({
+  promptTranslation: {
+    minQualityScore: 80,
+    enhancePrompts: true
+  },
+  generation: {
+    maxRetries: 2,
+    enableRefinement: true
+  },
+  logging: {
+    verbose: true,
+    logIntentDetection: true
+  }
+});
+```
+
+### Response Structure
+
+```typescript
+interface ImageGenerationAgentResponse {
+  success: boolean;
+  imageUrl?: string;                // /generated/images/...
+  filePath?: string;                // Full filesystem path
+
+  // Transparent reasoning
+  reasoning: {
+    detectedIntent: {
+      useCase: 'blog-header';
+      topic: 'AI marketing automation';
+      style: 'editorial';
+      confidence: 85;
+      signals: ['use-case: blog', 'style: professional'];
+    };
+
+    contextAnalysis: {
+      composition: { aspectRatio: '16:9', framing: '...', ... };
+      technical: { lighting: '...', camera: '...', quality: '...' };
+      mood: ['informative', 'professional', 'engaging'];
+      colors: ['professional', 'modern', 'balanced'];
+    };
+
+    translatedPrompt: {
+      prompt: 'Editorial photography for blog article about AI marketing automation, wide banner format 16:9, professional magazine quality, engaging composition, modern business setting, soft natural lighting, vibrant yet professional color palette, high resolution, detailed, informative and professional atmosphere';
+      negativePrompt: 'blurry, low quality, distorted, watermark, text overlay, pixelated, amateur, generic stock photo, clickbait';
+      qualityScore: 85;
+      optimizations: ['Front-loaded subject', 'Added composition specs', ...];
+    };
+  };
+
+  originalIntent: string;
+  processingTime?: number;          // Milliseconds
+  error?: string;
+}
+```
+
+### Nano Banana (Gemini) Optimization
+
+The agent applies Gemini 2.5 Flash specific optimizations:
+
+**1. Paragraph Style** - Gemini works best with flowing, detailed descriptions
+**2. Front-loaded Subject** - Most important info first
+**3. Style Descriptors** - Specific keywords Gemini understands well
+**4. Technical Details** - Lighting, camera, composition specifications
+**5. Quality Terms** - "high resolution", "professional quality", "detailed"
+**6. Mood/Atmosphere** - Emotional context at the end
+
+**Example translation:**
+```
+User Intent: "Blog header about AI marketing"
+
+Agent Output:
+"Editorial photography for blog article about AI marketing automation,
+wide banner format 16:9, professional magazine quality, engaging composition,
+modern business setting with technology elements, soft natural lighting,
+vibrant yet professional color palette, high resolution, sharp focus, detailed,
+informative and professional atmosphere"
+```
+
+### For Different AI Agents
+
+**Blog Agent:**
+```typescript
+const agent = new ImageGenerationAgent();
+
+// Generating article header
+const headerResult = await agent.generate({
+  intent: `Blog header for article: "${articleTitle}"`
+});
+```
+
+**Social Media Agent:**
+```typescript
+// Generating social post
+const postResult = await agent.generate({
+  intent: `Social media graphic about ${topic}`,
+  platform: 'instagram',
+  useCase: 'social-post'
+});
+```
+
+**Website Designer Agent:**
+```typescript
+// Generating hero banner
+const heroResult = await agent.generate({
+  intent: `Hero banner showcasing ${concept}`,
+  useCase: 'hero-banner'
+});
+```
+
+**Content Generation AI:**
+```typescript
+// Generate images for multiple sections
+const images = await Promise.all([
+  agent.generate({ intent: 'Hero banner for AI startup' }),
+  agent.generate({ intent: 'Team photo of diverse founders' }),
+  agent.generate({ intent: 'Product showcase of dashboard analytics' })
+]);
+```
+
+### Error Handling
+
+```typescript
+const result = await agent.generate({ intent: 'your request' });
+
+if (!result.success) {
+  if (result.error?.includes('Invalid intent')) {
+    // Intent too short or vague
+    console.error('Please provide more detail about what to create');
+  }
+  else if (result.error?.includes('API key')) {
+    // API key not set or invalid
+    console.error('Configure OPENROUTER_API_KEY in .env');
+  }
+  else if (result.error?.includes('rate limit')) {
+    // Rate limit exceeded
+    console.error('Rate limit exceeded, try again later');
+  }
+  else {
+    // Other error
+    console.error('Generation failed:', result.error);
+  }
+}
+```
+
+### Best Practices for AI Agents
+
+**1. Be Specific:**
+```typescript
+// Good
+"Professional blog header about sustainable fashion trends in 2025"
+
+// Too vague
+"fashion image"
+```
+
+**2. Include Context:**
+```typescript
+// Good
+"Hero banner showing diverse team collaborating in modern tech office"
+
+// Missing context
+"people working"
+```
+
+**3. Use Hints When Needed:**
+```typescript
+// If agent misdetects, provide hints
+agent.generate({
+  intent: "AI automation workflow",
+  useCase: 'concept-illustration',  // Force use case
+  stylePreference: 'minimalist'     // Force style
+});
+```
+
+**4. Check Reasoning:**
+```typescript
+if (result.success) {
+  // Verify agent understood correctly
+  console.log('Agent detected:', result.reasoning.detectedIntent);
+
+  // If wrong, regenerate with hints
+  if (result.reasoning.detectedIntent.useCase !== expectedUseCase) {
+    // Regenerate with explicit use case
+  }
+}
+```
+
+### Agent vs Direct Media Generator
+
+**Use Agent when:**
+- You want automatic intent detection
+- You want Gemini-optimized prompts
+- You want transparent reasoning
+- You're building tools for other AI agents
+- You want high-level, autonomous operation
+
+**Use media-generator directly when:**
+- You already have optimized prompts
+- You need fine-grained control
+- You want to use templates manually
+- You need maximum performance (skip intent detection)
+
+### Configuration Presets
+
+**PRESET_CONFIGS.fast** - Minimal quality checks, faster generation
+- minQualityScore: 50
+- retryOnFailure: false
+- enableRefinement: false
+
+**PRESET_CONFIGS.quality** - Maximum quality, all optimizations
+- minQualityScore: 80
+- retryOnFailure: true (3 attempts)
+- enableRefinement: true
+
+**PRESET_CONFIGS.debug** - Verbose logging for debugging
+- verbose: true
+- logIntentDetection: true
+- logPromptTranslation: true
+- logGeneration: true
+
+### Agent Architecture
+
+```
+lib/agents/image-generation-agent/
+├── index.ts                  # Main exports & helpers
+├── agent.ts                  # Core orchestration
+├── intent-detector.ts        # NLP intent classification
+├── context-analyzer.ts       # Context & style analysis
+├── prompt-translator.ts      # Nano Banana optimization
+├── types.ts                  # TypeScript interfaces
+├── config.ts                 # Configuration & presets
+├── example-usage.ts          # 10 usage examples
+└── README.md                 # Comprehensive docs
+```
+
+### Performance
+
+- **Intent detection**: < 100ms
+- **Context analysis**: < 50ms
+- **Prompt translation**: < 50ms
+- **Image generation**: 10-25 seconds (OpenRouter API)
+- **Total processing time**: 15-30 seconds average
+
+### Resources
+
+- **Agent README**: `lib/agents/image-generation-agent/README.md`
+- **Examples**: `lib/agents/image-generation-agent/example-usage.ts`
+- **Media Generator**: `lib/media-generator/`
+- **OpenRouter**: https://openrouter.ai
+
 ## Critical Configuration Knowledge
 
 ### PostCSS Required

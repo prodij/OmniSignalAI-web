@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Card } from '@/lib/design-system/base-components'
 import { Badge } from '@/lib/design-system/base-components'
 import { Text } from '@/lib/design-system/base-components'
@@ -16,6 +17,7 @@ interface BlogCardProps {
   category: string
   tags?: string[]
   featured?: boolean
+  thumbnail?: string
   className?: string
 }
 
@@ -28,6 +30,7 @@ export function BlogCard({
   category,
   tags,
   featured = false,
+  thumbnail,
   className,
 }: BlogCardProps) {
   const formattedDate = new Date(datePublished).toLocaleDateString('en-US', {
@@ -40,25 +43,56 @@ export function BlogCard({
     <Link href={`/blog/${slug}`} className="block group">
       <Card
         variant={featured ? 'bordered' : 'default'}
-        padding="lg"
+        padding="none"
         interactive
         className={cn(
-          'h-full flex flex-col transition-all duration-300',
+          'h-full flex flex-col overflow-hidden transition-all duration-300',
           featured && 'border-2 border-brand-primary',
           className
         )}
       >
-        {/* Header with category and featured badge */}
-        <div className="flex items-center justify-between mb-4">
-          <Badge variant="default" size="sm">
-            {category}
-          </Badge>
-          {featured && (
-            <Badge variant="success" size="sm">
-              Featured
-            </Badge>
+        {/* Thumbnail Image */}
+        {thumbnail && (
+          <div className="relative w-full h-48 overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+            <Image
+              src={thumbnail}
+              alt={title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            {/* Overlay gradient for better badge visibility */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent" />
+
+            {/* Header with category and featured badge - overlaid on image */}
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+              <Badge variant="default" size="sm" className="bg-white/90 backdrop-blur-sm">
+                {category}
+              </Badge>
+              {featured && (
+                <Badge variant="success" size="sm" className="bg-white/90 backdrop-blur-sm">
+                  Featured
+                </Badge>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Content */}
+        <div className="p-6 flex flex-col flex-grow">
+          {/* Header with category and featured badge (shown when no thumbnail) */}
+          {!thumbnail && (
+            <div className="flex items-center justify-between mb-4">
+              <Badge variant="default" size="sm">
+                {category}
+              </Badge>
+              {featured && (
+                <Badge variant="success" size="sm">
+                  Featured
+                </Badge>
+              )}
+            </div>
           )}
-        </div>
 
         {/* Title */}
         <h3 className="text-xl font-bold mb-3 text-neutral-900 dark:text-neutral-100 group-hover:text-brand-primary transition-colors">
@@ -101,9 +135,10 @@ export function BlogCard({
           </div>
         </div>
 
-        {/* Read more indicator */}
-        <div className="mt-4 text-brand-primary font-medium text-sm group-hover:translate-x-1 transition-transform">
-          Read article →
+          {/* Read more indicator */}
+          <div className="mt-4 text-brand-primary font-medium text-sm group-hover:translate-x-1 transition-transform">
+            Read article →
+          </div>
         </div>
       </Card>
     </Link>

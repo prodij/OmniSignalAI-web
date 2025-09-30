@@ -36,6 +36,9 @@ const blog = defineCollection({
       readTime: s.number().int().positive().optional(),
       featured: s.boolean().default(false),
 
+      // Thumbnail image
+      thumbnail: s.string().optional(),
+
       // Schema.org type for structured data
       schema: s.enum(["Article", "HowTo", "FAQPage"]).optional().default("Article"),
 

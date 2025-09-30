@@ -13,6 +13,7 @@ interface BlogPost {
   category: string
   tags?: string[]
   featured?: boolean
+  thumbnail?: string
 }
 
 interface BlogListProps {
@@ -63,6 +64,7 @@ export function BlogList({ posts, featured = false, limit, className }: BlogList
           category={post.category}
           tags={post.tags}
           featured={post.featured}
+          thumbnail={post.thumbnail}
         />
       ))}
     </Grid>
