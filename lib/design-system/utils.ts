@@ -75,13 +75,13 @@ export const animationUtils = {
  * Layout utilities
  */
 export const layoutUtils = {
-  container: (padding: keyof typeof spacing = '4') =>
+  container: (padding: keyof typeof spacing = 4) =>
     `max-w-7xl mx-auto px-${spacing[padding]}`,
 
-  section: (py: keyof typeof spacing = '20') =>
+  section: (py: keyof typeof spacing = 20) =>
     `py-${spacing[py]}`,
 
-  grid: (cols: number, gap: keyof typeof spacing = '4') =>
+  grid: (cols: number, gap: keyof typeof spacing = 4) =>
     `grid grid-cols-${cols} gap-${spacing[gap]}`,
 
   flex: (direction: 'row' | 'col' = 'row', align: 'start' | 'center' | 'end' = 'center', justify: 'start' | 'center' | 'end' | 'between' = 'center') =>

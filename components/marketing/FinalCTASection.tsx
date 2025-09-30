@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { ContentSection, TwoColumnLayout, CTASection, Card, Heading, Text, Badge, Button, cn } from '@/lib/design-system'
 
 export function FinalCTASection() {
   const [timeLeft, setTimeLeft] = useState({
@@ -88,173 +89,191 @@ export function FinalCTASection() {
     }, 4000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [finalTestimonials.length])
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-900 to-black text-white relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Main Header */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl font-heading font-bold mb-6">
+          <Heading size="6xl" className="text-white mb-6">
             Stop Wasting Time on Content Creation
-          </h2>
-          <p className="text-xl lg:text-2xl text-gray-300 max-w-4xl mx-auto mb-8">
+          </Heading>
+          <Text size="xl" className="text-gray-300 max-w-4xl mx-auto mb-8">
             While you're reading this, your competitors just generated 10 social media campaigns.
             <br />
             <span className="text-yellow-400 font-semibold">Don't get left behind.</span>
-          </p>
+          </Text>
 
           {/* Urgency Counter */}
-          <div className="bg-red-900/30 rounded-2xl p-6 max-w-md mx-auto mb-8">
-            <div className="text-red-300 text-sm mb-2">⚠️ Limited Time: Free Trial Access</div>
+          <Card className="bg-red-900/30 max-w-md mx-auto mb-8">
+            <Text size="sm" className="text-red-300 mb-2">⚠️ Limited Time: Free Trial Access</Text>
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-red-400">{timeLeft.hours.toString().padStart(2, '0')}</div>
-                <div className="text-red-200 text-xs">HOURS</div>
+                <Text size="2xl" weight="bold" className="text-red-400">
+                  {timeLeft.hours.toString().padStart(2, '0')}
+                </Text>
+                <Text size="xs" className="text-red-200">HOURS</Text>
               </div>
               <div>
-                <div className="text-2xl font-bold text-red-400">{timeLeft.minutes.toString().padStart(2, '0')}</div>
-                <div className="text-red-200 text-xs">MINUTES</div>
+                <Text size="2xl" weight="bold" className="text-red-400">
+                  {timeLeft.minutes.toString().padStart(2, '0')}
+                </Text>
+                <Text size="xs" className="text-red-200">MINUTES</Text>
               </div>
               <div>
-                <div className="text-2xl font-bold text-red-400">{timeLeft.seconds.toString().padStart(2, '0')}</div>
-                <div className="text-red-200 text-xs">SECONDS</div>
+                <Text size="2xl" weight="bold" className="text-red-400">
+                  {timeLeft.seconds.toString().padStart(2, '0')}
+                </Text>
+                <Text size="xs" className="text-red-200">SECONDS</Text>
               </div>
             </div>
-          </div>
+          </Card>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start mb-16">
-          {/* Left: What You Get Immediately */}
-          <div>
-            <h3 className="text-2xl font-bold mb-8 text-center">
-              What You Get in the Next 30 Minutes
-            </h3>
+        <TwoColumnLayout
+          variant="equal"
+          gap="xl"
+          verticalAlign="start"
+          leftContent={
+            <div>
+              <Heading size="2xl" className="text-white mb-8 text-center">
+                What You Get in the Next 30 Minutes
+              </Heading>
 
-            <div className="space-y-6">
-              {quickWins.map((win, index) => (
-                <div key={index} className="flex items-start space-x-4 bg-white/5 rounded-xl p-6">
-                  <div className="text-3xl">{win.icon}</div>
-                  <div className="flex-grow">
-                    <h4 className="text-lg font-semibold text-white mb-2">{win.title}</h4>
-                    <p className="text-gray-300 mb-2">{win.description}</p>
-                    <div className="text-yellow-400 text-sm font-medium">{win.time}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: Social Proof + Urgency */}
-          <div>
-            <h3 className="text-2xl font-bold mb-8 text-center">
-              Don't Take Our Word For It
-            </h3>
-
-            {/* Rotating Testimonial */}
-            <div className="bg-white/10 rounded-2xl p-8 mb-8">
-              <div className="text-center">
-                <div className="text-3xl text-yellow-400 mb-4">"</div>
-                <blockquote className="text-lg text-gray-200 mb-6 leading-relaxed">
-                  {finalTestimonials[currentTestimonial].quote}
-                </blockquote>
-                <div className="text-white font-semibold">
-                  {finalTestimonials[currentTestimonial].author}
-                </div>
-                <div className="text-green-400 font-bold mt-2">
-                  {finalTestimonials[currentTestimonial].metric}
-                </div>
-              </div>
-
-              {/* Testimonial Indicators */}
-              <div className="flex justify-center space-x-2 mt-6">
-                {finalTestimonials.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      currentTestimonial === index ? 'bg-yellow-400' : 'bg-gray-600'
-                    }`}
-                  />
+              <div className="space-y-6">
+                {quickWins.map((win, index) => (
+                  <Card key={index} className="bg-white/5 border-0">
+                    <div className="flex items-start space-x-4">
+                      <div className="text-3xl">{win.icon}</div>
+                      <div className="flex-grow">
+                        <Heading size="lg" className="text-white mb-2">{win.title}</Heading>
+                        <Text className="text-gray-300 mb-2">{win.description}</Text>
+                        <Badge variant="warning" className="bg-yellow-900/50 text-yellow-400 border-yellow-600">
+                          {win.time}
+                        </Badge>
+                      </div>
+                    </div>
+                  </Card>
                 ))}
               </div>
             </div>
+          }
+          rightContent={
+            <div>
+              <Heading size="2xl" className="text-white mb-8 text-center">
+                Don't Take Our Word For It
+              </Heading>
 
-            {/* Urgency Reasons */}
-            <div className="bg-red-900/20 rounded-xl p-6">
-              <h4 className="text-lg font-semibold text-red-300 mb-4">Why You Need to Act Now:</h4>
-              <div className="space-y-3">
-                {urgencyReasons.map((reason, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-red-400 rounded-full"></div>
-                    <div className="text-red-200 text-sm">{reason}</div>
-                  </div>
-                ))}
-              </div>
+              {/* Rotating Testimonial */}
+              <Card className="bg-white/10 border-0 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl text-yellow-400 mb-4">"</div>
+                  <blockquote className="text-lg text-gray-200 mb-6 leading-relaxed">
+                    {finalTestimonials[currentTestimonial].quote}
+                  </blockquote>
+                  <Text weight="semibold" className="text-white">
+                    {finalTestimonials[currentTestimonial].author}
+                  </Text>
+                  <Badge variant="success" className="mt-2 bg-green-900/50 text-green-400 border-green-600">
+                    {finalTestimonials[currentTestimonial].metric}
+                  </Badge>
+                </div>
+
+                {/* Testimonial Indicators */}
+                <div className="flex justify-center space-x-2 mt-6">
+                  {finalTestimonials.map((_, index) => (
+                    <div
+                      key={index}
+                      className={cn(
+                        "w-2 h-2 rounded-full transition-all duration-300",
+                        currentTestimonial === index ? 'bg-yellow-400' : 'bg-gray-600'
+                      )}
+                    />
+                  ))}
+                </div>
+              </Card>
+
+              {/* Urgency Reasons */}
+              <Card className="bg-red-900/20 border-0">
+                <Heading size="lg" className="text-red-300 mb-4">Why You Need to Act Now:</Heading>
+                <div className="space-y-3">
+                  {urgencyReasons.map((reason, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                      <Text size="sm" className="text-red-200">{reason}</Text>
+                    </div>
+                  ))}
+                </div>
+              </Card>
             </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* Main CTA */}
         <div className="text-center max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 mb-8">
-            <h3 className="text-3xl font-bold mb-4">
+          <Card className="bg-gradient-to-r from-indigo-600 to-purple-600 border-0 mb-8">
+            <Heading size="3xl" className="text-white mb-4">
               Start Your Content Transformation Now
-            </h3>
-            <p className="text-blue-100 mb-6 text-lg">
+            </Heading>
+            <Text size="lg" className="text-indigo-100 mb-6">
               14-day free trial • No credit card required • Cancel anytime
-            </p>
+            </Text>
 
             {/* Main CTA Button */}
-            <button className="bg-yellow-400 text-gray-900 px-12 py-6 rounded-xl font-bold text-xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-2xl mb-6">
+            <Button
+              size="lg"
+              className="bg-yellow-400 text-gray-900 px-12 py-6 font-bold text-xl hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-2xl mb-6"
+            >
               Generate My First Campaign in 30 Seconds - FREE
-            </button>
+            </Button>
 
             {/* Trust Signals */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-blue-200 text-sm">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
                 <div className="text-xl mb-1">🔒</div>
-                <div>Enterprise Security</div>
+                <Text size="sm" className="text-indigo-200">Enterprise Security</Text>
               </div>
               <div>
                 <div className="text-xl mb-1">💰</div>
-                <div>30-Day Guarantee</div>
+                <Text size="sm" className="text-indigo-200">30-Day Guarantee</Text>
               </div>
               <div>
                 <div className="text-xl mb-1">⚡</div>
-                <div>Instant Access</div>
+                <Text size="sm" className="text-indigo-200">Instant Access</Text>
               </div>
               <div>
                 <div className="text-xl mb-1">🎯</div>
-                <div>500+ Happy Customers</div>
+                <Text size="sm" className="text-indigo-200">500+ Happy Customers</Text>
               </div>
             </div>
-          </div>
+          </Card>
 
           {/* Alternative CTA */}
           <div className="text-center">
-            <p className="text-gray-400 mb-4">Not ready to start? Want to see it in action first?</p>
-            <button className="text-blue-400 hover:text-blue-300 underline">
+            <Text color="muted" className="mb-4">Not ready to start? Want to see it in action first?</Text>
+            <Button variant="ghost" className="text-indigo-400 hover:text-indigo-300 underline">
               Watch 2-Minute Demo Video →
-            </button>
+            </Button>
           </div>
 
           {/* Final Urgency */}
-          <div className="mt-12 p-6 bg-yellow-900/20 rounded-xl border border-yellow-500/30">
-            <div className="text-yellow-300 font-semibold mb-2">
+          <Card className="mt-12 bg-yellow-900/20 border border-yellow-500/30">
+            <Badge variant="warning" className="text-yellow-300 font-semibold mb-2">
               ⚠️ Fair Warning
-            </div>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            </Badge>
+            <Text size="sm" className="text-gray-300 leading-relaxed">
               Once you experience the transformation from 8 hours to 30 seconds, you'll wonder how you ever
               survived manual content creation. Our customers report feeling "almost guilty" about how easy
               it becomes to outperform their competition.
-            </p>
-          </div>
+            </Text>
+          </Card>
         </div>
       </div>
     </section>

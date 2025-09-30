@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ContentSection, TwoColumnLayout, Card, Heading, Text, Badge, cn } from '@/lib/design-system'
 
 export function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0)
@@ -124,152 +125,165 @@ export function HowItWorksSection() {
   ]
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-heading font-bold text-gray-900 mb-6">
-            How It Actually Works
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Behind the scenes of the 30-second transformation
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Left: Step Navigation */}
+    <ContentSection
+      title="How It Actually Works"
+      description="Behind the scenes of the 30-second transformation"
+      variant="default"
+      centered
+      className="bg-white"
+    >
+      <TwoColumnLayout
+        variant="equal"
+        gap="xl"
+        verticalAlign="start"
+        leftContent={
           <div className="space-y-4">
             {steps.map((step, index) => (
-              <div
+              <Card
                 key={index}
+                interactive
                 onClick={() => setActiveStep(index)}
-                className={`cursor-pointer rounded-2xl p-6 transition-all duration-300 ${
+                className={cn(
+                  "cursor-pointer transition-all duration-300",
                   activeStep === index
-                    ? 'bg-blue-50 border-2 border-blue-200 shadow-lg'
+                    ? 'bg-indigo-50 border-2 border-indigo-200 shadow-lg'
                     : 'bg-gray-50 hover:bg-gray-100 border-2 border-transparent'
-                }`}
+                )}
               >
                 <div className="flex items-center space-x-4">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${
-                    activeStep === index ? 'bg-blue-600 text-white' : 'bg-gray-200'
-                  }`}>
+                  <div className={cn(
+                    "w-12 h-12 rounded-full flex items-center justify-center text-2xl",
+                    activeStep === index ? 'bg-indigo-600 text-white' : 'bg-gray-200'
+                  )}>
                     {step.icon}
                   </div>
                   <div className="flex-grow">
                     <div className="flex items-center justify-between mb-1">
-                      <h3 className="text-lg font-bold text-gray-900">{step.title}</h3>
-                      <span className={`text-xs px-2 py-1 rounded-full ${
-                        activeStep === index
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-100 text-gray-600'
-                      }`}>
+                      <Heading size="lg">{step.title}</Heading>
+                      <Badge
+                        variant={activeStep === index ? 'default' : 'default'}
+                        size="sm"
+                        className={cn(
+                          activeStep === index
+                            ? 'bg-indigo-100 text-indigo-700'
+                            : 'bg-gray-100 text-gray-600'
+                        )}
+                      >
                         {step.time}
-                      </span>
+                      </Badge>
                     </div>
-                    <p className="text-sm text-gray-600">{step.subtitle}</p>
+                    <Text size="sm" color="muted">{step.subtitle}</Text>
                   </div>
                 </div>
 
                 {/* Expanded Details */}
                 {activeStep === index && (
-                  <div className="mt-4 pt-4 border-t border-blue-200">
-                    <p className="text-gray-700 mb-4">{step.description}</p>
+                  <div className="mt-4 pt-4 border-t border-indigo-200">
+                    <Text className="mb-4">{step.description}</Text>
                     <div className="space-y-2">
                       {step.details.map((detail, detailIndex) => (
                         <div key={detailIndex} className="flex items-start space-x-2">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <div className="text-sm text-gray-600">{detail}</div>
+                          <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <Text size="sm" color="muted">{detail}</Text>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
-              </div>
+              </Card>
             ))}
           </div>
 
-          {/* Right: Active Step Details */}
+        }
+        rightContent={
           <div className="sticky top-8">
-            <div className="bg-gray-900 rounded-2xl p-8 text-white">
+            <Card className="bg-gray-900 text-white">
               <div className="flex items-center space-x-3 mb-6">
                 <div className="text-green-400 text-xl">{steps[activeStep].icon}</div>
-                <div className="text-green-400 font-mono text-sm">Step {activeStep + 1}/4</div>
+                <Text size="sm" className="text-green-400 font-mono">
+                  Step {activeStep + 1}/4
+                </Text>
               </div>
 
-              <h3 className="text-2xl font-bold mb-4">{steps[activeStep].title}</h3>
+              <Heading size="2xl" className="text-white mb-4">
+                {steps[activeStep].title}
+              </Heading>
 
               {/* Input/Processing Display */}
-              <div className="bg-black/50 rounded-lg p-4 mb-6">
-                <div className="text-gray-300 text-sm mb-2">Input:</div>
-                <div className="text-white font-mono text-sm mb-4">
+              <Card className="bg-black/50 mb-6" padding="md">
+                <Text size="sm" className="text-gray-300 mb-2">Input:</Text>
+                <Text size="sm" className="text-white font-mono mb-4">
                   {steps[activeStep].example.input}
-                </div>
+                </Text>
 
-                <div className="text-gray-300 text-sm mb-2">AI Processing:</div>
+                <Text size="sm" className="text-gray-300 mb-2">AI Processing:</Text>
                 <div className="space-y-1">
                   {steps[activeStep].example.processing.map((process, index) => (
                     <div key={index} className="flex items-center space-x-2">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <div className="text-green-200 text-sm font-mono">{process}</div>
+                      <Text size="sm" className="text-green-200 font-mono">{process}</Text>
                     </div>
                   ))}
                 </div>
-              </div>
+              </Card>
 
               {/* Progress Bar */}
               <div className="bg-gray-700 rounded-full h-2 mb-4">
                 <div
-                  className="bg-gradient-to-r from-blue-400 to-green-400 h-2 rounded-full transition-all duration-1000"
+                  className="bg-gradient-to-r from-indigo-400 to-green-400 h-2 rounded-full transition-all duration-1000"
                   style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }}
                 ></div>
               </div>
 
-              <div className="text-center text-gray-300 text-sm">
+              <Text size="sm" className="text-center text-gray-300">
                 Step {activeStep + 1} of {steps.length} • {steps[activeStep].time}
-              </div>
-            </div>
+              </Text>
+            </Card>
           </div>
-        </div>
+        }
+      />
 
-        {/* Platform Examples */}
-        <div className="mt-20">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Platform-Specific Optimization
-          </h3>
+      {/* Platform Examples */}
+      <div className="mt-20">
+        <Heading size="3xl" className="text-center mb-12">
+          Platform-Specific Optimization
+        </Heading>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {platforms.map((platform, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className={`${platform.color} text-white p-4 text-center`}>
-                  <h4 className="font-bold text-lg">{platform.name}</h4>
-                </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {platforms.map((platform, index) => (
+            <Card key={index} variant="elevated" padding="none" className="overflow-hidden">
+              <div className={cn(platform.color, "text-white p-4 text-center")}>
+                <Heading size="lg" className="text-white">{platform.name}</Heading>
+              </div>
 
-                <div className="p-6">
-                  {/* Features */}
-                  <div className="mb-4">
-                    <div className="text-sm font-medium text-gray-700 mb-2">Optimizations:</div>
-                    <div className="space-y-1">
-                      {platform.features.map((feature, featureIndex) => (
-                        <div key={featureIndex} className="flex items-center space-x-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                          <div className="text-xs text-gray-600">{feature}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Sample Content */}
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <div className="text-xs text-gray-500 mb-2">Generated sample:</div>
-                    <div className="text-xs text-gray-700 leading-relaxed">
-                      {platform.sample}
-                    </div>
+              <div className="p-6">
+                {/* Features */}
+                <div className="mb-4">
+                  <Text size="sm" weight="medium" className="text-gray-700 mb-2">
+                    Optimizations:
+                  </Text>
+                  <div className="space-y-1">
+                    {platform.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center space-x-2">
+                        <div className="w-1 h-1 bg-indigo-500 rounded-full"></div>
+                        <Text size="xs" color="muted">{feature}</Text>
+                      </div>
+                    ))}
                   </div>
                 </div>
+
+                {/* Sample Content */}
+                <Card className="bg-gray-50" padding="sm">
+                  <Text size="xs" color="muted" className="mb-2">Generated sample:</Text>
+                  <Text size="xs" className="leading-relaxed">
+                    {platform.sample}
+                  </Text>
+                </Card>
               </div>
-            ))}
-          </div>
+            </Card>
+          ))}
         </div>
       </div>
-    </section>
+    </ContentSection>
   )
 }

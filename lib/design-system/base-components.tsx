@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useId } from 'react'
 import { cn, styleGenerators, animations, focus } from './utils'
 
 /**
@@ -134,7 +134,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     id,
     ...props
   }, ref) => {
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
+    const generatedId = useId()
+    const inputId = id || generatedId
     const errorVariant = error ? 'error' : variant
 
     return (
@@ -360,7 +361,7 @@ interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
   size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
   weight?: 'normal' | 'medium' | 'semibold' | 'bold'
-  color?: 'default' | 'muted' | 'primary' | 'secondary'
+  color?: 'default' | 'muted' | 'primary' | 'secondary' | 'error'
 }
 
 export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
@@ -390,6 +391,7 @@ export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
       muted: 'text-gray-600',
       primary: 'text-indigo-600',
       secondary: 'text-purple-600',
+      error: 'text-red-600',
     }
 
     return (
@@ -412,7 +414,7 @@ export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 Heading.displayName = "Heading"
 
 interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
-  size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl'
+  size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl'
   weight?: 'normal' | 'medium' | 'semibold' | 'bold'
   color?: 'default' | 'muted' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'
   as?: 'p' | 'span' | 'div'
@@ -426,6 +428,9 @@ export const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       base: 'text-base',
       lg: 'text-lg',
       xl: 'text-xl',
+      '2xl': 'text-2xl',
+      '3xl': 'text-3xl',
+      '4xl': 'text-4xl',
     }
 
     const weightClasses = {

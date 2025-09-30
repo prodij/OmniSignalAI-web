@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ContentSection, CTASection, Card, Heading, Text, Badge, Button, cn } from '@/lib/design-system'
 
 export function PricingSection() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly')
@@ -118,250 +119,259 @@ export function PricingSection() {
   }
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-heading font-bold text-gray-900 mb-6">
-            Simple, Transparent Pricing
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Choose the plan that fits your content creation needs.
-            All plans include our core AI generation technology.
-          </p>
+    <ContentSection
+      title="Simple, Transparent Pricing"
+      description="Choose the plan that fits your content creation needs. All plans include our core AI generation technology."
+      variant="default"
+      centered
+      className="bg-gradient-to-b from-white to-gray-50"
+    >
+      {/* Billing Toggle */}
+      <div className="flex justify-center mb-8">
+        <Card className="inline-flex items-center bg-gray-100 rounded-full p-1">
+          <Button
+            variant={billingCycle === 'monthly' ? 'primary' : 'ghost'}
+            size="sm"
+            onClick={() => setBillingCycle('monthly')}
+            className={cn(
+              "rounded-full transition-all duration-300",
+              billingCycle === 'monthly'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900 bg-transparent'
+            )}
+          >
+            Monthly
+          </Button>
+          <Button
+            variant={billingCycle === 'yearly' ? 'primary' : 'ghost'}
+            size="sm"
+            onClick={() => setBillingCycle('yearly')}
+            className={cn(
+              "rounded-full transition-all duration-300",
+              billingCycle === 'yearly'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900 bg-transparent'
+            )}
+          >
+            Yearly
+          </Button>
+        </Card>
+      </div>
 
-          {/* Billing Toggle */}
-          <div className="inline-flex items-center bg-gray-100 rounded-full p-1">
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                billingCycle === 'monthly'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBillingCycle('yearly')}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                billingCycle === 'yearly'
-                  ? 'bg-white text-gray-900 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Yearly
-            </button>
-          </div>
-
-          {billingCycle === 'yearly' && (
-            <div className="mt-4 text-green-600 font-semibold">
-              💰 Save up to 20% with annual billing
-            </div>
-          )}
+      {billingCycle === 'yearly' && (
+        <div className="text-center mb-8">
+          <Badge variant="success" className="text-green-600 font-semibold">
+            💰 Save up to 20% with annual billing
+          </Badge>
         </div>
+      )}
 
-        {/* Pricing Cards */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              className={`rounded-2xl p-8 transition-all duration-300 hover:shadow-2xl ${
-                plan.popular
-                  ? 'bg-gradient-to-b from-blue-50 to-white border-2 border-blue-200 shadow-xl scale-105'
-                  : 'bg-white border border-gray-200 shadow-lg hover:border-blue-200'
-              }`}
-            >
-              {plan.popular && (
-                <div className="bg-blue-600 text-white text-sm font-bold text-center py-2 px-4 rounded-full mb-6">
-                  Most Popular
-                </div>
-              )}
+      {/* Pricing Cards */}
+      <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        {plans.map((plan, index) => (
+          <Card
+            key={index}
+            variant="elevated"
+            interactive
+            className={cn(
+              "transition-all duration-300 hover:shadow-2xl relative",
+              plan.popular
+                ? 'bg-gradient-to-b from-indigo-50 to-white border-2 border-indigo-200 shadow-xl scale-105'
+                : 'bg-white border border-gray-200 shadow-lg hover:border-indigo-200'
+            )}
+          >
+            {plan.popular && (
+              <Badge
+                variant="default"
+                className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-indigo-600 text-white font-bold px-4 py-2"
+              >
+                Most Popular
+              </Badge>
+            )}
 
-              {/* Header */}
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <p className="text-gray-600 mb-6">{plan.description}</p>
+            {/* Header */}
+            <div className="text-center mb-8">
+              <Heading size="2xl" className="mb-2">{plan.name}</Heading>
+              <Text color="muted" className="mb-6">{plan.description}</Text>
 
-                <div className="mb-4">
-                  <span className="text-5xl font-bold text-gray-900">
-                    ${getCurrentPrice(plan)}
-                  </span>
-                  <span className="text-gray-600 ml-1">
-                    /{billingCycle === 'monthly' ? 'month' : 'month, billed annually'}
-                  </span>
-                </div>
-
-                {billingCycle === 'yearly' && (
-                  <div className="text-sm text-green-600 font-semibold">
-                    {plan.savings}
-                  </div>
-                )}
+              <div className="mb-4">
+                <span className="text-5xl font-bold text-gray-900">
+                  ${getCurrentPrice(plan)}
+                </span>
+                <Text size="base" color="muted" as="span" className="ml-1">
+                  /{billingCycle === 'monthly' ? 'month' : 'month, billed annually'}
+                </Text>
               </div>
 
-              {/* Features */}
-              <div className="mb-8">
-                <div className="space-y-3">
-                  {plan.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center space-x-3">
-                      <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              {billingCycle === 'yearly' && (
+                <Badge variant="success" size="sm">
+                  {plan.savings}
+                </Badge>
+              )}
+            </div>
+
+            {/* Features */}
+            <div className="mb-8">
+              <div className="space-y-3">
+                {plan.features.map((feature, featureIndex) => (
+                  <div key={featureIndex} className="flex items-center space-x-3">
+                    <div className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    </div>
+                    <Text size="base">{feature}</Text>
+                  </div>
+                ))}
+              </div>
+
+              {plan.limitations.length > 0 && (
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <Text size="sm" color="muted" className="mb-2">Plan limitations:</Text>
+                  {plan.limitations.map((limitation, limitIndex) => (
+                    <div key={limitIndex} className="flex items-center space-x-3 mb-2">
+                      <div className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
                       </div>
-                      <span className="text-gray-700">{feature}</span>
+                      <Text size="sm" color="muted">{limitation}</Text>
                     </div>
                   ))}
                 </div>
-
-                {plan.limitations.length > 0 && (
-                  <div className="mt-6 pt-6 border-t border-gray-100">
-                    <div className="text-sm text-gray-500 mb-2">Plan limitations:</div>
-                    {plan.limitations.map((limitation, limitIndex) => (
-                      <div key={limitIndex} className="flex items-center space-x-3 mb-2">
-                        <div className="w-5 h-5 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                          <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-                        </div>
-                        <span className="text-gray-500 text-sm">{limitation}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* CTA */}
-              <button
-                className={`w-full py-4 px-6 rounded-lg font-semibold text-lg transition-all duration-300 ${
-                  plan.popular
-                    ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg hover:shadow-xl'
-                    : 'bg-gray-900 text-white hover:bg-gray-800'
-                }`}
-              >
-                {plan.cta}
-              </button>
-
-              {plan.name !== "Enterprise" && (
-                <div className="text-center mt-4 text-sm text-gray-500">
-                  14-day free trial • No credit card required
-                </div>
               )}
             </div>
+
+            {/* CTA */}
+            <Button
+              variant={plan.popular ? 'primary' : 'secondary'}
+              size="lg"
+              fullWidth
+              className={cn(
+                "transition-all duration-300 font-semibold text-lg",
+                plan.popular
+                  ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-xl'
+                  : 'bg-gray-900 text-white hover:bg-gray-800'
+              )}
+            >
+              {plan.cta}
+            </Button>
+
+            {plan.name !== "Enterprise" && (
+              <Text size="sm" color="muted" className="text-center mt-4">
+                14-day free trial • No credit card required
+              </Text>
+            )}
+          </Card>
+        ))}
+      </div>
+
+      {/* Cost Comparison */}
+      <Card variant="elevated" className="mb-16 shadow-2xl">
+        <Heading size="2xl" className="text-center mb-8">
+          The Real Cost Comparison
+        </Heading>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Current Solution */}
+          <Card className="bg-red-50 border-l-4 border-red-500">
+            <Heading size="xl" className="text-red-800 mb-4">
+              Your Current Solution
+            </Heading>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <Text>Freelance content creator</Text>
+                <Text weight="semibold" className="text-red-600">
+                  ${costCalculator.currentCost.freelancer.toLocaleString()}/month
+                </Text>
+              </div>
+              <div className="flex justify-between">
+                <Text>Design tools & scheduling</Text>
+                <Text weight="semibold" className="text-red-600">
+                  ${costCalculator.currentCost.tools}/month
+                </Text>
+              </div>
+              <div className="flex justify-between">
+                <Text>Stock photos & premium features</Text>
+                <Text weight="semibold" className="text-red-600">
+                  ${costCalculator.currentCost.ads}/month
+                </Text>
+              </div>
+              <div className="border-t pt-3 flex justify-between">
+                <Text weight="bold">Total Monthly Cost</Text>
+                <Text weight="bold" size="xl" className="text-red-600">
+                  ${(costCalculator.currentCost.freelancer + costCalculator.currentCost.tools + costCalculator.currentCost.ads).toLocaleString()}/month
+                </Text>
+              </div>
+            </div>
+          </Card>
+
+          {/* OmniSignalAI Solution */}
+          <Card className="bg-green-50 border-l-4 border-green-500">
+            <Heading size="xl" className="text-green-800 mb-4">
+              With OmniSignalAI Professional
+            </Heading>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <Text>Complete AI content solution</Text>
+                <Text weight="semibold" className="text-green-600">
+                  ${costCalculator.withOmniSignal.subscription}/month
+                </Text>
+              </div>
+              <div className="flex justify-between">
+                <Text>Design tools included</Text>
+                <Text weight="semibold" className="text-green-600">$0</Text>
+              </div>
+              <div className="flex justify-between">
+                <Text>Unlimited AI-generated visuals</Text>
+                <Text weight="semibold" className="text-green-600">$0</Text>
+              </div>
+              <div className="border-t pt-3 flex justify-between">
+                <Text weight="bold">Total Monthly Cost</Text>
+                <Text weight="bold" size="xl" className="text-green-600">
+                  ${costCalculator.withOmniSignal.subscription}/month
+                </Text>
+              </div>
+            </div>
+
+            <Card className="mt-6 bg-green-100 text-center">
+              <Text size="2xl" weight="bold" className="text-green-800 mb-1">
+                ${costCalculator.withOmniSignal.savings.toLocaleString()} saved
+              </Text>
+              <Text size="sm" className="text-green-700">every single month</Text>
+            </Card>
+          </Card>
+        </div>
+      </Card>
+
+      {/* FAQs */}
+      <div className="max-w-3xl mx-auto mb-16">
+        <Heading size="2xl" className="text-center mb-12">
+          Frequently Asked Questions
+        </Heading>
+
+        <div className="space-y-6">
+          {faqs.map((faq, index) => (
+            <Card key={index} variant="default" className="shadow-sm border">
+              <Heading size="lg" className="mb-3">
+                {faq.question}
+              </Heading>
+              <Text color="muted" className="leading-relaxed">
+                {faq.answer}
+              </Text>
+            </Card>
           ))}
         </div>
-
-        {/* Cost Comparison */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-16">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
-            The Real Cost Comparison
-          </h3>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Current Solution */}
-            <div className="bg-red-50 rounded-xl p-6 border-l-4 border-red-500">
-              <h4 className="text-xl font-bold text-red-800 mb-4">
-                Your Current Solution
-              </h4>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Freelance content creator</span>
-                  <span className="font-semibold text-red-600">
-                    ${costCalculator.currentCost.freelancer.toLocaleString()}/month
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Design tools & scheduling</span>
-                  <span className="font-semibold text-red-600">
-                    ${costCalculator.currentCost.tools}/month
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Stock photos & premium features</span>
-                  <span className="font-semibold text-red-600">
-                    ${costCalculator.currentCost.ads}/month
-                  </span>
-                </div>
-                <div className="border-t pt-3 flex justify-between">
-                  <span className="font-bold text-gray-900">Total Monthly Cost</span>
-                  <span className="font-bold text-red-600 text-xl">
-                    ${(costCalculator.currentCost.freelancer + costCalculator.currentCost.tools + costCalculator.currentCost.ads).toLocaleString()}/month
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* OmniSignalAI Solution */}
-            <div className="bg-green-50 rounded-xl p-6 border-l-4 border-green-500">
-              <h4 className="text-xl font-bold text-green-800 mb-4">
-                With OmniSignalAI Professional
-              </h4>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Complete AI content solution</span>
-                  <span className="font-semibold text-green-600">
-                    ${costCalculator.withOmniSignal.subscription}/month
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Design tools included</span>
-                  <span className="font-semibold text-green-600">$0</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-700">Unlimited AI-generated visuals</span>
-                  <span className="font-semibold text-green-600">$0</span>
-                </div>
-                <div className="border-t pt-3 flex justify-between">
-                  <span className="font-bold text-gray-900">Total Monthly Cost</span>
-                  <span className="font-bold text-green-600 text-xl">
-                    ${costCalculator.withOmniSignal.subscription}/month
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-6 bg-green-100 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-green-800 mb-1">
-                  ${costCalculator.withOmniSignal.savings.toLocaleString()} saved
-                </div>
-                <div className="text-green-700 text-sm">every single month</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <div className="max-w-3xl mx-auto">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-12">
-            Frequently Asked Questions
-          </h3>
-
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white rounded-lg p-6 shadow-sm border">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                  {faq.question}
-                </h4>
-                <p className="text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">
-              Ready to Transform Your Content Creation?
-            </h3>
-            <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-              Join hundreds of marketers who've already made the switch from hours to seconds
-            </p>
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300">
-              Start Your 14-Day Free Trial
-            </button>
-            <div className="mt-4 text-blue-200 text-sm">
-              No credit card required • Cancel anytime • 30-day money-back guarantee
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
+
+      {/* Bottom CTA */}
+      <CTASection
+        title="Ready to Transform Your Content Creation?"
+        description="Join hundreds of marketers who've already made the switch from hours to seconds"
+        primaryButton={{
+          text: "Start Your 14-Day Free Trial",
+          href: "#"
+        }}
+        note="No credit card required • Cancel anytime • 30-day money-back guarantee"
+        variant="gradient"
+        className="bg-gradient-to-r from-indigo-600 to-purple-600"
+      />
+    </ContentSection>
   )
 }

@@ -1,15 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { ContentSection, StatsSection, Card, Heading, Text, Badge, cn } from '@/lib/design-system'
+import { NumberTicker } from '@/lib/design-system/interactive-components'
+import { Building2, Star, TrendingUp, Award, User } from 'lucide-react'
 
 export function SocialProofSection() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
 
   const metrics = [
-    { number: '12,847', label: 'Content pieces generated', suffix: '+' },
-    { number: '89%', label: 'Average engagement increase', suffix: '' },
-    { number: '4.2M', label: 'Total impressions driven', suffix: '+' },
-    { number: '67%', label: 'Time saved vs manual creation', suffix: '' }
+    { value: 12847, label: 'Content pieces generated', suffix: '+' },
+    { value: 89, label: 'Average engagement increase', suffix: '%' },
+    { value: 4200000, label: 'Total impressions driven', suffix: '+', format: 'M' },
+    { value: 67, label: 'Time saved vs manual creation', suffix: '%' }
   ]
 
   const testimonials = [
@@ -18,7 +21,7 @@ export function SocialProofSection() {
       author: "Sarah Chen",
       role: "Marketing Director",
       company: "TechFlow Solutions",
-      image: "👩‍💼",
+      imageIcon: User,
       results: "300% more content, 45% higher engagement",
       platforms: ["LinkedIn", "Twitter", "Instagram"]
     },
@@ -27,7 +30,7 @@ export function SocialProofSection() {
       author: "Marcus Rodriguez",
       role: "Founder & CEO",
       company: "Digital Marketing Pro",
-      image: "👨‍💻",
+      imageIcon: User,
       results: "$2,400/month saved on freelancers",
       platforms: ["Facebook", "LinkedIn", "Twitter"]
     },
@@ -36,7 +39,7 @@ export function SocialProofSection() {
       author: "Jennifer Park",
       role: "Content Manager",
       company: "Growth Labs Inc",
-      image: "👩‍🎨",
+      imageIcon: User,
       results: "87% brand voice consistency score",
       platforms: ["Instagram", "TikTok", "LinkedIn"]
     },
@@ -45,7 +48,7 @@ export function SocialProofSection() {
       author: "David Thompson",
       role: "VP Marketing",
       company: "Scale Ventures",
-      image: "👨‍💼",
+      imageIcon: User,
       results: "156% ROI increase in Q3",
       platforms: ["LinkedIn", "Twitter", "Facebook"]
     }
@@ -105,193 +108,201 @@ export function SocialProofSection() {
     }, 6000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [testimonials.length])
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4">
-        {/* Metrics Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-heading font-bold text-gray-900 mb-6">
-            The Numbers Don't Lie
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Real results from real marketers who made the switch
-          </p>
-
-          {/* Key Metrics */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {metrics.map((metric, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl lg:text-5xl font-bold text-blue-600 mb-2">
-                  {metric.number}{metric.suffix}
-                </div>
-                <div className="text-sm text-gray-600 leading-tight">
-                  {metric.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Main Testimonial Carousel */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
-            <div className="text-center mb-8">
-              <div className="text-6xl mb-4">{testimonials[currentTestimonial].image}</div>
-              <div className="text-3xl text-gray-400 mb-6">"</div>
-              <blockquote className="text-xl lg:text-2xl text-gray-700 leading-relaxed mb-8">
-                {testimonials[currentTestimonial].quote}
-              </blockquote>
-
-              {/* Author Info */}
-              <div className="border-t pt-6">
-                <div className="font-bold text-gray-900 text-lg">
-                  {testimonials[currentTestimonial].author}
-                </div>
-                <div className="text-gray-600 mb-4">
-                  {testimonials[currentTestimonial].role} at {testimonials[currentTestimonial].company}
-                </div>
-
-                {/* Results */}
-                <div className="bg-green-50 rounded-lg p-4 mb-4">
-                  <div className="text-sm font-medium text-green-700 mb-1">Results:</div>
-                  <div className="text-green-800 font-semibold">
-                    {testimonials[currentTestimonial].results}
-                  </div>
-                </div>
-
-                {/* Platforms Used */}
-                <div className="flex justify-center space-x-2">
-                  {testimonials[currentTestimonial].platforms.map((platform, index) => (
-                    <span
-                      key={index}
-                      className="text-xs px-3 py-1 bg-blue-100 text-blue-700 rounded-full"
-                    >
-                      {platform}
-                    </span>
-                  ))}
-                </div>
-              </div>
+    <ContentSection
+      title="The Numbers Don't Lie"
+      description="Real results from real marketers who made the switch"
+      variant="default"
+      centered
+      className="bg-gradient-to-b from-gray-50 to-white"
+    >
+      {/* Key Metrics */}
+      <StatsSection className="mb-16">
+        {metrics.map((metric, index) => (
+          <div key={index} className="text-center">
+            <div className="text-4xl lg:text-5xl font-bold text-indigo-600 mb-2">
+              <NumberTicker
+                value={metric.value}
+                className="text-indigo-600"
+              />
+              {metric.format === 'M' ? 'M' : ''}
+              {metric.suffix}
             </div>
+            <Text size="sm" color="muted" className="leading-tight">
+              {metric.label}
+            </Text>
+          </div>
+        ))}
+      </StatsSection>
 
-            {/* Carousel Indicators */}
+      {/* Main Testimonial Carousel */}
+      <div className="max-w-4xl mx-auto mb-16">
+        <Card variant="elevated" className="text-center shadow-2xl">
+          <div className="flex justify-center mb-4">
+            <div className="w-20 h-20 rounded-full bg-indigo-100 flex items-center justify-center">
+              {React.createElement(testimonials[currentTestimonial].imageIcon, {
+                className: "w-10 h-10 text-indigo-600"
+              })}
+            </div>
+          </div>
+          <div className="text-3xl text-gray-400 mb-6">"</div>
+          <blockquote className="text-xl lg:text-2xl text-gray-700 leading-relaxed mb-8">
+            {testimonials[currentTestimonial].quote}
+          </blockquote>
+
+          {/* Author Info */}
+          <div className="border-t pt-6">
+            <Heading size="lg" className="mb-2">
+              {testimonials[currentTestimonial].author}
+            </Heading>
+            <Text size="base" color="muted" className="mb-4">
+              {testimonials[currentTestimonial].role} at {testimonials[currentTestimonial].company}
+            </Text>
+
+            {/* Results */}
+            <Card className="bg-green-50 border border-green-200 mb-4">
+              <Text size="sm" weight="medium" className="text-green-700 mb-1">Results:</Text>
+              <Text weight="semibold" className="text-green-800">
+                {testimonials[currentTestimonial].results}
+              </Text>
+            </Card>
+
+            {/* Platforms Used */}
             <div className="flex justify-center space-x-2">
-              {testimonials.map((_, index) => (
-                <button
+              {testimonials[currentTestimonial].platforms.map((platform, index) => (
+                <Badge
                   key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    currentTestimonial === index ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                />
+                  variant="default"
+                  size="sm"
+                  className="bg-indigo-100 text-indigo-700"
+                >
+                  {platform}
+                </Badge>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Before/After Cases */}
-        <div className="mb-16">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Real Before/After Transformations
-          </h3>
+          {/* Carousel Indicators */}
+          <div className="flex justify-center space-x-2 mt-8">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentTestimonial(index)}
+                className={cn(
+                  "w-3 h-3 rounded-full transition-all duration-300",
+                  currentTestimonial === index ? 'bg-indigo-600' : 'bg-gray-300'
+                )}
+              />
+            ))}
+          </div>
+        </Card>
+      </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {beforeAfterCases.map((case_, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                {/* Company Header */}
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 text-center">
-                  <h4 className="font-bold text-lg">{case_.company}</h4>
+      {/* Before/After Cases */}
+      <div className="mb-16">
+        <Heading size="3xl" className="text-center mb-12">
+          Real Before/After Transformations
+        </Heading>
+
+        <div className="grid lg:grid-cols-3 gap-8">
+          {beforeAfterCases.map((case_, index) => (
+            <Card key={index} variant="elevated" padding="none" className="overflow-hidden">
+              {/* Company Header */}
+              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white p-4 text-center">
+                <Heading size="lg" className="text-white">{case_.company}</Heading>
+              </div>
+
+              <div className="p-6">
+                {/* Before */}
+                <div className="mb-6">
+                  <div className="flex items-center justify-center mb-4">
+                    <Badge variant="error" size="sm">
+                      Before OmniSignalAI
+                    </Badge>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Time spent:</Text>
+                      <Text size="sm" weight="semibold" className="text-red-600">{case_.before.time}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Posts created:</Text>
+                      <Text size="sm" weight="semibold">{case_.before.posts}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Engagement rate:</Text>
+                      <Text size="sm" weight="semibold">{case_.before.engagement}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Weekly reach:</Text>
+                      <Text size="sm" weight="semibold">{case_.before.reach}</Text>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="p-6">
-                  {/* Before */}
-                  <div className="mb-6">
-                    <div className="flex items-center justify-center mb-4">
-                      <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">
-                        Before OmniSignalAI
-                      </span>
-                    </div>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Time spent:</span>
-                        <span className="font-semibold text-red-600">{case_.before.time}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Posts created:</span>
-                        <span className="font-semibold">{case_.before.posts}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Engagement rate:</span>
-                        <span className="font-semibold">{case_.before.engagement}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Weekly reach:</span>
-                        <span className="font-semibold">{case_.before.reach}</span>
-                      </div>
-                    </div>
-                  </div>
+                {/* Arrow */}
+                <div className="text-center mb-6">
+                  <Text size="2xl" className="text-indigo-600">↓</Text>
+                </div>
 
-                  {/* Arrow */}
-                  <div className="text-center mb-6">
-                    <div className="text-2xl text-blue-600">↓</div>
+                {/* After */}
+                <div>
+                  <div className="flex items-center justify-center mb-4">
+                    <Badge variant="success" size="sm">
+                      With OmniSignalAI
+                    </Badge>
                   </div>
-
-                  {/* After */}
-                  <div>
-                    <div className="flex items-center justify-center mb-4">
-                      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
-                        With OmniSignalAI
-                      </span>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Time spent:</Text>
+                      <Text size="sm" weight="semibold" className="text-green-600">{case_.after.time}</Text>
                     </div>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Time spent:</span>
-                        <span className="font-semibold text-green-600">{case_.after.time}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Posts created:</span>
-                        <span className="font-semibold">{case_.after.posts}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Engagement rate:</span>
-                        <span className="font-semibold">{case_.after.engagement}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Weekly reach:</span>
-                        <span className="font-semibold">{case_.after.reach}</span>
-                      </div>
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Posts created:</Text>
+                      <Text size="sm" weight="semibold">{case_.after.posts}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Engagement rate:</Text>
+                      <Text size="sm" weight="semibold">{case_.after.engagement}</Text>
+                    </div>
+                    <div className="flex justify-between">
+                      <Text size="sm" color="muted">Weekly reach:</Text>
+                      <Text size="sm" weight="semibold">{case_.after.reach}</Text>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom Trust Signals */}
-        <div className="bg-gray-900 rounded-2xl p-8 text-white text-center">
-          <h3 className="text-2xl font-bold mb-6">Trusted by Growing Businesses</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-2xl mb-2">🏢</div>
-              <div className="text-sm text-gray-300">500+ Companies</div>
-            </div>
-            <div>
-              <div className="text-2xl mb-2">🌟</div>
-              <div className="text-sm text-gray-300">4.9/5 Rating</div>
-            </div>
-            <div>
-              <div className="text-2xl mb-2">💡</div>
-              <div className="text-sm text-gray-300">12M+ Posts Generated</div>
-            </div>
-            <div>
-              <div className="text-2xl mb-2">📈</div>
-              <div className="text-sm text-gray-300">89% Success Rate</div>
-            </div>
-          </div>
+            </Card>
+          ))}
         </div>
       </div>
-    </section>
+
+      {/* Bottom Trust Signals */}
+      <Card className="bg-gray-900 text-white text-center max-w-4xl mx-auto">
+        <Heading size="2xl" className="text-white mb-6">
+          Trusted by Growing Businesses
+        </Heading>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div>
+            <Building2 className="w-8 h-8 mx-auto mb-2 text-indigo-400" />
+            <Text size="sm" className="text-gray-300">500+ Companies</Text>
+          </div>
+          <div>
+            <Star className="w-8 h-8 mx-auto mb-2 text-yellow-400" />
+            <Text size="sm" className="text-gray-300">4.9/5 Rating</Text>
+          </div>
+          <div>
+            <TrendingUp className="w-8 h-8 mx-auto mb-2 text-green-400" />
+            <Text size="sm" className="text-gray-300">12M+ Posts Generated</Text>
+          </div>
+          <div>
+            <Award className="w-8 h-8 mx-auto mb-2 text-purple-400" />
+            <Text size="sm" className="text-gray-300">89% Success Rate</Text>
+          </div>
+        </div>
+      </Card>
+    </ContentSection>
   )
 }

@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react'
 import { HeroLayout, TwoColumnLayout, Button, Heading, Text, Card, cn } from '@/lib/design-system'
+import { Check, Zap, Clock, Sparkles, CheckCircle2 } from 'lucide-react'
 
 const platformsDemo = [
-  { name: 'LinkedIn', status: 'generated', icon: '✓', color: 'bg-blue-500/20' },
-  { name: 'Instagram', status: 'processing', icon: '⚡', color: 'bg-pink-500/20' },
-  { name: 'Twitter', status: 'pending', icon: '⏳', color: 'bg-blue-400/20' },
-  { name: 'Facebook', status: 'pending', icon: '⏳', color: 'bg-blue-600/20' },
+  { name: 'LinkedIn', status: 'generated', icon: Check, color: 'bg-blue-500/20' },
+  { name: 'Instagram', status: 'processing', icon: Zap, color: 'bg-pink-500/20' },
+  { name: 'Twitter', status: 'pending', icon: Clock, color: 'bg-blue-400/20' },
+  { name: 'Facebook', status: 'pending', icon: Clock, color: 'bg-blue-600/20' },
 ]
 
 const benefits = [
@@ -86,7 +87,7 @@ export function HeroSection() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-cyan-300 rounded-full animate-pulse flex-shrink-0"></div>
+                  <CheckCircle2 className="w-5 h-5 text-cyan-300 flex-shrink-0" />
                   <Text size="sm" className="text-white/90">
                     {benefit}
                   </Text>
@@ -95,15 +96,29 @@ export function HeroSection() {
             </div>
 
             {/* CTA Button */}
-            <div className="pt-4">
+            <div className="pt-6 space-y-4">
               <Button
                 variant="primary"
                 size="lg"
-                className="bg-white text-indigo-600 hover:bg-gray-100 shadow-2xl"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 text-lg font-semibold"
                 onClick={startDemo}
               >
-                Start Creating Content in 30 Seconds - Free Trial
+                Start Free Trial - No Credit Card Required
               </Button>
+              <div className="flex items-center space-x-4 text-sm text-gray-500">
+                <span className="flex items-center">
+                  <Check className="text-green-500 mr-1 w-4 h-4" />
+                  14-day free trial
+                </span>
+                <span className="flex items-center">
+                  <Check className="text-green-500 mr-1 w-4 h-4" />
+                  Setup in 2 minutes
+                </span>
+                <span className="flex items-center">
+                  <Check className="text-green-500 mr-1 w-4 h-4" />
+                  Cancel anytime
+                </span>
+              </div>
             </div>
           </div>
         }
@@ -111,12 +126,12 @@ export function HeroSection() {
           <div className="relative">
             <Card
               variant="elevated"
-              className="bg-black/20 backdrop-blur-sm border border-white/10 p-8"
+              className="bg-white border border-gray-200 shadow-2xl p-8"
             >
               <div className="space-y-6">
                 {/* Studio Header */}
                 <div className="flex items-center space-x-3 text-green-400">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <Sparkles className="w-5 h-5 animate-pulse" />
                   <Text size="sm" className="font-mono text-green-400">
                     OmniSignalAI Studio
                   </Text>
@@ -154,25 +169,31 @@ export function HeroSection() {
 
                   {/* Platform Status Grid */}
                   <div className="grid grid-cols-2 gap-3">
-                    {platformsDemo.map((platform, index) => (
-                      <Card
-                        key={platform.name}
-                        className={cn(
-                          platform.color,
-                          "p-3 text-center border border-white/10",
-                          countdown < 25 - (index * 5) && "bg-green-500/20"
-                        )}
-                      >
-                        <Text size="xs" className="text-white/60 mb-1">
-                          {platform.name}
-                        </Text>
-                        <Text size="sm" className="text-white">
-                          {countdown < 25 - (index * 5) ? '✓ Generated' :
-                           countdown < 30 - (index * 3) ? '⚡ Processing' :
-                           '⏳ Pending'}
-                        </Text>
-                      </Card>
-                    ))}
+                    {platformsDemo.map((platform, index) => {
+                      const IconComponent = countdown < 25 - (index * 5) ? Check :
+                                          countdown < 30 - (index * 3) ? Zap : Clock
+                      const statusText = countdown < 25 - (index * 5) ? 'Generated' :
+                                        countdown < 30 - (index * 3) ? 'Processing' : 'Pending'
+
+                      return (
+                        <Card
+                          key={platform.name}
+                          className={cn(
+                            platform.color,
+                            "p-3 text-center border border-white/10",
+                            countdown < 25 - (index * 5) && "bg-green-500/20"
+                          )}
+                        >
+                          <Text size="xs" className="text-white/60 mb-1">
+                            {platform.name}
+                          </Text>
+                          <div className="flex items-center justify-center space-x-2">
+                            <IconComponent className="w-4 h-4 text-white" />
+                            <Text size="sm" className="text-white">{statusText}</Text>
+                          </div>
+                        </Card>
+                      )
+                    })}
                   </div>
                 </div>
               </div>

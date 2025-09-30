@@ -1,25 +1,27 @@
 'use client'
 
+import React from 'react'
 import { ContentSection, TwoColumnLayout, Card, Heading, Text, Badge } from '@/lib/design-system'
+import { Smartphone, Frown, Flame, Clock } from 'lucide-react'
 
 const realityChecks = [
   {
-    icon: '📱',
+    icon: Smartphone,
     text: 'Research shows content creation takes "hours if not days"',
     color: 'text-red-500'
   },
   {
-    icon: '😰',
+    icon: Frown,
     text: '33% of marketers struggle with content that resonates',
     color: 'text-orange-500'
   },
   {
-    icon: '🔥',
+    icon: Flame,
     text: 'Content creation fatigue is the #1 marketing pain point',
     color: 'text-red-600'
   },
   {
-    icon: '⏰',
+    icon: Clock,
     text: 'You\'re a "team of one" drowning in platform demands',
     color: 'text-orange-600'
   }
@@ -56,9 +58,7 @@ export function ProblemSection() {
             <div className="space-y-6">
               {realityChecks.map((item, index) => (
                 <div key={index} className="flex items-start space-x-4">
-                  <span className={`text-2xl ${item.color} flex-shrink-0`}>
-                    {item.icon}
-                  </span>
+                  {React.createElement(item.icon, { className: `w-6 h-6 ${item.color} flex-shrink-0` })}
                   <Text size="base" color="default" className="leading-relaxed">
                     {item.text}
                   </Text>

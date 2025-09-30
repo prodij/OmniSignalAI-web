@@ -30,7 +30,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
  */
 interface HeroLayoutProps {
   children: React.ReactNode
-  variant?: 'default' | 'gradient' | 'video' | 'image'
+  variant?: 'default' | 'gradient' | 'video' | 'image' | 'white'
   height?: 'auto' | 'screen' | 'large' | 'medium'
   overlay?: boolean
   className?: string
@@ -48,6 +48,7 @@ export const HeroLayout: React.FC<HeroLayoutProps> = ({
     gradient: 'bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700',
     video: 'bg-black relative overflow-hidden',
     image: 'bg-gray-900 relative bg-cover bg-center',
+    white: 'bg-white',
   }
 
   const heightClasses = {
@@ -83,12 +84,12 @@ export const HeroLayout: React.FC<HeroLayoutProps> = ({
  * Two Column Layout Component
  */
 interface TwoColumnLayoutProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   leftContent?: React.ReactNode
   rightContent?: React.ReactNode
   variant?: 'equal' | 'left-heavy' | 'right-heavy'
   gap?: 'sm' | 'md' | 'lg' | 'xl'
-  verticalAlign?: 'top' | 'center' | 'bottom'
+  verticalAlign?: 'top' | 'center' | 'bottom' | 'start'
   reverseOnMobile?: boolean
   className?: string
 }
@@ -120,6 +121,7 @@ export const TwoColumnLayout: React.FC<TwoColumnLayoutProps> = ({
     top: 'items-start',
     center: 'items-center',
     bottom: 'items-end',
+    start: 'items-start',
   }
 
   const leftColSpan = variant === 'left-heavy' ? 'lg:col-span-2' : ''
@@ -295,6 +297,7 @@ interface CTASectionProps {
   }
   variant?: 'default' | 'gradient' | 'dark'
   centered?: boolean
+  note?: string
   className?: string
 }
 
@@ -306,6 +309,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
   secondaryButton,
   variant = 'gradient',
   centered = true,
+  note,
   className
 }) => {
   const variantClasses = {
@@ -366,6 +370,12 @@ export const CTASection: React.FC<CTASectionProps> = ({
             </div>
           )}
 
+          {note && (
+            <p className="text-sm mt-4 opacity-70 text-center">
+              {note}
+            </p>
+          )}
+
           {children}
         </div>
       </Container>
@@ -377,7 +387,8 @@ export const CTASection: React.FC<CTASectionProps> = ({
  * Stats Section Layout
  */
 interface StatsSectionProps {
-  stats: Array<{
+  children?: React.ReactNode
+  stats?: Array<{
     value: string
     label: string
     description?: string
@@ -389,6 +400,7 @@ interface StatsSectionProps {
 }
 
 export const StatsSection: React.FC<StatsSectionProps> = ({
+  children,
   stats,
   variant = 'default',
   columns = 4,
@@ -415,7 +427,7 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
           columnClasses[columns],
           centered && 'text-center'
         )}>
-          {stats.map((stat, index) => (
+          {children ? children : stats?.map((stat, index) => (
             <div key={index} className="space-y-2">
               <div className={cn(
                 'text-3xl md:text-4xl font-bold font-heading',
