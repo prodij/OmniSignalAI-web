@@ -72,20 +72,45 @@ function parseSections(content: string): BlogSection[] {
  * Identify sections that need images
  */
 function identifySectionsNeedingImages(sections: BlogSection[]): BlogSection[] {
-  return sections.filter(section => {
+  // Priority order for section selection
+  const priorityKeywords = [
+    'problem',
+    'challenge',
+    'issue',
+    'difficulty',
+    'pain',
+    'what you',
+    'why',
+  ];
+
+  const candidates = sections.filter(section => {
     // Skip FAQ and small sections
     if (section.heading.toLowerCase().includes('faq')) return false;
     if (section.heading.toLowerCase().includes('quick answer')) return false;
+    if (section.heading.toLowerCase().includes('key takeaway')) return false;
+    if (section.heading.toLowerCase().includes('getting started')) return false;
     if (section.content.length < 200) return false;
 
-    // Prioritize level 2 headings (##)
-    if (section.level === 2) return true;
+    // Only level 2 headings (##)
+    return section.level === 2;
+  });
 
-    // Include level 3 headings if they're substantial
-    if (section.level === 3 && section.content.length > 400) return true;
+  // Sort by priority keywords
+  candidates.sort((a, b) => {
+    const aHasPriority = priorityKeywords.some(keyword =>
+      a.heading.toLowerCase().includes(keyword)
+    );
+    const bHasPriority = priorityKeywords.some(keyword =>
+      b.heading.toLowerCase().includes(keyword)
+    );
 
-    return false;
-  }).slice(0, 4); // Max 4 images per post
+    if (aHasPriority && !bHasPriority) return -1;
+    if (!aHasPriority && bHasPriority) return 1;
+    return 0;
+  });
+
+  // Return only the top 1 section
+  return candidates.slice(0, 1);
 }
 
 /**
@@ -96,25 +121,33 @@ async function generateSectionImage(
   post: BlogPost,
   section: BlogSection
 ): Promise<GeneratedImage | null> {
-  // Create intent based on section content
-  const intent = `Professional editorial illustration for blog section titled "${section.heading}"
-    from article "${post.title}".
-    Context: ${section.content.substring(0, 300)}...
-    Style: Clean, modern, professional, editorial photography or illustration that visually represents the concept.`;
+  // Create more specific intent with emphasis on filling the frame
+  const contentPreview = section.content.substring(0, 400).replace(/\n+/g, ' ').trim();
+
+  const intent = `Full-frame editorial photography for blog article section.
+    Article: "${post.title}"
+    Section: "${section.heading}"
+    Context: ${contentPreview}
+
+    IMPORTANT: Create a wide horizontal composition (16:9 ratio) that completely fills the frame edge-to-edge.
+    Style: Professional magazine-quality photography, cinematic lighting, shallow depth of field.
+    Subject should dominate the frame with no empty space or borders.
+    Modern, clean, business/editorial aesthetic.`;
 
   console.log(`\nGenerating image for section: ${section.heading}`);
-  console.log(`Intent: ${intent.substring(0, 100)}...`);
+  console.log(`Content preview: ${contentPreview.substring(0, 150)}...`);
 
   try {
     const result = await agent.generate({
       intent,
       useCase: 'blog-header',
-      stylePreference: 'editorial',
-      filename: `${post.slug}-section-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      stylePreference: 'photorealistic',
+      filename: `${post.slug}-section-${section.heading.toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 50)}`,
     });
 
     if (result.success && result.imageUrl) {
       console.log(`✓ Generated: ${result.imageUrl}`);
+      console.log(`  File: ${result.filePath}`);
       return {
         section: section.heading,
         imageUrl: result.imageUrl,
@@ -287,6 +320,13 @@ async function main() {
       if (image) {
         generatedImages.push(image);
         results.imagesGenerated++;
+
+        // Show preview information
+        console.log(`\n  📋 PREVIEW:`);
+        console.log(`     Post: ${post.title}`);
+        console.log(`     Section: ${section.heading}`);
+        console.log(`     Image: ${image.imageUrl}`);
+        console.log(`     Prompt: ${image.prompt.substring(0, 200)}...`);
       } else {
         results.imagesFailed++;
       }
@@ -298,21 +338,21 @@ async function main() {
       }
     }
 
-    // Insert images into content
+    // Show summary and ask for approval
     if (generatedImages.length > 0) {
-      const updatedContent = insertImagesIntoContent(
-        post.content,
-        sectionsForImages,
-        generatedImages
-      );
+      console.log(`\n  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+      console.log(`  📊 Generated ${generatedImages.length} image(s) for "${post.title}"`);
+      console.log(`  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 
-      // Update file with new content
-      const fileContent = await readFile(post.filePath, 'utf-8');
-      const { data } = matter(fileContent);
-      const newFileContent = matter.stringify(updatedContent, data);
-      await writeFile(post.filePath, newFileContent, 'utf-8');
+      generatedImages.forEach((img, idx) => {
+        console.log(`\n  ${idx + 1}. Section: "${img.section}"`);
+        console.log(`     Image: ${img.imageUrl}`);
+      });
 
-      console.log(`\n  ✓ Updated ${post.filePath} with ${generatedImages.length} images`);
+      console.log(`\n  ⚠️  IMAGES GENERATED BUT NOT INSERTED INTO POST YET`);
+      console.log(`     Review images in: /public/generated/images/`);
+      console.log(`     To insert into post, use: --approve flag`);
+      console.log(`     To regenerate, delete images and run again\n`);
     }
 
     results.postsProcessed++;

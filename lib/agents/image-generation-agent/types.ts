@@ -188,6 +188,12 @@ export interface AgentConfig {
 
     /** Minimum quality score to accept (0-100) */
     minQualityScore: number;
+
+    /** Use LLM-based prompt enhancement (Gemini 2.5 Flash) for advanced refinement */
+    useLLMEnhancement?: boolean;
+
+    /** Number of LLM refinement iterations (2-4 recommended) */
+    llmEnhancementIterations?: number;
   };
 
   /** Generation settings */

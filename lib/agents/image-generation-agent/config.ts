@@ -18,6 +18,8 @@ export const DEFAULT_CONFIG: AgentConfig = {
     enhancePrompts: true,
     addNegativePrompts: true,
     minQualityScore: 60,
+    useLLMEnhancement: false, // Use Gemini 2.5 Flash for advanced prompt refinement
+    llmEnhancementIterations: 3, // Number of refinement iterations (2-4 recommended)
   },
 
   /** Generation settings */

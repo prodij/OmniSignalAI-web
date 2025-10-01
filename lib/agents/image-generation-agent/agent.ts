@@ -13,6 +13,7 @@ import { ContextAnalyzer } from './context-analyzer';
 import { PromptTranslator } from './prompt-translator';
 import { generateImage, refineImage } from '@/lib/media-generator';
 import { DEFAULT_CONFIG } from './config';
+import { PromptEnhancementAgent, type PromptEnhancementRequest } from '@/lib/agents/prompt-enhancement';
 
 /**
  * Image Generation Agent
@@ -102,10 +103,54 @@ export class ImageGenerationAgent {
       );
 
       // Step 4: Translate to optimized prompt
-      this.log('Translating to Nano Banana optimized prompt...', 'promptTranslation');
-      const translatedPrompt = this.promptTranslator.translateToPrompt(contextAnalysis);
+      let finalPrompt: string;
+      let finalNegativePrompt: string;
+      let translatedPrompt: any;
 
-      this.log(`Prompt: ${translatedPrompt.prompt}`, 'promptTranslation');
+      if (this.config.promptTranslation.useLLMEnhancement) {
+        // Use advanced LLM-based prompt enhancement
+        this.log('Using LLM-based prompt enhancement...', 'promptTranslation');
+
+        const enhancementAgent = new PromptEnhancementAgent(
+          this.config.promptTranslation.llmEnhancementIterations || 3,
+          this.config.promptTranslation.minQualityScore
+        );
+
+        const enhancementRequest: PromptEnhancementRequest = {
+          userIntent: request.intent,
+          useCase: detectedIntent.useCase,
+          stylePreference: detectedIntent.style as any,
+          aspectRatio: contextAnalysis.composition.aspectRatio as '16:9' | '1:1' | '4:5' | '9:16',
+          additionalContext: `Platform: ${detectedIntent.platform || 'general'}. Topic: ${detectedIntent.topic}`,
+        };
+
+        const enhancementResult = await enhancementAgent.enhance(enhancementRequest);
+
+        if (!enhancementResult.success) {
+          this.log(`LLM enhancement failed: ${enhancementResult.error}. Falling back to standard translation.`, 'promptTranslation');
+          translatedPrompt = this.promptTranslator.translateToPrompt(contextAnalysis);
+          finalPrompt = translatedPrompt.prompt;
+          finalNegativePrompt = translatedPrompt.negativePrompt;
+        } else {
+          this.log(`LLM enhancement successful! Confidence: ${enhancementResult.finalPrompt.confidenceScore}%`, 'promptTranslation');
+          finalPrompt = enhancementResult.finalPrompt.optimizedPrompt;
+          finalNegativePrompt = enhancementResult.finalPrompt.negativePrompt;
+          translatedPrompt = {
+            prompt: finalPrompt,
+            negativePrompt: finalNegativePrompt,
+            qualityScore: enhancementResult.finalPrompt.confidenceScore,
+            optimizations: enhancementResult.finalPrompt.reasoning ? [enhancementResult.finalPrompt.reasoning] : [],
+          };
+        }
+      } else {
+        // Use standard prompt translation
+        this.log('Translating to Nano Banana optimized prompt...', 'promptTranslation');
+        translatedPrompt = this.promptTranslator.translateToPrompt(contextAnalysis);
+        finalPrompt = translatedPrompt.prompt;
+        finalNegativePrompt = translatedPrompt.negativePrompt;
+      }
+
+      this.log(`Prompt: ${finalPrompt.substring(0, 150)}...`, 'promptTranslation');
       this.log(`Quality score: ${translatedPrompt.qualityScore}`, 'promptTranslation');
 
       // Validate translation quality
@@ -124,9 +169,9 @@ export class ImageGenerationAgent {
       // Step 5: Generate image
       this.log('Generating image via OpenRouter...', 'generation');
       const generationResult = await generateImage({
-        prompt: translatedPrompt.prompt,
+        prompt: finalPrompt,
         negativePrompt: this.config.promptTranslation.addNegativePrompts
-          ? translatedPrompt.negativePrompt
+          ? finalNegativePrompt
           : undefined,
         filename: request.filename,
       });
