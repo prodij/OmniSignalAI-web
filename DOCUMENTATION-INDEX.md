@@ -22,8 +22,10 @@
 ### I'm Working with AI/Agents
 **Start with:**
 1. [CLAUDE.md](./CLAUDE.md) - AI agent instructions (most comprehensive!)
-2. [lib/agents/image-generation-agent/README.md](./lib/agents/image-generation-agent/README.md)
-3. [lib/media-generator/README.md](./lib/media-generator/README.md)
+2. [AI_AGENT_INTEGRATION_PLAN.md](./AI_AGENT_INTEGRATION_PLAN.md) - PageBuilder & SDK architecture
+3. [lib/ai-agent-sdk/README.md](./lib/ai-agent-sdk/README.md) - Complete SDK documentation
+4. [lib/agents/image-generation-agent/README.md](./lib/agents/image-generation-agent/README.md)
+5. [lib/media-generator/README.md](./lib/media-generator/README.md)
 
 ### I'm Debugging an Issue
 **Go straight to:**
@@ -50,6 +52,8 @@
 | Document | Purpose | Audience |
 |----------|---------|----------|
 | [CLAUDE.md](./CLAUDE.md) | AI agent instructions | AI agents, developers |
+| [AI_AGENT_INTEGRATION_PLAN.md](./AI_AGENT_INTEGRATION_PLAN.md) | PageBuilder & SDK architecture | AI developers, architects |
+| [lib/ai-agent-sdk/README.md](./lib/ai-agent-sdk/README.md) | Complete SDK documentation | AI agents, developers |
 | [lib/agents/image-generation-agent/README.md](./lib/agents/image-generation-agent/README.md) | Autonomous image generation | AI integration |
 | [lib/media-generator/README.md](./lib/media-generator/README.md) | Direct image generation | Manual usage |
 | [CONTENT-GENERATION-SYSTEM.md](./CONTENT-GENERATION-SYSTEM.md) | Full content pipeline | System architects |
@@ -59,6 +63,7 @@
 | Document | Purpose | Audience |
 |----------|---------|----------|
 | [PLAN.md](./PLAN.md) | Website strategy & content | Product, design |
+| [AI_AGENT_INTEGRATION_PLAN.md](./AI_AGENT_INTEGRATION_PLAN.md) | AI-powered content generation | Product, engineering |
 | [PLAN-BLOG.md](./PLAN-BLOG.md) | Blog content strategy | Content team |
 | [IMAGE-GENERATION-STRATEGY.md](./IMAGE-GENERATION-STRATEGY.md) | Media generation approach | Design, content |
 

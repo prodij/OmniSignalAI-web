@@ -107,6 +107,8 @@ Visit [http://localhost:5000](http://localhost:5000) to see the website.
 
 Create new MDX files in `content/blog/`:
 
+#### Traditional Markdown Posts
+
 ```mdx
 ---
 title: "Your Blog Title"
@@ -120,6 +122,26 @@ seo:
 
 Your content here...
 ```
+
+#### AI-Generated PageBuilder Posts
+
+The platform now supports AI-generated content using the PageBuilder system:
+
+```mdx
+---
+title: "AI-Generated Blog Post"
+layout: "builder"
+blocks:
+  - component: "Section"
+    props: { variant: "light" }
+    children:
+      - component: "Heading"
+        props: { level: 1, align: "center" }
+        children: ["Your Title"]
+---
+```
+
+**For AI Agents:** Use the [AI Agent SDK](./lib/ai-agent-sdk/README.md) to programmatically create content.
 
 ### Modifying Design Tokens
 
@@ -235,8 +257,10 @@ NEXT_PUBLIC_ENABLE_DEMO=true
 - [CONTENT-GENERATION-SYSTEM.md](./CONTENT-GENERATION-SYSTEM.md) - AI content pipeline
 
 ### Component Documentation
+- [lib/ai-agent-sdk/README.md](./lib/ai-agent-sdk/README.md) - **AI Agent SDK for autonomous content creation**
 - [lib/media-generator/README.md](./lib/media-generator/README.md) - Image generation
 - [lib/agents/image-generation-agent/README.md](./lib/agents/image-generation-agent/README.md) - Autonomous image agent
+- [AI_AGENT_INTEGRATION_PLAN.md](./AI_AGENT_INTEGRATION_PLAN.md) - PageBuilder & SDK architecture
 
 ## 🎨 Using Claude Code
 

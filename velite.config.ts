@@ -68,6 +68,10 @@ const blog = defineCollection({
       draft: s.boolean().default(false),
       published: s.boolean().default(true),
 
+      // AI Agent Integration: PageBuilder support
+      layout: s.enum(["default", "builder"]).optional().default("default"),
+      blocks: s.any().optional(),
+
       // MDX body
       body: s.mdx(),
     })
