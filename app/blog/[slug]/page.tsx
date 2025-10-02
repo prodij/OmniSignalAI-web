@@ -5,6 +5,7 @@ import { BlogHeader } from '@/components/blog/BlogHeader'
 import { BlogContent } from '@/components/blog/BlogContent'
 import { generateBlogSchema } from '@/lib/schema/blog-schema'
 import { MDXContent } from '@/components/blog/MDXContent'
+import { PageBuilder } from '@/components/PageBuilder'
 
 interface BlogPostPageProps {
   params: {
@@ -88,6 +89,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     readTime: post.readTime,
   })
 
+  // Check if this is a PageBuilder layout
+  if (post.layout === 'builder' && post.blocks) {
+    return (
+      <>
+        {/* JSON-LD Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+
+        {/* Render using PageBuilder */}
+        <PageBuilder blocks={post.blocks} />
+      </>
+    )
+  }
+
+  // Default MDX rendering
   return (
     <>
       {/* JSON-LD Schema */}
