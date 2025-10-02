@@ -39,8 +39,10 @@
 | Document | Purpose | When to Read |
 |----------|---------|--------------|
 | [README.md](./README.md) | Project overview & setup | First time setup |
+| [NEW-DEVELOPER-CHECKLIST.md](./NEW-DEVELOPER-CHECKLIST.md) | First week onboarding | Day 1 |
 | [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) | Comprehensive coding standards | Before contributing |
 | [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) | Fast task lookup | Daily development |
+| [CHEAT-SHEET.md](./CHEAT-SHEET.md) | Copy-paste solutions | Keep open while coding |
 | [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) | Problem solutions | When stuck |
 
 ### AI & Agent Documentation
@@ -127,8 +129,9 @@
 ### For Your First Week
 Day 1:
 - ✅ [README.md](./README.md) - Get overview
+- ✅ [NEW-DEVELOPER-CHECKLIST.md](./NEW-DEVELOPER-CHECKLIST.md) - Follow step-by-step
 - ✅ Setup local environment
-- ✅ Browse [QUICK-REFERENCE.md](./QUICK-REFERENCE.md)
+- ✅ Browse [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) and [CHEAT-SHEET.md](./CHEAT-SHEET.md)
 
 Day 2-3:
 - ✅ [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) - Comprehensive read
@@ -142,6 +145,7 @@ Day 4-5:
 
 ### For Ongoing Reference
 Keep these open:
+- [CHEAT-SHEET.md](./CHEAT-SHEET.md) - Copy-paste solutions
 - [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) - Daily tasks
 - [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) - When issues arise
 - Component-specific READMEs - For detailed APIs

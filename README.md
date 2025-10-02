@@ -96,7 +96,10 @@ npm run dev
 
 Visit [http://localhost:5000](http://localhost:5000) to see the website.
 
-**📖 New Developer?** Start with [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) for comprehensive coding standards and patterns!
+**📖 New Developer?** 
+- Start with [NEW-DEVELOPER-CHECKLIST.md](./NEW-DEVELOPER-CHECKLIST.md) for step-by-step onboarding
+- Keep [CHEAT-SHEET.md](./CHEAT-SHEET.md) open for quick copy-paste solutions
+- Read [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) for comprehensive patterns
 
 ## 📝 Content Management
 
@@ -218,9 +221,12 @@ NEXT_PUBLIC_ENABLE_DEMO=true
 ## 📚 Documentation
 
 ### Core Documentation
-- [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) - **Comprehensive coding guide** (START HERE)
+- [NEW-DEVELOPER-CHECKLIST.md](./NEW-DEVELOPER-CHECKLIST.md) - **First week guide** (START HERE)
+- [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) - Comprehensive coding standards
 - [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) - Fast lookup for common tasks
+- [CHEAT-SHEET.md](./CHEAT-SHEET.md) - Copy-paste solutions
 - [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) - Solutions to common problems
+- [DOCUMENTATION-INDEX.md](./DOCUMENTATION-INDEX.md) - Find any documentation
 - [CLAUDE.md](./CLAUDE.md) - AI agent instructions (most comprehensive!)
 
 ### Project Documentation
