@@ -74,7 +74,7 @@ OmniSignalAI-web/
 - Node.js 18+
 - npm/yarn/pnpm
 
-### Installation
+### Quick Start
 
 ```bash
 # Clone the repository
@@ -86,11 +86,20 @@ cd OmniSignalAI-web
 # Install dependencies
 npm install
 
+# Create environment file
+cp .env.example .env.local
+# Add your OPENROUTER_API_KEY to .env.local
+
 # Run development server
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to see the website.
+Visit [http://localhost:5000](http://localhost:5000) to see the website.
+
+**📖 New Developer?** 
+- Start with [NEW-DEVELOPER-CHECKLIST.md](./NEW-DEVELOPER-CHECKLIST.md) for step-by-step onboarding
+- Keep [CHEAT-SHEET.md](./CHEAT-SHEET.md) open for quick copy-paste solutions
+- Read [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) for comprehensive patterns
 
 ## 📝 Content Management
 
@@ -211,9 +220,23 @@ NEXT_PUBLIC_ENABLE_DEMO=true
 
 ## 📚 Documentation
 
+### Core Documentation
+- [NEW-DEVELOPER-CHECKLIST.md](./NEW-DEVELOPER-CHECKLIST.md) - **First week guide** (START HERE)
+- [DEVELOPMENT-GUIDE.md](./DEVELOPMENT-GUIDE.md) - Comprehensive coding standards
+- [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) - Fast lookup for common tasks
+- [CHEAT-SHEET.md](./CHEAT-SHEET.md) - Copy-paste solutions
+- [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) - Solutions to common problems
+- [DOCUMENTATION-INDEX.md](./DOCUMENTATION-INDEX.md) - Find any documentation
+- [CLAUDE.md](./CLAUDE.md) - AI agent instructions (most comprehensive!)
+
+### Project Documentation
 - [PLAN.md](./PLAN.md) - Complete website plan and architecture
-- [Design System](./design-system/README.md) - Component and token documentation
-- [Content Guide](./content/README.md) - Content creation guidelines
+- [DESIGN_SYSTEM_LEARNINGS.md](./DESIGN_SYSTEM_LEARNINGS.md) - Design system insights
+- [CONTENT-GENERATION-SYSTEM.md](./CONTENT-GENERATION-SYSTEM.md) - AI content pipeline
+
+### Component Documentation
+- [lib/media-generator/README.md](./lib/media-generator/README.md) - Image generation
+- [lib/agents/image-generation-agent/README.md](./lib/agents/image-generation-agent/README.md) - Autonomous image agent
 
 ## 🎨 Using Claude Code
 
