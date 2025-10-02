@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import { Navigation } from '@/components/Navigation'
 import '../styles/globals.css'
@@ -14,12 +14,17 @@ const poppins = Poppins({
   variable: '--font-heading',
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export const metadata: Metadata = {
+  metadataBase: new URL('https://omnisignalai.com'),
   title: 'OmniSignalAI - Transform Social Media Content Creation',
   description: 'Generate complete social media campaigns with text and images in 30 seconds. AI-powered platform that transforms content creation from hours to seconds.',
   keywords: ['AI', 'social media', 'content creation', 'marketing', 'automation'],
   authors: [{ name: 'OmniSignalAI Team' }],
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
   openGraph: {
     type: 'website',

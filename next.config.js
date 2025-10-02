@@ -4,9 +4,20 @@ const nextConfig = {
   swcMinify: true,
   // Removed standalone output to fix Vercel build trace stack overflow
   // Docker builds can use standard output
+
+  // Exclude problematic patterns from build tracing to prevent stack overflow
   experimental: {
-    appDir: true,
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/@swc/core-linux-x64-gnu',
+        'node_modules/@swc/core-linux-x64-musl',
+        'node_modules/@esbuild',
+        'node_modules/webpack',
+        'node_modules/terser',
+      ],
+    },
   },
+
   images: {
     domains: ['images.unsplash.com', 'avatars.githubusercontent.com', 'localhost', 'omnisignalai.com'],
   },
