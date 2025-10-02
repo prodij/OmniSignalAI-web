@@ -272,4 +272,4 @@ export class PromptEnhancementAgent {
   }
 }
 
-export { VisualAttributes } from './attribute-extractor';
+export type { VisualAttributes } from './attribute-extractor';

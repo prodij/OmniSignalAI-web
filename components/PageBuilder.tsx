@@ -26,7 +26,7 @@ const renderBlock = (block: Block | string, key: number): ReactNode => {
     return block
   }
 
-  const Component = COMPONENT_MAP[block.component as keyof typeof COMPONENT_MAP]
+  const Component = COMPONENT_MAP[block.component as keyof typeof COMPONENT_MAP] as FC<any>
 
   if (!Component) {
     console.warn(`Component "${block.component}" not found in COMPONENT_MAP.`)

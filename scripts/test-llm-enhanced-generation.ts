@@ -56,7 +56,7 @@ async function testLLMEnhancedGeneration() {
     console.log('✅ Success!');
     console.log(`  Image URL: ${result.imageUrl}`);
     console.log(`  File Path: ${result.filePath}`);
-    console.log(`  Processing Time: ${(result.processingTime / 1000).toFixed(2)}s\n`);
+    console.log(`  Processing Time: ${result.processingTime ? (result.processingTime / 1000).toFixed(2) : 'N/A'}s\n`);
 
     console.log('📊 Quality Metrics:');
     console.log(`  Detected Intent Confidence: ${result.reasoning.detectedIntent.confidence}%`);

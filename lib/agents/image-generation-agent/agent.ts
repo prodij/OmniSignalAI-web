@@ -116,9 +116,14 @@ export class ImageGenerationAgent {
           this.config.promptTranslation.minQualityScore
         );
 
+        // Map custom use case to a supported type for prompt enhancement
+        const mappedUseCase = detectedIntent.useCase === 'custom'
+          ? 'concept-illustration'
+          : detectedIntent.useCase;
+
         const enhancementRequest: PromptEnhancementRequest = {
           userIntent: request.intent,
-          useCase: detectedIntent.useCase,
+          useCase: mappedUseCase,
           stylePreference: detectedIntent.style as any,
           aspectRatio: contextAnalysis.composition.aspectRatio as '16:9' | '1:1' | '4:5' | '9:16',
           additionalContext: `Platform: ${detectedIntent.platform || 'general'}. Topic: ${detectedIntent.topic}`,

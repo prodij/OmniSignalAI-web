@@ -21,7 +21,7 @@ async function example1_discoverComponents() {
 
   const result = await listAvailableComponents({ includeExamples: true })
 
-  if (result.success) {
+  if (result.success && result.data) {
     console.log(`✅ Found ${result.data.length} components\n`)
 
     // Show first 5 components
@@ -47,7 +47,7 @@ async function example2_listPages() {
 
   const result = await listPages('blog')
 
-  if (result.success) {
+  if (result.success && result.data) {
     console.log(`✅ Found ${result.data.length} blog posts\n`)
     result.data.slice(0, 5).forEach((slug) => {
       console.log(`📄 ${slug}`)
@@ -65,7 +65,7 @@ async function example3_readPage() {
 
   const result = await getPage('blog/hello-world-omnisignal')
 
-  if (result.success) {
+  if (result.success && result.data) {
     console.log('✅ Page loaded successfully\n')
     console.log(`Title: ${result.data.frontmatter.title}`)
     console.log(`Description: ${result.data.frontmatter.description}`)
@@ -115,7 +115,7 @@ The AI Agent SDK makes it easy for AI agents to create content autonomously.
     `.trim(),
   })
 
-  if (result.success) {
+  if (result.success && result.data) {
     console.log('✅ Page created successfully')
     console.log(`Path: ${result.data.path}`)
   } else {
@@ -233,7 +233,7 @@ async function example5_createPageBuilderPage() {
     },
   })
 
-  if (result.success) {
+  if (result.success && result.data) {
     console.log('✅ PageBuilder page created successfully')
     console.log(`Path: ${result.data.path}`)
   } else {

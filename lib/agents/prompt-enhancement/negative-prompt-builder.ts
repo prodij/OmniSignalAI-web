@@ -148,7 +148,7 @@ export function extractNegativesFromCritique(critique: string): string[] {
   ];
 
   patterns.forEach(pattern => {
-    const matches = critique.matchAll(pattern);
+    const matches = Array.from(critique.matchAll(pattern));
     for (const match of matches) {
       if (match[1]) {
         negatives.push(match[1].trim().toLowerCase());
