@@ -5,18 +5,13 @@ const nextConfig = {
   // Removed standalone output to fix Vercel build trace stack overflow
   // Docker builds can use standard output
 
-  // Exclude problematic patterns from build tracing to prevent stack overflow
+  // Disable output file tracing to prevent stack overflow during build
   experimental: {
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/@swc/core-linux-x64-gnu',
-        'node_modules/@swc/core-linux-x64-musl',
-        'node_modules/@esbuild',
-        'node_modules/webpack',
-        'node_modules/terser',
-      ],
-    },
+    outputFileTracingRoot: undefined,
   },
+
+  // Alternative: disable tracing entirely for Vercel
+  outputFileTracing: false,
 
   images: {
     domains: ['images.unsplash.com', 'avatars.githubusercontent.com', 'localhost', 'omnisignalai.com'],
