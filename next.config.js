@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'standalone', // Enable standalone output for Docker
+  // Removed standalone output to fix Vercel build trace stack overflow
+  // Docker builds can use standard output
   experimental: {
     appDir: true,
   },
