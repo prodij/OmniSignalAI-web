@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import { resolvePost } from '@/lib/content/resolver'
 import { blog } from '#site/content'
 import { BlogHeader } from '@/components/blog/BlogHeader'
 import { BlogContent } from '@/components/blog/BlogContent'
@@ -15,13 +16,15 @@ interface BlogPostPageProps {
 
 async function getPostFromParams(params: BlogPostPageProps['params']) {
   const slug = params?.slug
-  const post = blog.find((post) => post.slugAsParams === slug)
 
-  if (!post || !post.published || post.draft) {
+  // Try dual content resolver (API first, then static)
+  const resolved = await resolvePost(slug)
+
+  if (!resolved) {
     return null
   }
 
-  return post
+  return resolved.data
 }
 
 export async function generateMetadata({
@@ -37,14 +40,14 @@ export async function generateMetadata({
     title: `${post.title} | OmniSignalAI Blog`,
     description: post.description,
     keywords: post.keywords,
-    authors: [{ name: post.author.name, url: post.author.url }],
+    authors: post.author ? [{ name: post.author.name, url: post.author.url }] : undefined,
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
       publishedTime: post.datePublished,
       modifiedTime: post.dateModified,
-      authors: [post.author.name],
+      authors: post.author ? [post.author.name] : undefined,
       url: `https://omnisignalai.com/blog/${post.slugAsParams}`,
       images: post.og?.image ? [{ url: post.og.image, alt: post.og.imageAlt }] : [],
     },
@@ -80,13 +83,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     slug: post.slugAsParams,
     datePublished: post.datePublished,
     dateModified: post.dateModified,
-    author: post.author,
-    category: post.category,
-    keywords: post.keywords,
+    author: post.author || { name: 'OmniSignalAI', url: 'https://omnisignalai.com' },
+    category: post.category || 'General',
+    keywords: post.keywords || [],
     schema: post.schema,
     faq: post.faq,
     steps: post.steps,
-    readTime: post.readTime,
+    readTime: post.readTime || 5,
   })
 
   // Check if this is a PageBuilder layout
@@ -120,8 +123,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         description={post.description}
         datePublished={post.datePublished}
         dateModified={post.dateModified}
-        readTime={post.readTime}
-        category={post.category}
+        readTime={post.readTime || 5}
+        category={post.category || 'General'}
         tags={post.tags}
         author={post.author}
       />

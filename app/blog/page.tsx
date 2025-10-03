@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { blog } from '#site/content'
+import { resolvePosts } from '@/lib/content/resolver'
 import { BlogList } from '@/components/blog/BlogList'
 import { Section, Container } from '@/lib/design-system/base-components'
 import { Heading, Text } from '@/lib/design-system/base-components'
@@ -16,17 +16,27 @@ export const metadata: Metadata = {
   },
 }
 
-export default function BlogPage() {
-  // Filter out draft posts and sort by date
-  const publishedPosts = blog
-    .filter((post) => post.published && !post.draft)
-    .sort((a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime())
+export default async function BlogPage() {
+  // Resolve posts from API or static (dual content system)
+  const resolvedPosts = await resolvePosts({ published: true })
+
+  // Ensure all required fields have defaults
+  const publishedPosts = resolvedPosts.map((post) => ({
+    ...post,
+    readTime: post.readTime || 5,
+    category: post.category || 'General',
+  }))
+
+  // Sort by date
+  const sortedPosts = publishedPosts.sort(
+    (a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime()
+  )
 
   // Get featured posts
-  const featuredPosts = publishedPosts.filter((post) => post.featured)
+  const featuredPosts = sortedPosts.filter((post) => post.featured)
 
   // Get recent posts (non-featured)
-  const recentPosts = publishedPosts.filter((post) => !post.featured)
+  const recentPosts = sortedPosts.filter((post) => !post.featured)
 
   const schema = generateWebSiteSchema()
 

@@ -32,10 +32,15 @@ const customJestConfig = {
     {
       displayName: 'integration',
       testEnvironment: 'node',
+      preset: 'ts-jest',
       testMatch: ['**/__tests__/api/**/*.(test|spec).[jt]s?(x)'],
       setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
       moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/$1',
+        '^#site/content$': '<rootDir>/.velite',
+      },
+      transform: {
+        '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: { jsx: 'react', esModuleInterop: true, allowSyntheticDefaultImports: true } }],
       },
     },
     {
