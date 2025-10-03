@@ -207,6 +207,145 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 Badge.displayName = "Badge"
 
 /**
+ * Base Select Component
+ */
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  variant?: 'default' | 'error'
+  selectSize?: 'sm' | 'md' | 'lg'
+  label?: string
+  error?: string
+}
+
+export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+  ({
+    className,
+    variant = 'default',
+    selectSize = 'md',
+    label,
+    error,
+    id,
+    children,
+    ...props
+  }, ref) => {
+    const generatedId = useId()
+    const selectId = id || generatedId
+    const errorVariant = error ? 'error' : variant
+
+    const sizeClasses = {
+      sm: 'px-3 py-1.5 text-sm',
+      md: 'px-4 py-2 text-base',
+      lg: 'px-5 py-3 text-lg',
+    }
+
+    const variantClasses = {
+      default: 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
+      error: 'border-red-500 focus:border-red-500 focus:ring-red-500',
+    }
+
+    return (
+      <div className="w-full">
+        {label && (
+          <label htmlFor={selectId} className="block text-sm font-medium text-gray-700 mb-2">
+            {label}
+          </label>
+        )}
+        <select
+          ref={ref}
+          id={selectId}
+          className={cn(
+            'block w-full rounded-md border shadow-sm transition-colors',
+            'focus:outline-none focus:ring-2',
+            sizeClasses[selectSize],
+            variantClasses[errorVariant],
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </select>
+        {error && (
+          <p className="mt-2 text-sm text-red-600">{error}</p>
+        )}
+      </div>
+    )
+  }
+)
+Select.displayName = "Select"
+
+/**
+ * Base Textarea Component
+ */
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  variant?: 'default' | 'error'
+  textareaSize?: 'sm' | 'md' | 'lg'
+  label?: string
+  error?: string
+  resize?: 'none' | 'vertical' | 'horizontal' | 'both'
+}
+
+export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({
+    className,
+    variant = 'default',
+    textareaSize = 'md',
+    label,
+    error,
+    resize = 'vertical',
+    id,
+    ...props
+  }, ref) => {
+    const generatedId = useId()
+    const textareaId = id || generatedId
+    const errorVariant = error ? 'error' : variant
+
+    const sizeClasses = {
+      sm: 'px-3 py-1.5 text-sm',
+      md: 'px-4 py-2 text-base',
+      lg: 'px-5 py-3 text-lg',
+    }
+
+    const variantClasses = {
+      default: 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
+      error: 'border-red-500 focus:border-red-500 focus:ring-red-500',
+    }
+
+    const resizeClasses = {
+      none: 'resize-none',
+      vertical: 'resize-y',
+      horizontal: 'resize-x',
+      both: 'resize',
+    }
+
+    return (
+      <div className="w-full">
+        {label && (
+          <label htmlFor={textareaId} className="block text-sm font-medium text-gray-700 mb-2">
+            {label}
+          </label>
+        )}
+        <textarea
+          ref={ref}
+          id={textareaId}
+          className={cn(
+            'block w-full rounded-md border shadow-sm transition-colors',
+            'focus:outline-none focus:ring-2',
+            sizeClasses[textareaSize],
+            variantClasses[errorVariant],
+            resizeClasses[resize],
+            className
+          )}
+          {...props}
+        />
+        {error && (
+          <p className="mt-2 text-sm text-red-600">{error}</p>
+        )}
+      </div>
+    )
+  }
+)
+Textarea.displayName = "Textarea"
+
+/**
  * Base Container Component
  */
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {

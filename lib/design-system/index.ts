@@ -22,12 +22,25 @@ export {
   Card,
   Input,
   Badge,
+  Select,
+  Textarea,
   Container,
   Section,
   Grid,
   Heading,
   Text,
 } from './base-components'
+
+// Table components
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  TablePagination,
+} from './table-components'
 
 // Layout components
 export {
