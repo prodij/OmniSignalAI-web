@@ -77,13 +77,15 @@ export function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Sign In
-            </Button>
+            <a href="/login">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-600 hover:text-gray-900"
+              >
+                Sign In
+              </Button>
+            </a>
             <Button
               variant="primary"
               size="sm"
@@ -150,13 +152,15 @@ export function Navigation() {
             </div>
 
             <div className="pt-4 space-y-3">
-              <Button
-                variant="ghost"
-                size="md"
-                className="w-full text-gray-600 hover:text-gray-900"
-              >
-                Sign In
-              </Button>
+              <a href="/login" className="block">
+                <Button
+                  variant="ghost"
+                  size="md"
+                  className="w-full text-gray-600 hover:text-gray-900"
+                >
+                  Sign In
+                </Button>
+              </a>
               <Button
                 variant="primary"
                 size="md"
