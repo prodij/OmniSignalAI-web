@@ -55,12 +55,10 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Only apply dark mode on dashboard pages
+                  // Only apply dark mode on dashboard pages if explicitly set
                   if (window.location.pathname.startsWith('/dashboard')) {
                     var darkMode = localStorage.getItem('darkMode');
                     if (darkMode === 'true') {
-                      document.documentElement.classList.add('dark');
-                    } else if (darkMode === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                       document.documentElement.classList.add('dark');
                     }
                   }

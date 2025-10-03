@@ -26,6 +26,11 @@ export default function Navigation({ user }: NavigationProps) {
   const router = useRouter()
   const { isDarkMode, toggleDarkMode } = useDarkMode()
 
+  // Debug: Log dark mode state
+  if (typeof window !== 'undefined') {
+    console.log('[Navigation] isDarkMode:', isDarkMode, 'htmlHasDarkClass:', document.documentElement.classList.contains('dark'))
+  }
+
   const handleSignOut = async () => {
     try {
       await authService.signOut()

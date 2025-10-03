@@ -19,10 +19,8 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem('darkMode')
     if (saved !== null) {
       setIsDarkMode(saved === 'true')
-    } else {
-      // Check system preference
-      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
     }
+    // Note: Do NOT default to system preference - dashboard should default to light mode
   }, [])
 
   useEffect(() => {
