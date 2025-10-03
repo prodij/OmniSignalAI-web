@@ -55,9 +55,14 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var darkMode = localStorage.getItem('darkMode');
-                  if (darkMode === 'true' || (darkMode === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
+                  // Only apply dark mode on dashboard pages
+                  if (window.location.pathname.startsWith('/dashboard')) {
+                    var darkMode = localStorage.getItem('darkMode');
+                    if (darkMode === 'true') {
+                      document.documentElement.classList.add('dark');
+                    } else if (darkMode === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                      document.documentElement.classList.add('dark');
+                    }
                   }
                 } catch (e) {}
               })();

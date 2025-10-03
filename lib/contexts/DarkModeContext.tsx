@@ -43,11 +43,6 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
     setIsDarkMode(prev => !prev)
   }
 
-  // Prevent flash on initial render
-  if (!mounted) {
-    return <>{children}</>
-  }
-
   return (
     <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
       {children}
