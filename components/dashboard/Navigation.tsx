@@ -69,7 +69,11 @@ export default function Navigation({ user }: NavigationProps) {
   }
 
   return (
-    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
+    <nav className={`border-b shadow-sm transition-colors ${
+      isDarkMode
+        ? 'bg-gray-900 border-gray-700'
+        : 'bg-white border-gray-200'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo and Navigation */}
@@ -80,7 +84,7 @@ export default function Navigation({ user }: NavigationProps) {
                 <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">O</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                <span className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>
                   AI Studio
                 </span>
               </Link>
@@ -98,8 +102,12 @@ export default function Navigation({ user }: NavigationProps) {
                     href={item.href}
                     className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                       active
-                        ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+                        ? isDarkMode
+                          ? 'bg-indigo-900/30 text-indigo-300'
+                          : 'bg-indigo-50 text-indigo-700'
+                        : isDarkMode
+                        ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     }`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
@@ -114,13 +122,17 @@ export default function Navigation({ user }: NavigationProps) {
           <div className="flex items-center space-x-4">
             {/* User Email */}
             <div className="hidden md:block">
-              <span className="text-sm text-gray-600 dark:text-gray-300">{user?.email || 'User'}</span>
+              <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{user?.email || 'User'}</span>
             </div>
 
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className={`p-2 rounded-lg transition-colors ${
+                isDarkMode
+                  ? 'text-gray-300 hover:bg-gray-800'
+                  : 'text-gray-600 hover:bg-gray-100'
+              }`}
               aria-label="Toggle dark mode"
             >
               {isDarkMode ? (
@@ -144,7 +156,7 @@ export default function Navigation({ user }: NavigationProps) {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="sm:hidden border-t border-gray-200 dark:border-gray-700">
+      <div className={`sm:hidden border-t ${isDarkMode ? 'border-gray-700' : 'border-gray-200'}`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon
@@ -156,8 +168,12 @@ export default function Navigation({ user }: NavigationProps) {
                 href={item.href}
                 className={`flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors ${
                   active
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
+                    ? isDarkMode
+                      ? 'bg-indigo-900/30 text-indigo-300'
+                      : 'bg-indigo-50 text-indigo-700'
+                    : isDarkMode
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-800'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
                 <Icon className="w-5 h-5 mr-3" />
