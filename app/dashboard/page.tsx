@@ -10,10 +10,15 @@ import { FileText, FilePlus, Archive, CheckCircle } from 'lucide-react'
 
 export default async function DashboardPage() {
   // Fetch posts for statistics
-  const result = await blogService.getPosts({ page: 1, page_size: 100 }).catch(() => ({
-    posts: [],
-    pagination: { total: 0, page: 1, page_size: 100, total_pages: 0 },
-  }))
+  let hasError = false
+  const result = await blogService.getPosts({ page: 1, page_size: 100 }).catch((err) => {
+    console.error('Failed to fetch posts:', err)
+    hasError = true
+    return {
+      posts: [],
+      pagination: { total: 0, page: 1, page_size: 100, total_pages: 0 },
+    }
+  })
 
   const stats = {
     total: result.pagination.total,
@@ -63,6 +68,19 @@ export default async function DashboardPage() {
           Manage your blog content powered by AI
         </Text>
       </div>
+
+      {/* Error Alert */}
+      {hasError && (
+        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <Text className="text-yellow-800 font-medium mb-1">⚠️ Unable to connect to backend</Text>
+          <Text size="sm" className="text-yellow-700">
+            Make sure the omnidraft backend is running at{' '}
+            <code className="px-1 py-0.5 bg-yellow-100 rounded">
+              {process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000'}
+            </code>
+          </Text>
+        </div>
+      )}
 
       {/* Statistics Grid */}
       <Grid cols={4} gap="lg" className="mb-8">

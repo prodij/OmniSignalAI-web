@@ -10,7 +10,6 @@
 import { createServerClient } from '@/lib/supabase/client'
 import { redirect } from 'next/navigation'
 import Navigation from '@/components/dashboard/Navigation'
-import { authService } from '@/lib/api'
 
 export default async function DashboardLayout({
   children,
@@ -27,8 +26,10 @@ export default async function DashboardLayout({
     redirect('/login')
   }
 
-  // Get user info for display
-  const user = await authService.getCurrentUser().catch(() => null)
+  // Get user info for display (use server-side Supabase client)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -6,7 +6,7 @@
 
 import { blogService } from '@/lib/api'
 import ContentTable from '@/components/dashboard/ContentTable'
-import { Heading, Button } from '@/lib/design-system'
+import { Heading, Button, Text } from '@/lib/design-system'
 import { FilePlus } from 'lucide-react'
 import Link from 'next/link'
 
@@ -22,14 +22,19 @@ export default async function ContentPage({ searchParams }: ContentPageProps) {
   const status = searchParams.status as 'draft' | 'published' | 'archived' | undefined
 
   // Fetch posts from API
+  let hasError = false
   const result = await blogService.getPosts({
     page,
     page_size: 20,
     status_filter: status,
-  }).catch(() => ({
-    posts: [],
-    pagination: { total: 0, page: 1, page_size: 20, total_pages: 0 },
-  }))
+  }).catch((err) => {
+    console.error('Failed to fetch posts:', err)
+    hasError = true
+    return {
+      posts: [],
+      pagination: { total: 0, page: 1, page_size: 20, total_pages: 0 },
+    }
+  })
 
   return (
     <div>
@@ -49,6 +54,16 @@ export default async function ContentPage({ searchParams }: ContentPageProps) {
           </Button>
         </Link>
       </div>
+
+      {/* Error Alert */}
+      {hasError && (
+        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <Text className="text-yellow-800 font-medium mb-1">⚠️ Unable to connect to backend</Text>
+          <Text size="sm" className="text-yellow-700">
+            Content will appear here once the backend is running. Start it with: <code className="px-1 py-0.5 bg-yellow-100 rounded">cd omnidraft && docker-compose up</code>
+          </Text>
+        </div>
+      )}
 
       {/* Content Table */}
       <ContentTable posts={result.posts} pagination={result.pagination} />
