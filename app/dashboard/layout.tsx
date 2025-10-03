@@ -9,8 +9,7 @@
 
 import { createServerClient } from '@/lib/supabase/client'
 import { redirect } from 'next/navigation'
-import Navigation from '@/components/dashboard/Navigation'
-import { DarkModeProvider } from '@/lib/contexts/DarkModeContext'
+import DashboardWrapper from '@/components/dashboard/DashboardWrapper'
 
 export default async function DashboardLayout({
   children,
@@ -33,13 +32,8 @@ export default async function DashboardLayout({
   } = await supabase.auth.getUser()
 
   return (
-    <DarkModeProvider>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors">
-        <Navigation user={user} />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {children}
-        </main>
-      </div>
-    </DarkModeProvider>
+    <DashboardWrapper user={user}>
+      {children}
+    </DashboardWrapper>
   )
 }
