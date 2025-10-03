@@ -58,7 +58,12 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
 export function useDarkMode() {
   const context = useContext(DarkModeContext)
   if (context === undefined) {
-    throw new Error('useDarkMode must be used within a DarkModeProvider')
+    // Return default values if provider not found (prevents crash during SSR)
+    console.warn('useDarkMode used outside DarkModeProvider, returning defaults')
+    return {
+      isDarkMode: false,
+      toggleDarkMode: () => {},
+    }
   }
   return context
 }
