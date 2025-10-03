@@ -40,6 +40,7 @@ export function Navigation() {
   const [debugMenuOpen, setDebugMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [authLoading, setAuthLoading] = useState(true)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const router = useRouter()
   const pathname = usePathname()
@@ -52,6 +53,7 @@ export function Navigation() {
 
       setIsAuthenticated(!!session)
       setUserEmail(session?.user?.email || null)
+      setAuthLoading(false)
     }
 
     checkAuth()
@@ -91,7 +93,14 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {isAuthenticated ? (
+            {authLoading ? (
+              // Skeleton loader while checking auth
+              <div className="flex items-center space-x-8">
+                <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+                <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+                <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
+              </div>
+            ) : isAuthenticated ? (
               // Authenticated navigation with icons
               authenticatedNavLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href))
@@ -133,7 +142,8 @@ export function Navigation() {
                   </a>
                 )
               })
-            )}
+            )
+            }
 
             {/* Debug Dropdown */}
             <div className="relative">
@@ -166,7 +176,12 @@ export function Navigation() {
           </div>
 
           {/* Desktop CTA / User Menu */}
-          {isAuthenticated ? (
+          {authLoading ? (
+            // Skeleton loader for auth buttons
+            <div className="hidden md:flex items-center space-x-4">
+              <div className="h-9 w-24 bg-gray-200 rounded-lg animate-pulse" />
+            </div>
+          ) : isAuthenticated ? (
             // Logged in: Show user menu
             <div className="hidden md:flex items-center space-x-4">
               <div className="relative">
@@ -217,7 +232,8 @@ export function Navigation() {
                 Start Free Trial
               </Button>
             </div>
-          )}
+          )
+          }
 
           {/* Mobile Menu Button */}
           <button
@@ -237,7 +253,14 @@ export function Navigation() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="px-4 py-6 space-y-4">
-            {isAuthenticated ? (
+            {authLoading ? (
+              // Skeleton loader for mobile menu
+              <div className="space-y-3">
+                <div className="h-6 bg-gray-200 rounded animate-pulse" />
+                <div className="h-6 bg-gray-200 rounded animate-pulse" />
+                <div className="h-6 bg-gray-200 rounded animate-pulse" />
+              </div>
+            ) : isAuthenticated ? (
               // Authenticated navigation with icons
               authenticatedNavLinks.map((link) => {
                 const isActive = pathname === link.href || (link.href !== '/' && pathname?.startsWith(link.href))
@@ -281,7 +304,8 @@ export function Navigation() {
                   </a>
                 )
               })
-            )}
+            )
+            }
 
             {/* Mobile Debug Section */}
             <div className="border-t border-gray-200 pt-4">
