@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
   // Exchange code for session
   if (code) {
     try {
-      const supabase = createServerClient()
+      const supabase = await createServerClient()
       const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
 
       if (exchangeError) {

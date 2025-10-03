@@ -7,7 +7,6 @@
 
 import { createBrowserClient } from '@supabase/ssr'
 import { createServerClient as createSupabaseServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import type { Database } from '@/types/supabase'
 
 // Validate environment variables
@@ -50,8 +49,9 @@ export function createClient() {
  * const { data } = await supabase.auth.getUser()
  * ```
  */
-export function createServerClient() {
-  const cookieStore = cookies()
+export async function createServerClient() {
+  const { cookies } = await import('next/headers')
+  const cookieStore = await cookies()
 
   return createSupabaseServerClient<Database>(
     SUPABASE_URL!,
@@ -99,7 +99,7 @@ export function createServerClient() {
  * ```
  */
 export async function getSession() {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const {
     data: { session },
   } = await supabase.auth.getSession()
@@ -121,7 +121,7 @@ export async function getSession() {
  * ```
  */
 export async function getUser() {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const {
     data: { user },
   } = await supabase.auth.getUser()

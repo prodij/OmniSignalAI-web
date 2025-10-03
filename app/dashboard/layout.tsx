@@ -17,7 +17,7 @@ export default async function DashboardLayout({
   children: React.ReactNode
 }) {
   // Double-check authentication at layout level
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const {
     data: { session },
   } = await supabase.auth.getSession()
