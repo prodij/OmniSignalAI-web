@@ -1,3 +1,4 @@
+import { Navigation } from '@/components/Navigation'
 import { HeroSection } from '@/components/marketing/HeroSection'
 import { TrustBar } from '@/components/marketing/TrustBar'
 import { ProblemSection } from '@/components/marketing/ProblemSection'
@@ -12,7 +13,9 @@ import { SectionSeparator } from '@/components/SectionSeparator'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <>
+      <Navigation />
+      <main className="min-h-screen bg-white">
       {/* Hero Section - White background */}
       <div className="bg-gradient-to-b from-white via-gray-50 to-white">
         <HeroSection />
@@ -73,5 +76,6 @@ export default function HomePage() {
         <FinalCTASection />
       </div>
     </main>
+    </>
   )
 }

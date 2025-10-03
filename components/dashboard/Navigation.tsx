@@ -28,7 +28,14 @@ export default function Navigation({ user }: NavigationProps) {
 
   // Debug: Log dark mode state
   if (typeof window !== 'undefined') {
-    console.log('[Navigation] isDarkMode:', isDarkMode, 'htmlHasDarkClass:', document.documentElement.classList.contains('dark'))
+    const htmlHasDark = document.documentElement.classList.contains('dark')
+    const storedDarkMode = localStorage.getItem('darkMode')
+    console.log('[Navigation Debug]', {
+      isDarkMode,
+      htmlHasDarkClass: htmlHasDark,
+      localStorage: storedDarkMode,
+      mismatch: (isDarkMode && !htmlHasDark) || (!isDarkMode && htmlHasDark)
+    })
   }
 
   const handleSignOut = async () => {
@@ -125,21 +132,31 @@ export default function Navigation({ user }: NavigationProps) {
               <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{user?.email || 'User'}</span>
             </div>
 
+            {/* TEST MARKER */}
+            <div className="bg-green-500 text-white px-2 py-1 text-xs font-bold">
+              TEST MARKER
+            </div>
+
             {/* Dark Mode Toggle */}
             <button
-              onClick={toggleDarkMode}
-              className={`p-2 rounded-lg transition-colors ${
+              onClick={() => {
+                console.log('[Toggle] Clicked! Current isDarkMode:', isDarkMode)
+                toggleDarkMode()
+              }}
+              className={`p-2 rounded-lg transition-colors border-2 border-red-500 ${
                 isDarkMode
                   ? 'text-gray-300 hover:bg-gray-800'
                   : 'text-gray-600 hover:bg-gray-100'
               }`}
               aria-label="Toggle dark mode"
+              title={`Dark mode is ${isDarkMode ? 'ON' : 'OFF'}. Click to toggle.`}
             >
               {isDarkMode ? (
                 <Sun className="w-5 h-5" />
               ) : (
                 <Moon className="w-5 h-5" />
               )}
+              <span className="sr-only">Toggle dark mode (currently {isDarkMode ? 'off' : 'off'})</span>
             </button>
 
             {/* Sign Out Button */}

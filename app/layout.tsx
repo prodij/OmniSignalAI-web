@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
-import { Navigation } from '@/components/Navigation'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -69,7 +68,6 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
-        <Navigation />
         {children}
       </body>
     </html>
