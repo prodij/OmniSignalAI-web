@@ -60,13 +60,13 @@ export default function LoginPage() {
   const handleEmailPassword = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setLoadingMessage(mode === 'signin' ? 'Signing you in...' : 'Creating your account...')
+    setLoadingMessage(mode === 'signin' ? '✨ Sprinkling magic dust...' : '🎨 Crafting your creative space...')
     setError(null)
 
     try {
       if (mode === 'signin') {
         await authService.signInWithPassword({ email, password })
-        setLoadingMessage('Redirecting to dashboard...')
+        setLoadingMessage('🚀 Launching your cockpit...')
         router.push('/dashboard')
       } else {
         const { user, session } = await authService.signUp({
@@ -77,7 +77,7 @@ export default function LoginPage() {
 
         if (session) {
           // Auto-signed in after signup
-          setLoadingMessage('Redirecting to dashboard...')
+          setLoadingMessage('🚀 Launching your cockpit...')
           router.push('/dashboard')
         } else {
           // Email verification required
@@ -93,7 +93,7 @@ export default function LoginPage() {
 
   const handleGoogleOAuth = async () => {
     setLoading(true)
-    setLoadingMessage('Redirecting to Google...')
+    setLoadingMessage('🌟 Summoning Google magic...')
     setError(null)
 
     try {
@@ -176,7 +176,7 @@ export default function LoginPage() {
               {loadingMessage}
             </p>
             <p className="text-sm text-gray-500 mt-2">
-              This may take a few seconds
+              Casting spells takes a moment ✨
             </p>
           </div>
         </div>
