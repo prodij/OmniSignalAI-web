@@ -1,7 +1,7 @@
 /**
  * Dashboard Integration Tests
  *
- * Tests the Content Cockpit dashboard functionality:
+ * Tests the AI Studio dashboard functionality:
  * - Content manager operations
  * - Post editing workflow
  * - Real API integration (no mocks)

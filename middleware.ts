@@ -70,6 +70,11 @@ export async function middleware(request: NextRequest) {
 
   // Protect /dashboard routes
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    // Temporarily disable dashboard in production until backend is deployed
+    if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_ENABLE_AI_STUDIO !== 'true') {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+
     if (!session) {
       const redirectUrl = new URL('/login', request.url)
       redirectUrl.searchParams.set('redirect', request.nextUrl.pathname)

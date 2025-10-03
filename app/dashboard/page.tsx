@@ -62,7 +62,7 @@ export default async function DashboardPage() {
     <div>
       <div className="mb-8">
         <Heading as="h1" size="3xl" className="mb-2">
-          Content Cockpit
+          AI Studio
         </Heading>
         <Text size="lg" className="text-gray-600 dark:text-gray-300">
           Manage your blog content powered by AI
