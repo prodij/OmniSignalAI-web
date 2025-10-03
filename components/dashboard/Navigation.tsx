@@ -26,18 +26,6 @@ export default function Navigation({ user }: NavigationProps) {
   const router = useRouter()
   const { isDarkMode, toggleDarkMode } = useDarkMode()
 
-  // Debug: Log dark mode state
-  if (typeof window !== 'undefined') {
-    const htmlHasDark = document.documentElement.classList.contains('dark')
-    const storedDarkMode = localStorage.getItem('darkMode')
-    console.log('[Navigation Debug]', {
-      isDarkMode,
-      htmlHasDarkClass: htmlHasDark,
-      localStorage: storedDarkMode,
-      mismatch: (isDarkMode && !htmlHasDark) || (!isDarkMode && htmlHasDark)
-    })
-  }
-
   const handleSignOut = async () => {
     try {
       await authService.signOut()
@@ -132,18 +120,10 @@ export default function Navigation({ user }: NavigationProps) {
               <span className={`text-sm ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{user?.email || 'User'}</span>
             </div>
 
-            {/* TEST MARKER */}
-            <div className="bg-green-500 text-white px-2 py-1 text-xs font-bold">
-              TEST MARKER
-            </div>
-
             {/* Dark Mode Toggle */}
             <button
-              onClick={() => {
-                console.log('[Toggle] Clicked! Current isDarkMode:', isDarkMode)
-                toggleDarkMode()
-              }}
-              className={`p-2 rounded-lg transition-colors border-2 border-red-500 ${
+              onClick={toggleDarkMode}
+              className={`p-2 rounded-lg transition-colors ${
                 isDarkMode
                   ? 'text-gray-300 hover:bg-gray-800'
                   : 'text-gray-600 hover:bg-gray-100'
@@ -156,7 +136,6 @@ export default function Navigation({ user }: NavigationProps) {
               ) : (
                 <Moon className="w-5 h-5" />
               )}
-              <span className="sr-only">Toggle dark mode (currently {isDarkMode ? 'off' : 'off'})</span>
             </button>
 
             {/* Sign Out Button */}
