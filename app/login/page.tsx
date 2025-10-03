@@ -21,6 +21,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [loadingMessage, setLoadingMessage] = useState('')
   const [magicLinkSent, setMagicLinkSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -59,11 +60,13 @@ export default function LoginPage() {
   const handleEmailPassword = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setLoadingMessage(mode === 'signin' ? 'Signing you in...' : 'Creating your account...')
     setError(null)
 
     try {
       if (mode === 'signin') {
         await authService.signInWithPassword({ email, password })
+        setLoadingMessage('Redirecting to dashboard...')
         router.push('/dashboard')
       } else {
         const { user, session } = await authService.signUp({
@@ -74,21 +77,23 @@ export default function LoginPage() {
 
         if (session) {
           // Auto-signed in after signup
+          setLoadingMessage('Redirecting to dashboard...')
           router.push('/dashboard')
         } else {
           // Email verification required
+          setLoading(false)
           setError('Please check your email to verify your account.')
         }
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : `${mode === 'signin' ? 'Sign in' : 'Sign up'} failed`)
-    } finally {
       setLoading(false)
     }
   }
 
   const handleGoogleOAuth = async () => {
     setLoading(true)
+    setLoadingMessage('Redirecting to Google...')
     setError(null)
 
     try {
@@ -96,7 +101,7 @@ export default function LoginPage() {
         provider: 'google',
         redirectTo: `${window.location.origin}/auth/callback`,
       })
-      // OAuth will redirect to Google
+      // OAuth will redirect to Google - keep loading state active
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Google sign in failed')
       setLoading(false)
@@ -161,7 +166,22 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 relative">
+      {/* Full-page loading overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-sm mx-4 text-center">
+            <Loader2 className="w-12 h-12 animate-spin text-indigo-600 mx-auto mb-4" />
+            <p className="text-lg font-semibold text-gray-900">
+              {loadingMessage}
+            </p>
+            <p className="text-sm text-gray-500 mt-2">
+              This may take a few seconds
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-md w-full">
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6">
           {/* Header */}
