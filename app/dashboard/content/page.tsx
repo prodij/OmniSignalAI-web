@@ -44,7 +44,7 @@ export default async function ContentPage({ searchParams }: ContentPageProps) {
           <Heading as="h1" size="3xl" className="mb-2">
             Content Manager
           </Heading>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-300">
             Manage your blog posts ({result.pagination.total} total)
           </p>
         </div>
@@ -57,10 +57,10 @@ export default async function ContentPage({ searchParams }: ContentPageProps) {
 
       {/* Error Alert */}
       {hasError && (
-        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <Text className="text-yellow-800 font-medium mb-1">⚠️ Unable to connect to backend</Text>
-          <Text size="sm" className="text-yellow-700">
-            Content will appear here once the backend is running. Start it with: <code className="px-1 py-0.5 bg-yellow-100 rounded">cd omnidraft && docker-compose up</code>
+        <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+          <Text className="text-yellow-800 dark:text-yellow-200 font-medium mb-1">⚠️ Unable to connect to backend</Text>
+          <Text size="sm" className="text-yellow-700 dark:text-yellow-300">
+            Content will appear here once the backend is running. Start it with: <code className="px-1 py-0.5 bg-yellow-100 dark:bg-yellow-800 rounded">cd omnidraft && docker-compose up</code>
           </Text>
         </div>
       )}

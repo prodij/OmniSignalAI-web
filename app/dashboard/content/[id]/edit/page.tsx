@@ -100,8 +100,8 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
-          <Text className="text-gray-600">Loading post...</Text>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-indigo-400 mx-auto mb-4"></div>
+          <Text className="text-gray-600 dark:text-gray-300">Loading post...</Text>
         </div>
       </div>
     )
@@ -113,7 +113,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
       <div className="max-w-2xl mx-auto">
         <Card padding="lg">
           <div className="text-center">
-            <Text className="text-red-600 mb-4">{error}</Text>
+            <Text className="text-red-600 dark:text-red-400 mb-4">{error}</Text>
             <Button onClick={() => router.push('/dashboard/content')}>
               Back to Content
             </Button>
@@ -133,7 +133,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
           <Heading as="h1" size="3xl" className="mb-2">
             Edit Post
           </Heading>
-          <Text className="text-gray-600">
+          <Text className="text-gray-600 dark:text-gray-300">
             Make changes to your blog post
           </Text>
         </div>
@@ -152,8 +152,8 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <Text className="text-red-800">{error}</Text>
+        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+          <Text className="text-red-800 dark:text-red-200">{error}</Text>
         </div>
       )}
 
@@ -185,7 +185,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
                 },
               })}
             />
-            <Text size="sm" className="text-gray-500 mt-1">
+            <Text size="sm" className="text-gray-500 dark:text-gray-400 mt-1">
               URL: /blog/{register('slug').name}
             </Text>
           </div>
@@ -212,13 +212,13 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
                 minLength: { value: 50, message: 'Content must be at least 50 characters' },
               })}
             />
-            <Text size="sm" className="text-gray-500 mt-1">
+            <Text size="sm" className="text-gray-500 dark:text-gray-400 mt-1">
               Supports Markdown and MDX syntax
             </Text>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center space-x-4 pt-4 border-t">
+          <div className="flex items-center space-x-4 pt-4 border-t border-gray-200 dark:border-gray-700">
             <Button
               type="submit"
               loading={saving}
@@ -236,7 +236,7 @@ export default function EditPostPage({ params }: { params: { id: string } }) {
               Cancel
             </Button>
             {isDirty && (
-              <Text size="sm" className="text-gray-500">
+              <Text size="sm" className="text-gray-500 dark:text-gray-400">
                 You have unsaved changes
               </Text>
             )}

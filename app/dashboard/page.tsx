@@ -64,18 +64,18 @@ export default async function DashboardPage() {
         <Heading as="h1" size="3xl" className="mb-2">
           Content Cockpit
         </Heading>
-        <Text size="lg" className="text-gray-600">
+        <Text size="lg" className="text-gray-600 dark:text-gray-300">
           Manage your blog content powered by AI
         </Text>
       </div>
 
       {/* Error Alert */}
       {hasError && (
-        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <Text className="text-yellow-800 font-medium mb-1">⚠️ Unable to connect to backend</Text>
-          <Text size="sm" className="text-yellow-700">
+        <div className="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+          <Text className="text-yellow-800 dark:text-yellow-200 font-medium mb-1">⚠️ Unable to connect to backend</Text>
+          <Text size="sm" className="text-yellow-700 dark:text-yellow-300">
             Make sure the omnidraft backend is running at{' '}
-            <code className="px-1 py-0.5 bg-yellow-100 rounded">
+            <code className="px-1 py-0.5 bg-yellow-100 dark:bg-yellow-800 rounded">
               {process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000'}
             </code>
           </Text>
@@ -90,15 +90,15 @@ export default async function DashboardPage() {
             <Card key={stat.label} padding="md">
               <div className="flex items-center justify-between">
                 <div>
-                  <Text size="sm" className="text-gray-600 mb-1">
+                  <Text size="sm" className="text-gray-600 dark:text-gray-400 mb-1">
                     {stat.label}
                   </Text>
                   <Text size="3xl" className="font-bold">
                     {stat.value}
                   </Text>
                 </div>
-                <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                  <Icon className={`w-6 h-6 ${stat.color}`} />
+                <div className={`p-3 rounded-lg ${stat.bgColor} dark:bg-opacity-20`}>
+                  <Icon className={`w-6 h-6 ${stat.color} dark:brightness-125`} />
                 </div>
               </div>
             </Card>
@@ -114,16 +114,16 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <a
             href="/dashboard/generate"
-            className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-colors group"
+            className="flex items-center p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors group"
           >
-            <div className="p-2 bg-indigo-100 rounded-lg group-hover:bg-indigo-200 transition-colors">
-              <FilePlus className="w-6 h-6 text-indigo-600" />
+            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-200 dark:group-hover:bg-indigo-900/50 transition-colors">
+              <FilePlus className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div className="ml-4">
-              <Text className="font-semibold text-gray-900 group-hover:text-indigo-700">
+              <Text className="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-300">
                 Generate New Content
               </Text>
-              <Text size="sm" className="text-gray-600">
+              <Text size="sm" className="text-gray-600 dark:text-gray-400">
                 Use AI to create blog posts
               </Text>
             </div>
@@ -131,16 +131,16 @@ export default async function DashboardPage() {
 
           <a
             href="/dashboard/content"
-            className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-colors group"
+            className="flex items-center p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-indigo-500 dark:hover:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors group"
           >
-            <div className="p-2 bg-indigo-100 rounded-lg group-hover:bg-indigo-200 transition-colors">
-              <FileText className="w-6 h-6 text-indigo-600" />
+            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-200 dark:group-hover:bg-indigo-900/50 transition-colors">
+              <FileText className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div className="ml-4">
-              <Text className="font-semibold text-gray-900 group-hover:text-indigo-700">
+              <Text className="font-semibold text-gray-900 dark:text-white group-hover:text-indigo-700 dark:group-hover:text-indigo-300">
                 Manage Content
               </Text>
-              <Text size="sm" className="text-gray-600">
+              <Text size="sm" className="text-gray-600 dark:text-gray-400">
                 View and edit all posts
               </Text>
             </div>

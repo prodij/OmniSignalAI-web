@@ -13,8 +13,9 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { authService } from '@/lib/api'
 import { Button } from '@/lib/design-system'
-import { FileText, Sparkles, LayoutDashboard, LogOut } from 'lucide-react'
+import { FileText, Sparkles, LayoutDashboard, LogOut, Moon, Sun } from 'lucide-react'
 import type { User } from '@supabase/supabase-js'
+import { useDarkMode } from '@/lib/contexts/DarkModeContext'
 
 interface NavigationProps {
   user: User | null
@@ -23,6 +24,7 @@ interface NavigationProps {
 export default function Navigation({ user }: NavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
+  const { isDarkMode, toggleDarkMode } = useDarkMode()
 
   const handleSignOut = async () => {
     try {
@@ -62,7 +64,7 @@ export default function Navigation({ user }: NavigationProps) {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm">
+    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo and Navigation */}
@@ -73,8 +75,8 @@ export default function Navigation({ user }: NavigationProps) {
                 <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold text-lg">O</span>
                 </div>
-                <span className="text-lg font-semibold text-gray-900">
-                  Content Cockpit
+                <span className="text-lg font-semibold text-gray-900 dark:text-white">
+                  AI Studio
                 </span>
               </Link>
             </div>
@@ -91,8 +93,8 @@ export default function Navigation({ user }: NavigationProps) {
                     href={item.href}
                     className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                       active
-                        ? 'bg-indigo-50 text-indigo-700'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                        ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
@@ -107,8 +109,21 @@ export default function Navigation({ user }: NavigationProps) {
           <div className="flex items-center space-x-4">
             {/* User Email */}
             <div className="hidden md:block">
-              <span className="text-sm text-gray-600">{user?.email || 'User'}</span>
+              <span className="text-sm text-gray-600 dark:text-gray-300">{user?.email || 'User'}</span>
             </div>
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
+            </button>
 
             {/* Sign Out Button */}
             <Button
@@ -124,7 +139,7 @@ export default function Navigation({ user }: NavigationProps) {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="sm:hidden border-t border-gray-200">
+      <div className="sm:hidden border-t border-gray-200 dark:border-gray-700">
         <div className="px-2 pt-2 pb-3 space-y-1">
           {navItems.map((item) => {
             const Icon = item.icon
@@ -136,8 +151,8 @@ export default function Navigation({ user }: NavigationProps) {
                 href={item.href}
                 className={`flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors ${
                   active
-                    ? 'bg-indigo-50 text-indigo-700'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800'
                 }`}
               >
                 <Icon className="w-5 h-5 mr-3" />

@@ -44,11 +44,11 @@ export const HeroLayout: React.FC<HeroLayoutProps> = ({
   className
 }) => {
   const variantClasses = {
-    default: 'bg-white',
-    gradient: 'bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700',
+    default: 'bg-white dark:bg-gray-950',
+    gradient: 'bg-gradient-to-br from-indigo-600 via-purple-600 to-blue-700 dark:from-indigo-900 dark:via-purple-900 dark:to-blue-900',
     video: 'bg-black relative overflow-hidden',
-    image: 'bg-gray-900 relative bg-cover bg-center',
-    white: 'bg-white',
+    image: 'bg-gray-900 dark:bg-gray-950 relative bg-cover bg-center',
+    white: 'bg-white dark:bg-gray-950',
   }
 
   const heightClasses = {
@@ -71,7 +71,7 @@ export const HeroLayout: React.FC<HeroLayoutProps> = ({
       )}
     >
       {overlay && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
+        <div className="absolute inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-10" />
       )}
       <Container className="relative z-20 h-full flex items-center">
         {children}
@@ -203,14 +203,14 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
             centered && 'text-center'
           )}>
             {subtitle && (
-              <p className="text-sm font-semibold text-indigo-600 uppercase tracking-wide mb-2">
+              <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide mb-2">
                 {subtitle}
               </p>
             )}
             {title && (
               <h2 className={cn(
                 'text-3xl md:text-4xl lg:text-5xl font-bold font-heading',
-                variant === 'dark' ? 'text-white' : 'text-gray-900',
+                variant === 'dark' ? 'text-white' : 'text-gray-900 dark:text-white',
                 centered && 'mx-auto',
                 !centered && title.length > 50 && 'max-w-4xl'
               )}>
@@ -220,7 +220,7 @@ export const ContentSection: React.FC<ContentSectionProps> = ({
             {description && (
               <p className={cn(
                 'text-lg md:text-xl mt-4',
-                variant === 'dark' ? 'text-gray-300' : 'text-gray-600',
+                variant === 'dark' ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400',
                 centered ? 'mx-auto max-w-3xl' : 'max-w-4xl'
               )}>
                 {description}
@@ -313,9 +313,9 @@ export const CTASection: React.FC<CTASectionProps> = ({
   className
 }) => {
   const variantClasses = {
-    default: 'bg-white',
-    gradient: 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white',
-    dark: 'bg-gray-900 text-white',
+    default: 'bg-white dark:bg-gray-950',
+    gradient: 'bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 text-white',
+    dark: 'bg-gray-900 dark:bg-gray-950 text-white',
   }
 
   return (
@@ -348,8 +348,8 @@ export const CTASection: React.FC<CTASectionProps> = ({
                   className={cn(
                     'px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200',
                     variant === 'gradient'
-                      ? 'bg-white text-indigo-600 hover:bg-gray-100'
-                      : 'bg-indigo-600 text-white hover:bg-indigo-700',
+                      ? 'bg-white dark:bg-gray-100 text-indigo-600 dark:text-indigo-700 hover:bg-gray-100 dark:hover:bg-gray-200'
+                      : 'bg-indigo-600 dark:bg-indigo-500 text-white hover:bg-indigo-700 dark:hover:bg-indigo-600',
                     'hover:scale-105 shadow-lg hover:shadow-xl'
                   )}
                 >
@@ -361,7 +361,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
                   onClick={secondaryButton.onClick}
                   className={cn(
                     'px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200',
-                    'border-2 border-current hover:bg-white hover:bg-opacity-10'
+                    'border-2 border-current hover:bg-white hover:bg-opacity-10 dark:hover:bg-white dark:hover:bg-opacity-20'
                   )}
                 >
                   {secondaryButton.text}
@@ -408,9 +408,9 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
   className
 }) => {
   const variantClasses = {
-    default: 'bg-white',
-    dark: 'bg-gray-900 text-white',
-    primary: 'bg-indigo-50',
+    default: 'bg-white dark:bg-gray-950',
+    dark: 'bg-gray-900 dark:bg-gray-950 text-white',
+    primary: 'bg-indigo-50 dark:bg-indigo-950',
   }
 
   const columnClasses = {
@@ -431,20 +431,20 @@ export const StatsSection: React.FC<StatsSectionProps> = ({
             <div key={index} className="space-y-2">
               <div className={cn(
                 'text-3xl md:text-4xl font-bold font-heading',
-                variant === 'dark' ? 'text-white' : 'text-indigo-600'
+                variant === 'dark' ? 'text-white' : 'text-indigo-600 dark:text-indigo-400'
               )}>
                 {stat.value}
               </div>
               <div className={cn(
                 'text-sm font-semibold uppercase tracking-wide',
-                variant === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                variant === 'dark' ? 'text-gray-300' : 'text-gray-600 dark:text-gray-400'
               )}>
                 {stat.label}
               </div>
               {stat.description && (
                 <div className={cn(
                   'text-sm',
-                  variant === 'dark' ? 'text-gray-400' : 'text-gray-500'
+                  variant === 'dark' ? 'text-gray-400' : 'text-gray-500 dark:text-gray-500'
                 )}>
                   {stat.description}
                 </div>

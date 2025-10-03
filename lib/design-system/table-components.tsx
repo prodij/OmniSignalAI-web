@@ -20,7 +20,7 @@ export const Table = React.forwardRef<HTMLTableElement, TableProps>(
         <table
           ref={ref}
           className={cn(
-            'min-w-full divide-y divide-gray-200',
+            'min-w-full divide-y divide-gray-200 dark:divide-gray-700',
             className
           )}
           {...props}
@@ -40,7 +40,7 @@ export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeader
     return (
       <thead
         ref={ref}
-        className={cn('bg-gray-50', className)}
+        className={cn('bg-gray-50 dark:bg-gray-800', className)}
         {...props}
       >
         {children}
@@ -60,7 +60,7 @@ export const TableBody = React.forwardRef<HTMLTableSectionElement, TableBodyProp
       <tbody
         ref={ref}
         className={cn(
-          'bg-white divide-y divide-gray-200',
+          'bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700',
           className
         )}
         {...props}
@@ -82,7 +82,7 @@ export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
       <tr
         ref={ref}
         className={cn(
-          hoverable && 'hover:bg-gray-50 transition-colors',
+          hoverable && 'hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors',
           className
         )}
         {...props}
@@ -105,8 +105,8 @@ export const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
       <th
         ref={ref}
         className={cn(
-          'px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider',
-          sortable && 'cursor-pointer select-none hover:bg-gray-100',
+          'px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider',
+          sortable && 'cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-700',
           className
         )}
         {...props}
@@ -114,7 +114,7 @@ export const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
         <div className="flex items-center space-x-1">
           <span>{children}</span>
           {sortable && sorted && (
-            <span className="text-gray-400">
+            <span className="text-gray-400 dark:text-gray-500">
               {sorted === 'asc' ? '↑' : '↓'}
             </span>
           )}
@@ -133,7 +133,7 @@ export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
       <td
         ref={ref}
         className={cn(
-          'px-6 py-4 whitespace-nowrap text-sm text-gray-900',
+          'px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100',
           className
         )}
         {...props}
@@ -169,8 +169,8 @@ export function TablePagination({
   const endItem = Math.min(currentPage * itemsPerPage, totalItems)
 
   return (
-    <div className={cn('px-6 py-4 border-t border-gray-200 flex items-center justify-between', className)}>
-      <div className="text-sm text-gray-700">
+    <div className={cn('px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between', className)}>
+      <div className="text-sm text-gray-700 dark:text-gray-300">
         Showing <span className="font-medium">{startItem}</span> to{' '}
         <span className="font-medium">{endItem}</span> of{' '}
         <span className="font-medium">{totalItems}</span> results
@@ -182,13 +182,13 @@ export function TablePagination({
           className={cn(
             'px-3 py-1 text-sm border rounded-md transition-colors',
             currentPage === 1
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed border-gray-300 dark:border-gray-700'
+              : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-600'
           )}
         >
           Previous
         </button>
-        <span className="text-sm text-gray-700">
+        <span className="text-sm text-gray-700 dark:text-gray-300">
           Page {currentPage} of {totalPages}
         </span>
         <button
@@ -197,8 +197,8 @@ export function TablePagination({
           className={cn(
             'px-3 py-1 text-sm border rounded-md transition-colors',
             currentPage >= totalPages
-              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'
+              ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-600 cursor-not-allowed border-gray-300 dark:border-gray-700'
+              : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-600'
           )}
         >
           Next

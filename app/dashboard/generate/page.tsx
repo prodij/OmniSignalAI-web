@@ -90,7 +90,7 @@ export default function GeneratePage() {
           <Heading as="h1" size="3xl" className="mb-2">
             Content Generated Successfully!
           </Heading>
-          <Text className="text-gray-600">
+          <Text className="text-gray-600 dark:text-gray-300">
             Your AI-generated blog post has been saved as a draft
           </Text>
         </div>
@@ -99,10 +99,10 @@ export default function GeneratePage() {
           <Heading as="h2" size="2xl" className="mb-4">
             {generatedPost.title}
           </Heading>
-          <Text className="text-gray-600 mb-6">{generatedPost.excerpt}</Text>
-          <div className="prose prose-sm max-w-none">
-            <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <pre className="whitespace-pre-wrap text-sm">{generatedPost.content}</pre>
+          <Text className="text-gray-600 dark:text-gray-300 mb-6">{generatedPost.excerpt}</Text>
+          <div className="prose prose-sm dark:prose-invert max-w-none">
+            <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+              <pre className="whitespace-pre-wrap text-sm text-gray-900 dark:text-gray-100">{generatedPost.content}</pre>
             </div>
           </div>
         </Card>
@@ -139,14 +139,14 @@ export default function GeneratePage() {
         <Heading as="h1" size="3xl" className="mb-2">
           AI Content Wizard
         </Heading>
-        <Text className="text-gray-600">
+        <Text className="text-gray-600 dark:text-gray-300">
           Generate high-quality blog posts using AI
         </Text>
       </div>
 
       {error && (
-        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-          <Text className="text-red-800">{error}</Text>
+        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+          <Text className="text-red-800 dark:text-red-200">{error}</Text>
         </div>
       )}
 

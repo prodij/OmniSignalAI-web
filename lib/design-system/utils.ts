@@ -124,13 +124,13 @@ export const responsive = {
  */
 export const styleGenerators = {
   button: (variant: 'primary' | 'secondary' | 'outline' | 'ghost' = 'primary', size: 'sm' | 'md' | 'lg' = 'md') => {
-    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+    const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed'
 
     const variants = {
-      primary: 'bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500',
-      secondary: 'bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500',
-      outline: 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 focus:ring-indigo-500',
-      ghost: 'text-indigo-600 hover:bg-indigo-50 focus:ring-indigo-500',
+      primary: 'bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-400',
+      secondary: 'bg-purple-600 text-white hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 focus:ring-purple-500 dark:focus:ring-purple-400',
+      outline: 'border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-950 focus:ring-indigo-500 dark:focus:ring-indigo-400',
+      ghost: 'text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950 focus:ring-indigo-500 dark:focus:ring-indigo-400',
     }
 
     const sizes = {
@@ -143,23 +143,23 @@ export const styleGenerators = {
   },
 
   card: (variant: 'default' | 'elevated' | 'bordered' = 'default') => {
-    const baseClasses = 'bg-white rounded-2xl'
+    const baseClasses = 'bg-white dark:bg-gray-900 rounded-2xl'
 
     const variants = {
-      default: 'shadow-md',
-      elevated: 'shadow-lg hover:shadow-xl transition-shadow duration-300',
-      bordered: 'border border-gray-200 shadow-sm',
+      default: 'shadow-md dark:shadow-gray-800',
+      elevated: 'shadow-lg hover:shadow-xl dark:shadow-gray-800 dark:hover:shadow-gray-700 transition-shadow duration-300',
+      bordered: 'border border-gray-200 dark:border-gray-700 shadow-sm dark:shadow-gray-800',
     }
 
     return cn(baseClasses, variants[variant])
   },
 
   input: (variant: 'default' | 'error' = 'default', size: 'sm' | 'md' | 'lg' = 'md') => {
-    const baseClasses = 'w-full border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0'
+    const baseClasses = 'w-full border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-0'
 
     const variants = {
-      default: 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500',
-      error: 'border-red-500 focus:border-red-500 focus:ring-red-500',
+      default: 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400',
+      error: 'border-red-500 dark:border-red-400 focus:border-red-500 dark:focus:border-red-400 focus:ring-red-500 dark:focus:ring-red-400',
     }
 
     const sizes = {
@@ -175,10 +175,10 @@ export const styleGenerators = {
     const baseClasses = 'inline-flex items-center font-medium rounded-full'
 
     const variants = {
-      default: 'bg-gray-100 text-gray-800',
-      success: 'bg-green-100 text-green-800',
-      warning: 'bg-yellow-100 text-yellow-800',
-      error: 'bg-red-100 text-red-800',
+      default: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
+      success: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+      warning: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+      error: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
     }
 
     const sizes = {
@@ -215,7 +215,7 @@ export const animations = {
  * Focus utilities for accessibility
  */
 export const focus = {
-  ring: 'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2',
-  ringInset: 'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-inset',
-  visible: 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2',
+  ring: 'focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:ring-offset-2 dark:focus:ring-offset-gray-900',
+  ringInset: 'focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 focus:ring-inset',
+  visible: 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900',
 }
