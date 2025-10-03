@@ -1,7 +1,7 @@
 /**
  * Dashboard Layout
  *
- * Protected layout for the Content Cockpit dashboard
+ * Protected layout for the AI Studio dashboard
  * - Requires authentication (handled by middleware)
  * - Provides consistent navigation
  * - Displays user info and sign-out

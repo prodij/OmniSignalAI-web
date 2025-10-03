@@ -85,7 +85,7 @@ export function Navigation() {
           <a href={isAuthenticated ? "/dashboard" : "/"} className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
             <Logo className="w-10 h-10" />
             <span className="text-xl font-bold text-gray-900 tracking-tight">
-              {isAuthenticated ? "Content Cockpit" : "OmniSignalAI"}
+              {isAuthenticated ? "AI Studio" : "OmniSignalAI"}
             </span>
           </a>
 

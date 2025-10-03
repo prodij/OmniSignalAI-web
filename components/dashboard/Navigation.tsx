@@ -3,7 +3,7 @@
 /**
  * Dashboard Navigation
  *
- * Main navigation for the Content Cockpit
+ * Main navigation for the AI Studio
  * - Active route highlighting
  * - User info display
  * - Sign-out functionality

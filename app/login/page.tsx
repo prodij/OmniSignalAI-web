@@ -66,7 +66,7 @@ export default function LoginPage() {
     try {
       if (mode === 'signin') {
         await authService.signInWithPassword({ email, password })
-        setLoadingMessage('🚀 Launching your cockpit...')
+        setLoadingMessage('🚀 Launching your AI Studio...')
         router.push('/dashboard')
       } else {
         const { user, session } = await authService.signUp({
@@ -77,7 +77,7 @@ export default function LoginPage() {
 
         if (session) {
           // Auto-signed in after signup
-          setLoadingMessage('🚀 Launching your cockpit...')
+          setLoadingMessage('🚀 Launching your AI Studio...')
           router.push('/dashboard')
         } else {
           // Email verification required
