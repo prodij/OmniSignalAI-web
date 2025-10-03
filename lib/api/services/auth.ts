@@ -17,6 +17,23 @@ export interface MagicLinkOptions {
 }
 
 /**
+ * Email/password sign in options
+ */
+export interface EmailPasswordOptions {
+  email: string
+  password: string
+}
+
+/**
+ * Sign up options
+ */
+export interface SignUpOptions {
+  email: string
+  password: string
+  redirectTo?: string
+}
+
+/**
  * OAuth provider types
  */
 export type OAuthProvider = 'google' | 'github' | 'azure'
@@ -33,6 +50,70 @@ export interface OAuthOptions {
  * Authentication service
  */
 export const authService = {
+  /**
+   * Sign in with email and password
+   *
+   * @example
+   * ```ts
+   * await authService.signInWithPassword({
+   *   email: 'user@example.com',
+   *   password: 'secure-password'
+   * })
+   * // User is signed in with session
+   * ```
+   */
+  async signInWithPassword(options: EmailPasswordOptions): Promise<{ user: User; session: Session }> {
+    const supabase = createClient()
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: options.email,
+      password: options.password,
+    })
+
+    if (error) {
+      throw new Error(`Sign in failed: ${error.message}`)
+    }
+
+    if (!data.user || !data.session) {
+      throw new Error('Sign in failed: No user or session returned')
+    }
+
+    return { user: data.user, session: data.session }
+  },
+
+  /**
+   * Sign up with email and password
+   *
+   * @example
+   * ```ts
+   * await authService.signUp({
+   *   email: 'user@example.com',
+   *   password: 'secure-password',
+   *   redirectTo: '/dashboard'
+   * })
+   * // User account created, may need email verification
+   * ```
+   */
+  async signUp(options: SignUpOptions): Promise<{ user: User | null; session: Session | null }> {
+    const supabase = createClient()
+
+    const { data, error } = await supabase.auth.signUp({
+      email: options.email,
+      password: options.password,
+      options: {
+        emailRedirectTo:
+          options.redirectTo ||
+          `${window.location.origin}/auth/callback`,
+      },
+    })
+
+    if (error) {
+      throw new Error(`Sign up failed: ${error.message}`)
+    }
+
+    return { user: data.user, session: data.session }
+  },
+
   /**
    * Sign in with magic link (passwordless)
    *
