@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Poppins } from 'next/font/google'
-import { Navigation } from '@/components/Navigation'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -50,9 +49,25 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  // Only apply dark mode on dashboard pages if explicitly set
+                  if (window.location.pathname.startsWith('/dashboard')) {
+                    var darkMode = localStorage.getItem('darkMode');
+                    if (darkMode === 'true') {
+                      document.documentElement.classList.add('dark');
+                    }
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
       <body className={`${inter.variable} ${poppins.variable} font-sans antialiased`}>
-        <Navigation />
         {children}
       </body>
     </html>

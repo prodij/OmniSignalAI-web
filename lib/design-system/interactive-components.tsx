@@ -418,7 +418,7 @@ export const ShineBorder: React.FC<ShineBorderProps> = ({
         }}
       />
       <div
-        className="relative bg-white"
+        className="relative bg-white dark:bg-gray-900"
         style={{
           margin: borderWidth,
           borderRadius: borderRadius - borderWidth,

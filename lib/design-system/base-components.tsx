@@ -141,14 +141,14 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor={inputId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <span className="text-gray-400">{leftIcon}</span>
+              <span className="text-gray-400 dark:text-gray-500">{leftIcon}</span>
             </div>
           )}
           <input
@@ -165,12 +165,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
           {rightIcon && (
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <span className="text-gray-400">{rightIcon}</span>
+              <span className="text-gray-400 dark:text-gray-500">{rightIcon}</span>
             </div>
           )}
         </div>
         {error && (
-          <p className="mt-1 text-sm text-red-600">{error}</p>
+          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
         )}
       </div>
     )
@@ -205,6 +205,145 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   }
 )
 Badge.displayName = "Badge"
+
+/**
+ * Base Select Component
+ */
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  variant?: 'default' | 'error'
+  selectSize?: 'sm' | 'md' | 'lg'
+  label?: string
+  error?: string
+}
+
+export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+  ({
+    className,
+    variant = 'default',
+    selectSize = 'md',
+    label,
+    error,
+    id,
+    children,
+    ...props
+  }, ref) => {
+    const generatedId = useId()
+    const selectId = id || generatedId
+    const errorVariant = error ? 'error' : variant
+
+    const sizeClasses = {
+      sm: 'px-3 py-1.5 text-sm',
+      md: 'px-4 py-2 text-base',
+      lg: 'px-5 py-3 text-lg',
+    }
+
+    const variantClasses = {
+      default: 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400',
+      error: 'border-red-500 dark:border-red-400 focus:border-red-500 dark:focus:border-red-400 focus:ring-red-500 dark:focus:ring-red-400',
+    }
+
+    return (
+      <div className="w-full">
+        {label && (
+          <label htmlFor={selectId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            {label}
+          </label>
+        )}
+        <select
+          ref={ref}
+          id={selectId}
+          className={cn(
+            'block w-full rounded-md border shadow-sm transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white',
+            'focus:outline-none focus:ring-2',
+            sizeClasses[selectSize],
+            variantClasses[errorVariant],
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </select>
+        {error && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
+        )}
+      </div>
+    )
+  }
+)
+Select.displayName = "Select"
+
+/**
+ * Base Textarea Component
+ */
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  variant?: 'default' | 'error'
+  textareaSize?: 'sm' | 'md' | 'lg'
+  label?: string
+  error?: string
+  resize?: 'none' | 'vertical' | 'horizontal' | 'both'
+}
+
+export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({
+    className,
+    variant = 'default',
+    textareaSize = 'md',
+    label,
+    error,
+    resize = 'vertical',
+    id,
+    ...props
+  }, ref) => {
+    const generatedId = useId()
+    const textareaId = id || generatedId
+    const errorVariant = error ? 'error' : variant
+
+    const sizeClasses = {
+      sm: 'px-3 py-1.5 text-sm',
+      md: 'px-4 py-2 text-base',
+      lg: 'px-5 py-3 text-lg',
+    }
+
+    const variantClasses = {
+      default: 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-indigo-500 dark:focus:ring-indigo-400',
+      error: 'border-red-500 dark:border-red-400 focus:border-red-500 dark:focus:border-red-400 focus:ring-red-500 dark:focus:ring-red-400',
+    }
+
+    const resizeClasses = {
+      none: 'resize-none',
+      vertical: 'resize-y',
+      horizontal: 'resize-x',
+      both: 'resize',
+    }
+
+    return (
+      <div className="w-full">
+        {label && (
+          <label htmlFor={textareaId} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            {label}
+          </label>
+        )}
+        <textarea
+          ref={ref}
+          id={textareaId}
+          className={cn(
+            'block w-full rounded-md border shadow-sm transition-colors bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500',
+            'focus:outline-none focus:ring-2',
+            sizeClasses[textareaSize],
+            variantClasses[errorVariant],
+            resizeClasses[resize],
+            className
+          )}
+          {...props}
+        />
+        {error && (
+          <p className="mt-2 text-sm text-red-600 dark:text-red-400">{error}</p>
+        )}
+      </div>
+    )
+  }
+)
+Textarea.displayName = "Textarea"
 
 /**
  * Base Container Component
@@ -261,10 +400,10 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 export const Section = React.forwardRef<HTMLElement, SectionProps>(
   ({ className, variant = 'default', padding = 'lg', fullHeight = false, children, ...props }, ref) => {
     const variantClasses = {
-      default: 'bg-white',
-      primary: 'bg-gradient-to-br from-indigo-50 to-purple-50',
-      secondary: 'bg-gray-50',
-      dark: 'bg-gray-900 text-white',
+      default: 'bg-white dark:bg-gray-950',
+      primary: 'bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950 dark:to-purple-950',
+      secondary: 'bg-gray-50 dark:bg-gray-900',
+      dark: 'bg-gray-900 dark:bg-gray-950 text-white',
     }
 
     const paddingClasses = {
@@ -387,11 +526,11 @@ export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
     }
 
     const colorClasses = {
-      default: 'text-gray-900',
-      muted: 'text-gray-600',
-      primary: 'text-indigo-600',
-      secondary: 'text-purple-600',
-      error: 'text-red-600',
+      default: 'text-gray-900 dark:text-white',
+      muted: 'text-gray-600 dark:text-gray-400',
+      primary: 'text-indigo-600 dark:text-indigo-400',
+      secondary: 'text-purple-600 dark:text-purple-400',
+      error: 'text-red-600 dark:text-red-400',
     }
 
     return (
@@ -441,13 +580,13 @@ export const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     }
 
     const colorClasses = {
-      default: 'text-gray-900',
-      muted: 'text-gray-600',
-      primary: 'text-indigo-600',
-      secondary: 'text-purple-600',
-      success: 'text-green-600',
-      warning: 'text-yellow-600',
-      error: 'text-red-600',
+      default: 'text-gray-900 dark:text-white',
+      muted: 'text-gray-600 dark:text-gray-400',
+      primary: 'text-indigo-600 dark:text-indigo-400',
+      secondary: 'text-purple-600 dark:text-purple-400',
+      success: 'text-green-600 dark:text-green-400',
+      warning: 'text-yellow-600 dark:text-yellow-400',
+      error: 'text-red-600 dark:text-red-400',
     }
 
     return (
