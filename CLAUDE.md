@@ -1025,3 +1025,22 @@ NEXT_PUBLIC_ENABLE_DEMO=true
 - Real product screenshots over abstract illustrations
 - Social proof with specific customer results
 - Single focused CTA per section
+
+## Visual Design
+
+**When working on visual design, layouts, or styling:**
+
+📖 **Read**: `docs/VISUAL-DESIGN-GUIDE.md` for complete systematic design framework
+
+**Quick principles**:
+- Never say "this looks good"—show measurable evidence (contrast ratios, performance metrics)
+- Use `lib/design-system/visual-excellence-tokens.ts` for all design constants
+- Apply Golden Ratio (61.8% / 38.2%), 8px spacing, WCAG AAA contrast (≥7:1)
+- Generate custom visuals with Image Generation Agent (not stock photos)
+- Follow F-pattern (content) or Z-pattern (landing) layouts
+- Measure success: Accessibility 100/100, Performance ≥95, Conversion optimized
+
+**Reference implementation**: `components/visual/VisualHero.tsx`
+**Live demo**: `app/visual-demo/page.tsx`
+
+**Core philosophy**: Beauty is systematic, not subjective. Every design decision backed by data, mathematics, or proven patterns.

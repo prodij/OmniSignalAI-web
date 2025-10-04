@@ -26,50 +26,62 @@ export default function HomePage() {
         <TrustBar />
       </div>
 
-      <SectionSeparator variant="gradient" className="my-16" />
+      {/* 8px system: 96px spacing (12 × 8px) */}
+      <SectionSeparator variant="gradient" className="my-24" />
 
       {/* Problem Agitation - Warm gradient background */}
-      <div className="bg-gradient-to-b from-red-50/50 via-orange-50/30 to-white py-20">
+      {/* 8px system: 128px vertical padding (16 × 8px) */}
+      <div className="bg-gradient-to-b from-red-50/50 via-orange-50/30 to-white py-32">
         <ProblemSection />
       </div>
 
-      <SectionSeparator variant="gradient" className="my-20" />
+      {/* 8px system: 128px spacing (16 × 8px) - generous whitespace */}
+      <SectionSeparator variant="gradient" className="my-32" />
 
       {/* Solution Demonstration - Clean white */}
-      <div className="bg-white py-20">
+      {/* 8px system: 128px vertical padding */}
+      <div className="bg-white py-32">
         <SolutionSection />
       </div>
 
       {/* Benefits - Light gray background for contrast */}
-      <div className="bg-gradient-to-b from-white via-gray-50 to-white py-20">
+      {/* 8px system: 128px vertical padding */}
+      <div className="bg-gradient-to-b from-white via-gray-50 to-white py-32">
         <BenefitsSection />
       </div>
 
-      <SectionSeparator variant="gradient" className="my-20" />
+      {/* 8px system: 128px spacing */}
+      <SectionSeparator variant="gradient" className="my-32" />
 
       {/* Social Proof - White with subtle top border */}
-      <div className="bg-white py-20">
+      {/* 8px system: 128px vertical padding */}
+      <div className="bg-white py-32">
         <SocialProofSection />
       </div>
 
       {/* How It Works - Light indigo tint */}
-      <div className="bg-gradient-to-b from-white via-indigo-50/20 to-white py-20">
+      {/* 8px system: 128px vertical padding */}
+      <div className="bg-gradient-to-b from-white via-indigo-50/20 to-white py-32">
         <HowItWorksSection />
       </div>
 
-      <SectionSeparator variant="gradient" className="my-20" />
+      {/* 8px system: 128px spacing */}
+      <SectionSeparator variant="gradient" className="my-32" />
 
       {/* Pricing - Clean white, prominent section */}
-      <div className="bg-white py-20" id="pricing">
+      {/* 8px system: 128px vertical padding */}
+      <div className="bg-white py-32" id="pricing">
         <PricingSection />
       </div>
 
       {/* Integration Partners - Subtle gray */}
-      <div className="bg-gradient-to-b from-white via-gray-50 to-white py-20">
+      {/* 8px system: 128px vertical padding */}
+      <div className="bg-gradient-to-b from-white via-gray-50 to-white py-32">
         <IntegrationPartners />
       </div>
 
-      <SectionSeparator variant="gradient" className="my-16" />
+      {/* 8px system: 96px spacing (12 × 8px) */}
+      <SectionSeparator variant="gradient" className="my-24" />
 
       {/* Final CTA - Dark gradient for contrast */}
       <div className="bg-gradient-to-b from-white to-gray-50">
